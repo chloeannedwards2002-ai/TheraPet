@@ -1,9 +1,5 @@
 package com.example.therapet.ui.theme
 
-import android.R
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
