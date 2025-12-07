@@ -1,15 +1,14 @@
 package com.example.therapet.ui.theme
 
+import androidx.compose.material3.Checkbox
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.text.BasicSecureTextField
-import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.TextObfuscationMode
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -24,7 +23,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -124,6 +125,36 @@ fun MyPasswordTextField(
     )
 }
 
+@Composable
+fun MyCheckBox(
+    modifier: Modifier = Modifier,
+    label: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    testTag: String = "remember_password_tick_box"
+){
+    var checked by remember { mutableStateOf(false) }
+
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ){
+        Checkbox(
+            checked = checked,
+            onCheckedChange = { checked = it },
+            modifier = Modifier
+                .scale(0.75f)
+                .testTag(testTag)
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelSmall,
+            // Manually overriding the checkbox padding to bring the text closer to it slightly
+            modifier = Modifier.offset(x = (-9).dp)
+        )
+    }
+}
+
 
 
 @Composable
@@ -133,6 +164,7 @@ fun ShowInputFields() {
     var exampleText1 by remember { mutableStateOf("") }
     var exampleText2 by remember { mutableStateOf("") }
     var exampleText3 by remember { mutableStateOf("") }
+    var exampleCheck by remember { mutableStateOf(false) }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -160,6 +192,12 @@ fun ShowInputFields() {
             onValueChange = {exampleText3 = it },
             label = "Password",
             placeholder = "Enter password",
+        )
+
+        MyCheckBox(
+            label = "Test",
+            checked = exampleCheck,
+            onCheckedChange = { exampleCheck = it }
         )
     }
 }

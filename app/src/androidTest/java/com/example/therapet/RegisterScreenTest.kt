@@ -1,7 +1,5 @@
 package com.example.therapet
 
-import androidx.compose.ui.test.assert
-import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
@@ -18,7 +16,7 @@ class RegisterScreenTest {
     @get:Rule
     val intentsRule = IntentsRule()
 
-    //UIT-3 - When the user clicks the back button on the registration page, the app should navigate back to the welcome page
+    // When clicking the back button, return to the welcome screen
     @Test
     fun backButtonReturnsToMainActivity(){
 
@@ -36,6 +34,13 @@ class RegisterScreenTest {
     //Registration_Screen_UI_Tests - The user can type in all 5 input boxes
     @Test
     fun typeIntoAllRegistrationInputFields(){
+        // Assert that the boxes exist in the boxes
+        composeTestRule.onNodeWithTag("user_id_input").assertExists()
+        composeTestRule.onNodeWithTag("first_name_input").assertExists()
+        composeTestRule.onNodeWithTag("surname_input").assertExists()
+        composeTestRule.onNodeWithTag("password_input").assertExists()
+        composeTestRule.onNodeWithTag("confirm_password_input").assertExists()
+
         // Type in User ID input field
         composeTestRule
             .onNodeWithTag("user_id_input")
@@ -60,13 +65,6 @@ class RegisterScreenTest {
         composeTestRule
             .onNodeWithTag("confirm_password_input")
             .performTextInput("test")
-
-        // Assert that the text appears in the boxes
-        composeTestRule.onNodeWithTag("user_id_input").assertExists()
-        composeTestRule.onNodeWithTag("first_name_input").assertExists()
-        composeTestRule.onNodeWithTag("surname_input").assertExists()
-        composeTestRule.onNodeWithTag("password_input").assertExists()
-        composeTestRule.onNodeWithTag("confirm_password_input").assertExists()
     }
 
     // Registration_Screen_UI_Tests - Toggle visibility of password
