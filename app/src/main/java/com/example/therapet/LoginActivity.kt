@@ -1,19 +1,20 @@
 package com.example.therapet
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,27 +27,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.therapet.ui.theme.MyFilledButton
 import com.example.therapet.ui.theme.MyOutlinedTextField
-import com.example.therapet.ui.theme.TheraPetTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import com.example.therapet.ui.theme.MyPasswordTextField
+import com.example.therapet.ui.theme.TheraPetTheme
+import androidx.compose.ui.res.stringResource
+import com.example.therapet.ui.theme.MyCheckBox
+import com.example.therapet.ui.theme.MyFilledButton
+import com.example.therapet.ui.theme.MyTextButton
 
-class RegisterActivity : ComponentActivity() {
+class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             TheraPetTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Registration(
+                    Login(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -55,11 +56,8 @@ class RegisterActivity : ComponentActivity() {
     }
 }
 
-
-// TODO: Compile all elements here
 @Composable
-fun Registration(modifier: Modifier = Modifier) {
-
+fun Login(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val activity = context as? Activity
 
@@ -70,7 +68,6 @@ fun Registration(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        //TODO: Implement a TopAppBar to house all back buttons and other options dynamically
         IconButton(
             onClick = { activity?.finish() },
             modifier = Modifier
@@ -79,101 +76,65 @@ fun Registration(modifier: Modifier = Modifier) {
                 .testTag("back_button")
         ) {
             Icon(
-            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            contentDescription = "Back"
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Back"
             )
         }
 
         Spacer(modifier = Modifier.height(200.dp))
 
-
-        Text(text = "Register",
+        Text(text = "Login",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge
-            )
+        )
 
         Spacer(modifier = Modifier.height(40.dp))
-
-        UserIDInput()
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ){
-            Box(modifier = Modifier.weight(1f)){
-                FirstNameInput()
-            }
-            Box(modifier = Modifier.weight(1f)){
-                SurnameInput()
-            }
-        }
+        
+        UserLoginIDInput()
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        PasswordInput()
+        LoginPasswordInput()
 
-        Spacer(modifier = Modifier.height(20.dp))
+        RememberPasswordCheckBox(
+            modifier = Modifier.align(Alignment.Start)
+        )
 
-        ConfPasswordInput()
+        ToRegisterButton(onClick = {context.startActivity(
+            Intent(context, RegisterActivity::class.java)
+        )})
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(height = 5.dp))
 
-        //TODO: Navigate to create pet page
-        RegisterButton( onClick = {} )
+        Text(text = "or",
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.labelSmall
+        )
+
+        //TODO: Navigate to the Main Therapet Screen
+        LoginButton(onClick = {} )
+
+        ForgotPasswordButton(onClick = {})
     }
 }
 
-// User ID input text field
-
+// User ID input
 @Composable
-fun UserIDInput(modifier: Modifier = Modifier){
-    var userID by remember { mutableStateOf("") }
+fun UserLoginIDInput(modifier: Modifier = Modifier){
+    var loginID by remember { mutableStateOf("") }
     MyOutlinedTextField(
-        value = userID,
-        onValueChange = { userID = it },
+        value = loginID,
+        onValueChange = { loginID = it },
         placeholder = "Enter User ID",
         label = "User ID",
         modifier = modifier
-            .testTag("user_id_input")
+            .testTag("user_login_id_input")
     )
 }
 
-// First name input text field
-
+// Password input
 @Composable
-fun FirstNameInput(modifier: Modifier = Modifier){
-    var firstName by remember { mutableStateOf("") }
-    MyOutlinedTextField(
-        value = firstName,
-        onValueChange = { firstName = it },
-        placeholder = "First Name",
-        label = "First Name",
-        modifier = modifier
-            .testTag("first_name_input")
-    )
-}
-
-// Surname input text field
-
-@Composable
-fun SurnameInput(modifier: Modifier = Modifier){
-    var surname by remember { mutableStateOf("") }
-    MyOutlinedTextField(
-        value = surname,
-        onValueChange = { surname = it },
-        placeholder = "Surname",
-        label = "Surname",
-        modifier = modifier
-            .testTag("surname_input")
-    )
-}
-
-// Password input text field
-
-@Composable
-fun PasswordInput(modifier: Modifier = Modifier){
+fun LoginPasswordInput(modifier: Modifier = Modifier){
     var password by remember { mutableStateOf("") }
 
     MyPasswordTextField(
@@ -182,33 +143,55 @@ fun PasswordInput(modifier: Modifier = Modifier){
         placeholder = "Password",
         label = "Password",
         modifier = modifier
-            .testTag("password_input"),
-        toggleTestTag = "password_toggle"
+            .testTag("login_password_input"),
+        toggleTestTag = "login_password_toggle"
     )
 }
 
-// Confirm password input text field
-
+// Remember password checkbox
 @Composable
-fun ConfPasswordInput(modifier: Modifier = Modifier){
-    var confPassword by remember { mutableStateOf("") }
-    MyPasswordTextField(
-        value = confPassword,
-        onValueChange = { confPassword = it },
-        placeholder = "Confirm Password",
-        label = "Confirm Password",
+fun RememberPasswordCheckBox(modifier: Modifier = Modifier){
+    var checked by remember { mutableStateOf(false) }
+    MyCheckBox(
+        label = "Remember password",
+        checked = checked,
+        onCheckedChange = {checked = it},
         modifier = modifier
-            .testTag("confirm_password_input"),
-        toggleTestTag = "confirm_password_toggle"
     )
 }
 
-//Register button -> Navigates to registration page
+// Login button
 @Composable
-fun RegisterButton(onClick: () -> Unit){
+fun LoginButton(onClick: () -> Unit){
     MyFilledButton(
         onClick = onClick,
         text = stringResource(R.string.register),
+        modifier = Modifier
+            .fillMaxWidth(0.5F)
+            .padding(top = 20.dp)
+            .testTag("login_button")
+    )
+}
+
+// Register button
+@Composable
+fun ToRegisterButton(onClick: () -> Unit) {
+    MyFilledButton(
+        onClick = onClick,
+        text = stringResource(R.string.login),
+        modifier = Modifier
+            .fillMaxWidth(fraction=0.5f)
+            .padding(top = 20.dp)
+            .testTag("register_button")
+    )
+}
+
+// Forgot password? button
+@Composable
+fun ForgotPasswordButton(onClick: () -> Unit){
+    MyTextButton(
+        onClick = onClick,
+        text = "Forgot password?",
         modifier = Modifier.fillMaxWidth(0.5F).padding(top = 20.dp)
     )
 }
@@ -216,8 +199,8 @@ fun RegisterButton(onClick: () -> Unit){
 
 @Preview(showBackground = true)
 @Composable
-fun RegistrationPreview() {
+fun LoginPreview() {
     TheraPetTheme {
-    Registration()
+        Login()
     }
 }

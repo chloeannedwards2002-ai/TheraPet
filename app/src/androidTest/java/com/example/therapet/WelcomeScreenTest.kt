@@ -17,7 +17,7 @@ class WelcomeScreenTest {
     @get:Rule
     val intentsRule = IntentsRule()
 
-    // UIT-1 - When the user clicks on the "Register" button on the welcome page, the app should navigate to the Registration screen
+    //When the user clicks on the "Register" button on the welcome page, the app should navigate to the Registration screen
     @Test
     fun navigateFromWelcomeToRegister()
     {
@@ -30,7 +30,7 @@ class WelcomeScreenTest {
         intended(hasComponent(RegisterActivity::class.java.name))
     }
 
-  /*  // UIT-2 - When the user clicks on the "Login" button on the welcome page, the app should navigate to the Login screen
+   //When the user clicks on the "Login" button on the welcome page, the app should navigate to the Login screen
     @Test
     fun navigateFromWelcomeToLogin()
     {
@@ -41,5 +41,5 @@ class WelcomeScreenTest {
 
         //Assert LoginActivity is launched
         intended(hasComponent(LoginActivity::class.java.name))
-    }*/
+    }
 }

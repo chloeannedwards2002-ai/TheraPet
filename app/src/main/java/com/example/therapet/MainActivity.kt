@@ -69,7 +69,9 @@ fun Greeting(modifier: Modifier = Modifier) {
 
         //Login button navigates to the login page
 
-        ChooseLoginButton( onClick = {} )
+        ChooseLoginButton( onClick = { context.startActivity(
+            Intent(context, LoginActivity::class.java)
+        )}  )
     }
 }
 
