@@ -21,14 +21,14 @@ val Typography = Typography(
     labelSmall = TextStyle(
         fontFamily = NunitoFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         color = Grey
     ),
 
     labelMedium = TextStyle(
         fontFamily = NunitoFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 25.sp,
+        fontSize = 24.sp,
         color = Grey
     ) ,
 

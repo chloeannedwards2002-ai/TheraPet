@@ -1,5 +1,6 @@
 package com.example.therapet
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,6 +45,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(modifier: Modifier = Modifier) {
+
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .padding(10.dp)
@@ -54,29 +60,42 @@ fun Greeting(modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge
         )
-        RegisterButton( onClick = {} )
-        LoginButton( onClick = {} )
+
+        // Register button navigates to the registration page
+
+        ChooseRegisterButton( onClick = { context.startActivity(
+            Intent(context, RegisterActivity::class.java)
+        )} )
+
+        //Login button navigates to the login page
+
+        ChooseLoginButton( onClick = {} )
     }
 }
 
 //Register button -> Navigates to registration page
 @Composable
-fun RegisterButton(onClick: () -> Unit){
+fun ChooseRegisterButton(onClick: () -> Unit){
     MyFilledButton(
         onClick = onClick,
         text = stringResource(R.string.register),
-        modifier = Modifier.fillMaxWidth(0.5F).padding(top = 20.dp)
-
+        modifier = Modifier
+            .fillMaxWidth(0.5F)
+            .padding(top = 20.dp)
+            .testTag("choose_register_button") // For Jetpack UI tests
     )
 }
 
 //Login button -> Navigates to login page
 @Composable
-fun LoginButton(onClick: () -> Unit){
+fun ChooseLoginButton(onClick: () -> Unit){
     MyFilledButton(
         onClick = onClick,
         text = stringResource(R.string.login),
-        modifier = Modifier.fillMaxWidth(0.5F).padding(top = 20.dp)
+        modifier = Modifier
+            .fillMaxWidth(0.5F)
+            .padding(top = 20.dp)
+            .testTag("choose_login_button") // For Jetpack UI tests
     )
 }
 

@@ -3,6 +3,8 @@
     <string name="app_name">TheraPet</string>
 
     <!-- Welcome screen -->
-    <string name= "register">Register</string>
-    <string name= "login">Login</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>
