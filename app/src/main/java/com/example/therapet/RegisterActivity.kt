@@ -1,6 +1,7 @@
 package com.example.therapet
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -55,8 +56,6 @@ class RegisterActivity : ComponentActivity() {
     }
 }
 
-
-// TODO: Compile all elements here
 @Composable
 fun Registration(modifier: Modifier = Modifier) {
 
@@ -120,8 +119,9 @@ fun Registration(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        //TODO: Navigate to create pet page
-        RegisterButton( onClick = {} )
+        RegisterButton( onClick = { context.startActivity(
+            Intent(context, CreatePetActivity::class.java)
+        )} )
     }
 }
 
@@ -209,7 +209,10 @@ fun RegisterButton(onClick: () -> Unit){
     MyFilledButton(
         onClick = onClick,
         text = stringResource(R.string.register),
-        modifier = Modifier.fillMaxWidth(0.5F).padding(top = 20.dp)
+        modifier = Modifier
+            .fillMaxWidth(0.5F)
+            .padding(top = 20.dp)
+            .testTag("register_button")
     )
 }
 
