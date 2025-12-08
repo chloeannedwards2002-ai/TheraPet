@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TheraPet">
         <activity
+            android:name=".CreatePetActivity"
+            android:exported="false"
+            android:label="@string/title_activity_create_pet"
+            android:theme="@style/Theme.TheraPet" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login"

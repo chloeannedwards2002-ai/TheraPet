@@ -66,14 +66,14 @@ val Typography = Typography(
     titleSmall = TextStyle(
         fontFamily = NunitoFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 18.sp,
+        fontSize = 14.sp,
         color = Grey
     ),
 
     titleMedium = TextStyle(
         fontFamily = NunitoFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 28.sp,
+        fontSize = 24.sp,
         color = Grey
     ),
 
