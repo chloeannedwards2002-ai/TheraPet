@@ -1,4 +1,4 @@
-package com.example.therapet.ui.theme.customs
+package com.example.therapet.ui.theme
 
 import androidx.compose.material3.Checkbox
 import androidx.compose.foundation.clickable
@@ -32,7 +32,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.example.therapet.ui.theme.TheraPetTheme
 
 // Outlined text field
 @Composable

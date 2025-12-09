@@ -1,7 +1,6 @@
 package com.example.therapet
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -32,13 +31,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.ui.theme.MyFilledButton
-import com.example.therapet.ui.theme.customs.MyOutlinedTextField
+import com.example.therapet.ui.theme.MyOutlinedTextField
 import com.example.therapet.ui.theme.TheraPetTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import com.example.therapet.ui.theme.customs.MyPasswordTextField
+import com.example.therapet.ui.theme.MyPasswordTextField
 
 class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +55,8 @@ class RegisterActivity : ComponentActivity() {
     }
 }
 
+
+// TODO: Compile all elements here
 @Composable
 fun Registration(modifier: Modifier = Modifier) {
 
@@ -119,9 +120,8 @@ fun Registration(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        RegisterButton( onClick = { context.startActivity(
-            Intent(context, CreatePetActivity::class.java)
-        )} )
+        //TODO: Navigate to create pet page
+        RegisterButton( onClick = {} )
     }
 }
 
@@ -209,10 +209,7 @@ fun RegisterButton(onClick: () -> Unit){
     MyFilledButton(
         onClick = onClick,
         text = stringResource(R.string.register),
-        modifier = Modifier
-            .fillMaxWidth(0.5F)
-            .padding(top = 20.dp)
-            .testTag("register_button")
+        modifier = Modifier.fillMaxWidth(0.5F).padding(top = 20.dp)
     )
 }
 
