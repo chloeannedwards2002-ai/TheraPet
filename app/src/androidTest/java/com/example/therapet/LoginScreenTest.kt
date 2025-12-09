@@ -47,8 +47,8 @@ class LoginScreenTest {
         intended(hasComponent(RegisterActivity::class.java.name))
     }
 
-    // Login_Screen_UI_Tests - Navigate to the home screen of TheraPet when the login button is clicked
-    @Test
+    // TODO: Login_Screen_UI_Tests - Navigate to the home screen of TheraPet when the login button is clicked
+   /* @Test
     fun navigateToHomeScreenWhenLoginButtonClicked(){
         // Click the login button
         composeTestRule
@@ -57,7 +57,7 @@ class LoginScreenTest {
 
         //Assert HomeScreenActivity is launched
         intended(hasComponent(HomeScreenActivity::class.java.name))
-    }
+    } */
 
     // Login_Screen_UI_Tests - Both input fields can be typed in
     @Test

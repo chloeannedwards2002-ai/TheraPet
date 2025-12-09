@@ -32,11 +32,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.therapet.ui.theme.customs.MyOutlinedTextField
-import com.example.therapet.ui.theme.customs.MyPasswordTextField
+import com.example.therapet.ui.theme.MyOutlinedTextField
+import com.example.therapet.ui.theme.MyPasswordTextField
 import com.example.therapet.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
-import com.example.therapet.ui.theme.customs.MyCheckBox
+import com.example.therapet.ui.theme.MyCheckBox
 import com.example.therapet.ui.theme.MyFilledButton
 import com.example.therapet.ui.theme.MyTextButton
 
