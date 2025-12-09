@@ -1,4 +1,4 @@
-package com.example.therapet.ui.theme
+package com.example.therapet.ui.theme.text
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +15,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.therapet.ui.theme.Grey
+import com.example.therapet.ui.theme.TheraPetTheme
 
 // Set of Material typography styles to start with
 val Typography = Typography(
@@ -121,7 +123,7 @@ val styles = listOf(
     @Preview(showBackground = true)
     @Composable
     fun FontPreview() {
-        TheraPetTheme {
-            Test()
-        }
+     TheraPetTheme {
+         Test()
+     }
     }

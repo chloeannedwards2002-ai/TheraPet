@@ -29,10 +29,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.therapet.ui.theme.BasicTopBar
-import com.example.therapet.ui.theme.CircularCarousel
+import com.example.therapet.ui.theme.customs.BasicTopBar
+import com.example.therapet.ui.theme.customs.CircularCarousel
 import com.example.therapet.ui.theme.MyElevatedButton
-import com.example.therapet.ui.theme.MyOutlinedTextField
+import com.example.therapet.ui.theme.customs.MyOutlinedTextField
 import com.example.therapet.ui.theme.TheraPetTheme
 
 class CreatePetActivity : ComponentActivity() {

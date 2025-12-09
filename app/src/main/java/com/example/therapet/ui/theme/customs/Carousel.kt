@@ -1,4 +1,4 @@
-package com.example.therapet.ui.theme
+package com.example.therapet.ui.theme.customs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

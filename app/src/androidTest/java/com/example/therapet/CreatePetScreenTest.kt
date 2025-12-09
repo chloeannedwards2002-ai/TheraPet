@@ -9,8 +9,10 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.rule.IntentsRule
-import com.example.therapet.ui.theme.isSelectedCircleKey
+import com.example.therapet.ui.theme.customs.isSelectedCircleKey
 import org.junit.Rule
 import org.junit.Test
 
@@ -103,8 +105,8 @@ class CreatePetScreenTest {
     }
 
 
-    // Create_Pet_Page_Tests - TODO: Confirm button navigates to the TheraPet home page
-   /* @Test
+    // Create_Pet_Page_Tests - Confirm button navigates to the TheraPet home page
+    @Test
     fun navigateFromCreatePetToHomeScreen(){
         // Click the Confirm button
         composeTestRule
@@ -113,7 +115,5 @@ class CreatePetScreenTest {
 
         // Assert RegisterActivity is launched
         intended(hasComponent(HomeScreenActivity::class.java.name))
-    }*/
-
-
+    }
 }
