@@ -1,10 +1,6 @@
 package com.example.therapet
 
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,107 +30,102 @@ import com.example.therapet.ui.theme.MyElevatedButton
 import com.example.therapet.ui.theme.MyOutlinedTextField
 import com.example.therapet.ui.theme.TheraPetTheme
 
-class CreatePetActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            TheraPetTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CreatePetScreen()
-                }
-            }
-        }
-    }
-}
-
-
-// Compile all elements
 @Composable
-fun CreatePetScreen(modifier: Modifier = Modifier) {
-
+fun CreatePetScreen(
+    modifier: Modifier = Modifier
+) {
     var petName by remember { mutableStateOf("") }
     var selectedIndex by remember { mutableStateOf(0) }
 
-    CreatePetTopBar()
-
     Column(
         modifier = modifier
-            .padding(horizontal = 20.dp)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .testTag("create_pet_screen"),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
 
-        Spacer(modifier = Modifier.height(100.dp))
+        CreatePetTopBar(onBack = {})
 
-        PetPlaceholder()
+        Spacer(modifier = Modifier.height(60.dp))
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            PetPlaceholder()
+            Spacer(modifier = Modifier.height(30.dp))
 
-        Text(text = "Choose colour",
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.titleMedium
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        CircularCarousel(
-            selectedIndex = selectedIndex,
-            onIndexChanged = { selectedIndex = it }
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(text = "Choose name",
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.titleMedium
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        PetNameInputField(
-            petName = petName,
-            onNameChanged = { petName = it }
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ){
-            ResetButton(
-                onClick = {
-                    petName = ""
-                    selectedIndex = 0
-                },
-                modifier = Modifier.weight(1f)
+            Text(
+                text = "Choose colour",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Start,
+                style = MaterialTheme.typography.titleMedium
             )
-            ConfirmButton(
-                onClick = {},
-                modifier = Modifier.weight(1f)
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            CircularCarousel(
+                selectedIndex = selectedIndex,
+                onIndexChanged = { selectedIndex = it }
             )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(
+                text = "Choose name",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Start,
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            PetNameInputField(
+                petName = petName,
+                onNameChanged = { petName = it }
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                ResetButton(
+                    onClick = {
+                        petName = ""
+                        selectedIndex = 0
+                    },
+                    modifier = Modifier.weight(1f)
+                )
+                ConfirmButton(
+                    onClick = {
+                        // TODO: Save data and navigate to home screen
+                    },
+                    modifier = Modifier.weight(1f)
+                )
+            }
         }
     }
 }
 
 // Top bar
 @Composable
-fun CreatePetTopBar(){
+fun CreatePetTopBar(onBack: (() -> Unit)? = null){
     BasicTopBar(
         text = "Create your pet",
-        onBackClick = null
+        onBackClick = null,
     )
 }
 
-// !! PLACEHOLDER PET SMILEY FACE FOR NOW TODO: Create a fully design pet
+// !! PLACEHOLDER PET SMILEY FACE FOR NOW TODO: Create a fully designed pet
 @Composable
 fun PetPlaceholder(size: TextUnit = 260.sp){
     Text(
-        text = "\uD83D\uDE0A", // 😊 emoji
+        text = "\uD83D\uDE0A",
         fontSize = size,
         style = MaterialTheme.typography.labelLarge
     )
@@ -187,6 +177,8 @@ fun ConfirmButton(onClick: () -> Unit, modifier: Modifier = Modifier){
 @Composable
 fun CreatePetPreview() {
     TheraPetTheme {
-        CreatePetScreen()
+        CreatePetScreen(
+
+        )
     }
 }

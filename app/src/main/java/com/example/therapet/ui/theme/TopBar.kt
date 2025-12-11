@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,10 +42,13 @@ fun BasicTopBar(
         },
         navigationIcon = {
             if(onBackClick != null) {
-                IconButton(onClick = onBackClick) {
+                IconButton(
+                    onClick = onBackClick,
+                    modifier = Modifier.testTag("back_button")
+                ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back"
+                        contentDescription = "Back",
                     )
                 }
             }
@@ -54,12 +58,12 @@ fun BasicTopBar(
 }
 
 @Composable
-fun compileAllTopBars(){
+fun CompileAllTopBars(){
     Column {
         // Top bar with a back button
         BasicTopBar(
             text = "With Back Button",
-            onBackClick = {}
+            onBackClick = {},
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -67,7 +71,7 @@ fun compileAllTopBars(){
         // Top bar without a back button
         BasicTopBar(
             text = "Without Back Button",
-            onBackClick = null
+            onBackClick = null,
         )
     }
 }
@@ -76,7 +80,7 @@ fun compileAllTopBars(){
 @Composable
 fun AppBarPreview() {
     TheraPetTheme {
-        compileAllTopBars()
+        CompileAllTopBars()
     }
 }
 
