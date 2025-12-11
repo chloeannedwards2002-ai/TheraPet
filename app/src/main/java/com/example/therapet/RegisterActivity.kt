@@ -1,11 +1,5 @@
 package com.example.therapet
 
-import android.app.Activity
-import android.content.Intent
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -34,96 +26,81 @@ import androidx.compose.ui.unit.dp
 import com.example.therapet.ui.theme.MyFilledButton
 import com.example.therapet.ui.theme.MyOutlinedTextField
 import com.example.therapet.ui.theme.TheraPetTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import com.example.therapet.ui.theme.BasicTopBar
 import com.example.therapet.ui.theme.MyPasswordTextField
 
-class RegisterActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            TheraPetTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Registration(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
-    }
-}
 
 @Composable
-fun Registration(modifier: Modifier = Modifier) {
+fun RegisterScreen(
+    onRegister: () -> Unit,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Scaffold(
 
-    val context = LocalContext.current
-    val activity = context as? Activity
+    ) { innerPadding ->
 
-    Column(
-        modifier = modifier
-            .padding(horizontal = 20.dp)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        //TODO: Implement a TopAppBar to house all back buttons and other options dynamically
-        IconButton(
-            onClick = { activity?.finish() },
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(top = 16.dp)
-                .testTag("back_button")
+        BasicTopBar(
+            text = "",
+            onBackClick = onBack,
+        )
+
+        Column(
+            modifier = modifier
+                .padding(horizontal = 20.dp)
+                .padding(innerPadding)
+                .fillMaxSize()
+                .testTag("register_screen"),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            contentDescription = "Back"
-            )
-        }
+            Spacer(modifier = Modifier.height(140.dp))
 
-        Spacer(modifier = Modifier.height(200.dp))
-
-
-        Text(text = "Register",
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge
+            Text(
+                text = "Register",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleLarge
             )
 
-        Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
-        UserIDInput()
+            UserIDInput()
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ){
-            Box(modifier = Modifier.weight(1f)){
-                FirstNameInput()
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Box(modifier = Modifier.weight(1f)) {
+                    FirstNameInput()
+                }
+                Box(modifier = Modifier.weight(1f)) {
+                    SurnameInput()
+                }
             }
-            Box(modifier = Modifier.weight(1f)){
-                SurnameInput()
-            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            PasswordInput()
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            ConfPasswordInput()
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            RegisterButton(
+                onClick = onRegister
+            )
         }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        PasswordInput()
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        ConfPasswordInput()
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        RegisterButton( onClick = { context.startActivity(
-            Intent(context, CreatePetActivity::class.java)
-        )} )
     }
 }
+
+/*
+    Input field composables
+ */
 
 // User ID input text field
 
@@ -221,6 +198,9 @@ fun RegisterButton(onClick: () -> Unit){
 @Composable
 fun RegistrationPreview() {
     TheraPetTheme {
-    Registration()
+        RegisterScreen(
+            onRegister = {},
+            onBack = {}
+        )
     }
 }

@@ -1,22 +1,15 @@
 package com.example.therapet
 
-import android.content.Intent
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,57 +18,44 @@ import com.example.therapet.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
 import com.example.therapet.ui.theme.*
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            TheraPetTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
-    }
-}
-
-//Composing the full column
-
+//Composing the full screen
 @Composable
-fun Greeting(modifier: Modifier = Modifier) {
-
-    val context = LocalContext.current
+fun WelcomeScreen(
+    onRegisterNav: () -> Unit,
+    onLoginNav: () -> Unit,
+    modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier
             .padding(10.dp)
-            .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
+            .testTag("welcome_screen"),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Welcome to ${stringResource(R.string.app_name)}",
+
+        Text(
+            "Welcome to ${stringResource(R.string.app_name)}",
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge
         )
 
-        // Register button navigates to the registration page
+        ChooseRegisterButton(
+            onClick = onRegisterNav
+        )
 
-        ChooseRegisterButton( onClick = { context.startActivity(
-            Intent(context, RegisterActivity::class.java)
-        )} )
-
-        //Login button navigates to the login page
-
-        ChooseLoginButton( onClick = { context.startActivity(
-            Intent(context, LoginActivity::class.java)
-        )}  )
+        ChooseLoginButton(
+            onClick = onLoginNav
+        )
     }
 }
 
-//Register button -> Navigates to registration page
+/*
+    These are the composables for the register and login buttons using custom filled button fragments
+ */
+
+//Register button
 @Composable
 fun ChooseRegisterButton(onClick: () -> Unit){
     MyFilledButton(
@@ -88,7 +68,7 @@ fun ChooseRegisterButton(onClick: () -> Unit){
     )
 }
 
-//Login button -> Navigates to login page
+//Login button
 @Composable
 fun ChooseLoginButton(onClick: () -> Unit){
     MyFilledButton(
@@ -103,8 +83,11 @@ fun ChooseLoginButton(onClick: () -> Unit){
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun WelcomePreview() {
     TheraPetTheme {
-        Greeting()
+        WelcomeScreen(
+            onRegisterNav = {},
+            onLoginNav = {}
+        )
     }
 }
