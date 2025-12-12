@@ -80,6 +80,11 @@ class NavigationTest {
     // Verify that the register button on the Register screen navigates to the Create Pet screen
     @Test
     fun onClickRegisterButtonRegisterScreenNavigatesToCreatePetScreen(){
+        composeTestRule
+            .onNodeWithTag("choose_register_button")
+            .assertIsDisplayed()
+            .performClick()
+
         // Click "Register" button on the Register screen
         composeTestRule
             .onNodeWithTag("register_button")
@@ -89,6 +94,79 @@ class NavigationTest {
         // Verify the register screen is loaded
         composeTestRule
             .onNodeWithTag("create_pet_screen")
+            .assertIsDisplayed()
+    }
+
+    // Verify that the login button on the Login screen navigates to the home screen
+    @Test
+    fun onClickLoginButtonLoginScreenNavigatesToHomeScreen() {
+        // Navigate to the create pet screen
+        composeTestRule
+            .onNodeWithTag(testTag = "choose_login_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        // Click the "Login" button on the Login screen
+        composeTestRule
+            .onNodeWithTag(testTag = "login_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        // Verify the home screen is loaded
+        composeTestRule
+            .onNodeWithTag(testTag = "home_screen")
+            .assertIsDisplayed()
+    }
+
+    // Verify that the confirm button on the create pet screen navigates to the home screen
+    @Test
+    fun onClickConfirmButtonRegisterScreenNavigatesToHomeScreen() {
+        // Navigate to the create pet screen
+        composeTestRule
+            .onNodeWithTag(testTag = "choose_register_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        // Click register button
+        composeTestRule
+            .onNodeWithTag(testTag = "register_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        // Click the "Confirm" button
+        composeTestRule
+            .onNodeWithTag(testTag = "pet_confirm_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        // Verify the home screen is loaded
+        composeTestRule
+            .onNodeWithTag(testTag = "home_screen")
+            .assertIsDisplayed()
+    }
+
+    // Verify the navigation menu opens when the nav icon is clicked
+    @Test
+    fun sideOutMenuOpensWhenMenuButtonClick(){
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("home_screen")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("nav_drawer")
             .assertIsDisplayed()
     }
 }
