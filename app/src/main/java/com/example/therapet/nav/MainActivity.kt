@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.therapet.CreatePetScreen
+import com.example.therapet.HomeScreen
 import com.example.therapet.LoginScreen
 import com.example.therapet.RegisterScreen
 import com.example.therapet.WelcomeScreen
@@ -50,14 +51,17 @@ fun TheraPet(navController: NavHostController) {
         composable("login") {
             LoginScreen(
                 onRegisterNav = {navController.navigate("register")},
-                onLogin = {navController.navigate("home")},
+                onLogin = {navController.navigate("home_screen")},
                 onBack = {navController.popBackStack()}
             )
         }
         composable("create_pet") {
             CreatePetScreen(
-
+                onCreatePet = {navController.navigate("home_screen")}
             )
+        }
+        composable("home_screen") {
+            HomeScreen()
         }
     }
 }

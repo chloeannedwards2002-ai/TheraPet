@@ -76,9 +76,8 @@ fun LoginScreen(
                 modifier = Modifier.align(Alignment.Start)
             )
 
-            // TODO: Uncomment when home screen is created
             LoginButton(
-                onClick = onLogin
+                onClick = onLogin,
             )
 
             Spacer(modifier = Modifier.height(5.dp))

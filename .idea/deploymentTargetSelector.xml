@@ -8,10 +8,16 @@
       <SelectionState runConfigName="Tests in 'com.example.therapet'">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="NavigationTest">
+      <SelectionState runConfigName="onClickRegisterButtonRegisterScreenNavigatesToCreatePetScreen()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="onClickRegisterButtonRegisterScreenNavigatesToCreatePetScreen()">
+      <SelectionState runConfigName="onClickConfirmButtonRegisterScreenNavigatesToHomeScreen()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="onClickLoginButtonLoginScreenNavigatesToHomeScreen()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="sideOutMenuOpensWhenMenuButtonClick()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

@@ -32,6 +32,7 @@ import com.example.therapet.ui.theme.TheraPetTheme
 
 @Composable
 fun CreatePetScreen(
+    onCreatePet: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var petName by remember { mutableStateOf("") }
@@ -102,10 +103,10 @@ fun CreatePetScreen(
                     modifier = Modifier.weight(1f)
                 )
                 ConfirmButton(
-                    onClick = {
-                        // TODO: Save data and navigate to home screen
-                    },
-                    modifier = Modifier.weight(1f)
+                    onClick = onCreatePet,
+                    modifier = Modifier
+                        .weight(1f)
+                        .testTag("pet_confirm_button")
                 )
             }
         }
@@ -178,7 +179,7 @@ fun ConfirmButton(onClick: () -> Unit, modifier: Modifier = Modifier){
 fun CreatePetPreview() {
     TheraPetTheme {
         CreatePetScreen(
-
+            onCreatePet = {}
         )
     }
 }
