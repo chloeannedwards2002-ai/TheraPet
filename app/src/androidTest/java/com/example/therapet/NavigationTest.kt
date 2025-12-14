@@ -194,4 +194,29 @@ class NavigationTest {
             .onNodeWithTag("welcome_screen")
             .assertIsDisplayed()
     }
+
+    // Verify when clicking the "settings" button on the side out menu, the settings screen loads
+    @Test
+    fun onClickSettingsSideOutMenuNavigateToSettingsScreen() {
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("drawer_settings_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("settings_screen")
+            .assertIsDisplayed()
+    }
 }

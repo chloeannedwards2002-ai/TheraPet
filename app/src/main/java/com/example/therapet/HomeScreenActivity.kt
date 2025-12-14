@@ -32,7 +32,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onSettings: () -> Unit,
+    onNotifs:() -> Unit,
+    onAppts:() -> Unit
 ){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -40,9 +43,11 @@ fun HomeScreen(
     HomeNavigationDrawer(
         drawerState = drawerState,
         onDestinationClicked = { destination ->
-            if (destination == "logout") {
-                scope.launch { drawerState.close() }
-                onLogout()
+            when (destination) {
+                "settings" -> onSettings()
+                "logout" -> onLogout()
+                "notifications" -> onNotifs()
+                "appointments" -> onAppts()
             }
         }
     ) {
@@ -82,7 +87,10 @@ fun HomeScreen(
 fun HomeScreenPreview() {
     TheraPetTheme {
         HomeScreen(
-            onLogout = {}
+            onLogout = {},
+            onSettings = {},
+            onNotifs = {},
+            onAppts = {}
         )
     }
 }

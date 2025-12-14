@@ -38,10 +38,25 @@ fun MyFilledButton(modifier: Modifier = Modifier, text: String, onClick: () -> U
 
 // Filled tonal
 @Composable
-fun MyFilledTonalButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
-    FilledTonalButton(onClick = { onClick() }, modifier = modifier) {
-        Text(text,
-            style = MaterialTheme.typography.labelMedium)
+fun MyFilledTonalButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    containerColor: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimary
+) {
+    FilledTonalButton(
+        onClick = onClick,
+        modifier = modifier,
+        colors = ButtonDefaults.filledTonalButtonColors(
+            containerColor = containerColor,
+            contentColor = contentColor
+        )
+    ) {
+        Text(
+            text,
+            style = MaterialTheme.typography.labelMedium
+        )
     }
 }
 
@@ -61,10 +76,17 @@ fun MyElevatedButton(modifier: Modifier = Modifier, text: String, onClick: () ->
 
 // Outlined
 @Composable
-fun MyOutlinedButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
-    OutlinedButton(onClick = { onClick() }, modifier = modifier)  {
-        Text(text,
-            style = MaterialTheme.typography.labelMedium)
+fun MyOutlinedButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+) {
+    OutlinedButton(onClick = onClick, modifier = modifier,
+    ) {
+        Text(
+            text,
+            style = MaterialTheme.typography.labelMedium
+        )
     }
 }
 
@@ -87,11 +109,11 @@ fun AllButtonsGrid() {
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         modifier = Modifier.padding(16.dp)
     ) {
-        item { MyFilledButton(text = "Filled") { } }
-        item { MyFilledTonalButton(text = "Tonal") { } }
-        item { MyElevatedButton(text = "Elevate") { } }
-        item { MyOutlinedButton(text = "Outline") { } }
-        item { MyTextButton(text = "Text") { } }
+        item { MyFilledButton(text = "Filled", onClick = {}) }
+        item { MyFilledTonalButton(text = "Tonal", onClick = {}) }
+        item { MyElevatedButton(text = "Elevate", onClick = {}) }
+        item { MyOutlinedButton(text = "Outline", onClick = {}) }
+        item { MyTextButton(text = "Text", onClick = {}) }
     }
 }
 
