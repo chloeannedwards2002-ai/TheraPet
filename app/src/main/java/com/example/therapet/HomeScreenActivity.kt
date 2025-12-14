@@ -31,14 +31,20 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onLogout: () -> Unit
 ){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     HomeNavigationDrawer(
         drawerState = drawerState,
-        onDestinationClicked = { /* handle nav */ }
+        onDestinationClicked = { destination ->
+            if (destination == "logout") {
+                scope.launch { drawerState.close() }
+                onLogout()
+            }
+        }
     ) {
 
         Scaffold(
@@ -58,7 +64,7 @@ fun HomeScreen(
             Column(
                 modifier = modifier
                     .fillMaxSize()
-                    .padding(innerPadding) // ← required!
+                    .padding(innerPadding)
                     .testTag("home_screen"),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -73,8 +79,10 @@ fun HomeScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun HomeScreenPreview() {
     TheraPetTheme {
-        HomeScreen()
+        HomeScreen(
+            onLogout = {}
+        )
     }
 }
