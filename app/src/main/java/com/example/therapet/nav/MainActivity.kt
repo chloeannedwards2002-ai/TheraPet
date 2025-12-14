@@ -81,7 +81,9 @@ fun TheraPet(navController: NavHostController) {
                 //TODO: Add appointments screen
                 onAppts = {
                     navController.navigate("")
-                }
+                },
+
+                onBookAppt = { navController.navigate("choose_therapist_screen")}
             )
 
         }

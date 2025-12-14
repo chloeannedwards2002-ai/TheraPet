@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.therapet.ui.theme.MainTopBar
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.therapet.ui.theme.CircularAppointmentButton
 import com.example.therapet.ui.theme.CustomBottomBar
 import com.example.therapet.ui.theme.HomeNavigationDrawer
 import com.example.therapet.ui.theme.TheraPetTheme
@@ -35,7 +36,8 @@ fun HomeScreen(
     onLogout: () -> Unit,
     onSettings: () -> Unit,
     onNotifs:() -> Unit,
-    onAppts:() -> Unit
+    onAppts:() -> Unit,
+    onBookAppt: () -> Unit
 ){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -53,6 +55,15 @@ fun HomeScreen(
     ) {
 
         Scaffold(
+            floatingActionButton = {
+                CircularAppointmentButton(
+                    onClick = onBookAppt,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .testTag("choose_therapist_button")
+                )
+            },
+
             topBar = {
                 MainTopBar(
                     text = stringResource(R.string.app_name),
@@ -77,6 +88,7 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(150.dp))
 
                 PetPlaceholder()
+
             }
         }
     }
@@ -90,7 +102,8 @@ fun HomeScreenPreview() {
             onLogout = {},
             onSettings = {},
             onNotifs = {},
-            onAppts = {}
+            onAppts = {},
+            onBookAppt = {}
         )
     }
 }

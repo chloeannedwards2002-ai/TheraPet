@@ -219,4 +219,26 @@ class NavigationTest {
             .onNodeWithTag("settings_screen")
             .assertIsDisplayed()
     }
+
+    // Verify when clicking the + button on the home screen, the choose therapist screen loads
+    @Test
+    fun onClickPlusButtonHomeScreenNavigateToChooseTherapistScreen() {
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("choose_therapist_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("choose_therapist_screen")
+            .assertIsDisplayed()
+
+    }
 }
