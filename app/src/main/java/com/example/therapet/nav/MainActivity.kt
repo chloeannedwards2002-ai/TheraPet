@@ -61,7 +61,12 @@ fun TheraPet(navController: NavHostController) {
             )
         }
         composable("home_screen") {
-            HomeScreen()
+            HomeScreen(onLogout = {navController.navigate("welcome_screen"){
+                popUpTo("home_screen") {
+                    inclusive = true
+                }
+                launchSingleTop = true
+            } })
         }
     }
 }

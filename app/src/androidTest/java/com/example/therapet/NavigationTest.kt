@@ -169,4 +169,29 @@ class NavigationTest {
             .onNodeWithTag("nav_drawer")
             .assertIsDisplayed()
     }
+
+    // Verify when the user clicks the logout button from the side out menu, return to the welcome screen (TODO: Change to test login/logout state when implemented)
+    @Test
+    fun onClickLogoutSideOutMenuReturnToWelcomeScreen(){
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("drawer_logout_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("welcome_screen")
+            .assertIsDisplayed()
+    }
 }
