@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -100,23 +101,6 @@ fun MyTextButton(modifier: Modifier = Modifier, text: String, onClick: () -> Uni
     }
 }
 
-/* A grid to compose all buttons for preview */
-@Composable
-fun AllButtonsGrid() {
-    LazyVerticalGrid (
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = Modifier.padding(16.dp)
-    ) {
-        item { MyFilledButton(text = "Filled", onClick = {}) }
-        item { MyFilledTonalButton(text = "Tonal", onClick = {}) }
-        item { MyElevatedButton(text = "Elevate", onClick = {}) }
-        item { MyOutlinedButton(text = "Outline", onClick = {}) }
-        item { MyTextButton(text = "Text", onClick = {}) }
-    }
-}
-
 // Custom buttons for the (placeholder for now not an actual button yet)
 @Composable
 fun CircularBarButton(onClick: () -> Unit) {
@@ -135,6 +119,46 @@ fun CircularBarButton(onClick: () -> Unit) {
             contentDescription = null,
             tint = Color.White
         )
+    }
+}
+
+// Book appointment button
+@Composable
+fun CircularAppointmentButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Box(
+        modifier = Modifier
+            .size(size = 60.dp)
+            .background (
+                MaterialTheme.colorScheme.primary,
+                shape = CircleShape
+            )
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = null,
+            tint = Color.White
+        )
+    }
+}
+
+/* A grid to compose all buttons for preview */
+@Composable
+fun AllButtonsGrid() {
+    LazyVerticalGrid (
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = Modifier.padding(16.dp)
+    ) {
+        item { MyFilledButton(text = "Filled", onClick = {}) }
+        item { MyFilledTonalButton(text = "Tonal", onClick = {}) }
+        item { MyElevatedButton(text = "Elevate", onClick = {}) }
+        item { MyOutlinedButton(text = "Outline", onClick = {}) }
+        item { MyTextButton(text = "Text", onClick = {}) }
+        item { CircularBarButton(onClick = {}) }
+        item { CircularAppointmentButton(onClick = {}) }
     }
 }
 
