@@ -12,6 +12,7 @@ import com.example.therapet.CreatePetScreen
 import com.example.therapet.HomeScreen
 import com.example.therapet.LoginScreen
 import com.example.therapet.RegisterScreen
+import com.example.therapet.SettingsScreen
 import com.example.therapet.WelcomeScreen
 import com.example.therapet.ui.theme.TheraPetTheme
 
@@ -61,12 +62,32 @@ fun TheraPet(navController: NavHostController) {
             )
         }
         composable("home_screen") {
-            HomeScreen(onLogout = {navController.navigate("welcome_screen"){
-                popUpTo("home_screen") {
-                    inclusive = true
+            HomeScreen(
+                onLogout = {
+                navController.navigate("welcome_screen") {
+                    popUpTo("home_screen") { inclusive = true }
+                    launchSingleTop = true
                 }
-                launchSingleTop = true
-            } })
+            },
+                onSettings = {
+                    navController.navigate("settings_screen")
+                },
+
+                //TODO: Add notifs screen
+                onNotifs = {
+                    navController.navigate("")
+                },
+
+                //TODO: Add appointments screen
+                onAppts = {
+                    navController.navigate("")
+                }
+            )
+
+        }
+
+        composable("settings_screen"){
+            SettingsScreen(onBack = {navController.popBackStack()})
         }
     }
 }

@@ -44,7 +44,7 @@ fun HomeNavigationDrawer(
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                         .testTag("drawer_appointments_button"),
                     text = "Appointments",
-                    onClick = { /*onDestinationClicked("appointments")*/ }
+                    onClick = { onDestinationClicked("appointments") }
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -55,7 +55,7 @@ fun HomeNavigationDrawer(
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                         .testTag("drawer_notifications_button"),
                     text = "Notifications",
-                    onClick = { /*onDestinationClicked("notifications")*/ }
+                    onClick = { onDestinationClicked("notifications") }
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -66,7 +66,7 @@ fun HomeNavigationDrawer(
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                         .testTag("drawer_settings_button"),
                     text = "Settings",
-                    onClick = { /*onDestinationClicked("settings")*/ }
+                    onClick = { onDestinationClicked("settings") }
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
