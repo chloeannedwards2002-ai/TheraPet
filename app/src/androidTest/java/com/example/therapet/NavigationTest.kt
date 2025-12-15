@@ -241,4 +241,33 @@ class NavigationTest {
             .assertIsDisplayed()
 
     }
+
+    // Verify when clicking the continue button on the choose therapist screen, the book appointment screen loads
+    @Test
+    fun onClickContinueButtonNavigateToBookAppointmentScreen() {
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("choose_therapist_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("choose_therapist_screen")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithTag("continue_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("book_appointment_screen")
+            .assertIsDisplayed()
+    }
 }
