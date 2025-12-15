@@ -14,6 +14,8 @@ import com.example.therapet.LoginScreen
 import com.example.therapet.RegisterScreen
 import com.example.therapet.SettingsScreen
 import com.example.therapet.WelcomeScreen
+import com.example.therapet.booking.BookAppointmentScreen
+import com.example.therapet.booking.ChooseTherapistScreen
 import com.example.therapet.ui.theme.TheraPetTheme
 
 class MainActivity : ComponentActivity() {
@@ -90,6 +92,19 @@ fun TheraPet(navController: NavHostController) {
 
         composable("settings_screen"){
             SettingsScreen(onBack = {navController.popBackStack()})
+        }
+
+        composable("choose_therapist_screen"){
+            ChooseTherapistScreen(onBack = {navController.popBackStack()
+            },
+                onContinue = {navController.navigate("book_appointment_screen")})
+        }
+
+        composable("book_appointment_screen") {
+            BookAppointmentScreen(
+                onBack = {navController.popBackStack()},
+                onBook = {/*Show popup*/}
+            )
         }
     }
 }

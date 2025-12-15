@@ -1,6 +1,7 @@
 package com.example.therapet.booking
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -32,6 +33,7 @@ fun ChooseTherapistScreen(
     ) { innerPadding ->
         Column(
             modifier = modifier
+                .fillMaxSize()
                 .testTag("choose_therapist_screen")
         ){
 
