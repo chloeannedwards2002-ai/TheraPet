@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.therapet.CreatePetScreen
 import com.example.therapet.HomeScreen
 import com.example.therapet.LoginScreen
+import com.example.therapet.ProfileScreen
 import com.example.therapet.RegisterScreen
 import com.example.therapet.SettingsScreen
 import com.example.therapet.WelcomeScreen
@@ -71,6 +72,10 @@ fun TheraPet(navController: NavHostController) {
                     launchSingleTop = true
                 }
             },
+                onProfile = {
+                    navController.navigate("profile_screen")
+                            },
+
                 onSettings = {
                     navController.navigate("settings_screen")
                 },
@@ -104,6 +109,12 @@ fun TheraPet(navController: NavHostController) {
             BookAppointmentScreen(
                 onBack = {navController.popBackStack()},
                 onBook = {/*Show popup*/}
+            )
+        }
+
+        composable("profile_screen") {
+            ProfileScreen(
+                onBack = {navController.popBackStack()}
             )
         }
     }

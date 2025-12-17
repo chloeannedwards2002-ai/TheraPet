@@ -37,7 +37,8 @@ fun HomeScreen(
     onSettings: () -> Unit,
     onNotifs:() -> Unit,
     onAppts:() -> Unit,
-    onBookAppt: () -> Unit
+    onBookAppt: () -> Unit,
+    onProfile: () -> Unit
 ){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -50,6 +51,7 @@ fun HomeScreen(
                 "logout" -> onLogout()
                 "notifications" -> onNotifs()
                 "appointments" -> onAppts()
+                "profile" -> onProfile()
             }
         }
     ) {
@@ -103,7 +105,8 @@ fun HomeScreenPreview() {
             onSettings = {},
             onNotifs = {},
             onAppts = {},
-            onBookAppt = {}
+            onBookAppt = {},
+            onProfile = {}
         )
     }
 }

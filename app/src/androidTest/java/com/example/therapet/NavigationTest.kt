@@ -270,4 +270,29 @@ class NavigationTest {
             .onNodeWithTag("book_appointment_screen")
             .assertIsDisplayed()
     }
+
+    // Verify when opening nav drawer and clicking profile button navigate to profile screen
+    @Test
+    fun onClickSideOutMenuProfileButtonNavigateToProfileScreen() {
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("drawer_profile_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("profile_screen")
+            .assertIsDisplayed()
+    }
 }

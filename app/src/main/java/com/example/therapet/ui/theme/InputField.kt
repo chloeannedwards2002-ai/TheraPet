@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -155,6 +157,32 @@ fun MyCheckBox(
     }
 }
 
+@Composable
+fun MyReadOnlyEditableField(
+    value: String,
+    modifier: Modifier = Modifier,
+    onEditClick: () -> Unit
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = {},
+        modifier = modifier
+            .height(60.dp)
+            .fillMaxWidth(),
+        textStyle = MaterialTheme.typography.labelSmall,
+        readOnly = true,
+        singleLine = true,
+        trailingIcon = {
+            IconButton(onClick = onEditClick) {
+                Icon(
+                    imageVector = Icons.Filled.Edit,
+                    contentDescription = "Edit"
+                )
+            }
+        }
+    )
+}
+
 
 
 @Composable
@@ -198,6 +226,11 @@ fun ShowInputFields() {
             label = "Test",
             checked = exampleCheck,
             onCheckedChange = { exampleCheck = it }
+        )
+
+        MyReadOnlyEditableField(
+            value = "Read-only text",
+            onEditClick = { }
         )
     }
 }
