@@ -42,6 +42,17 @@ fun HomeNavigationDrawer(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .testTag("drawer_profile_button"),
+                    text = "Profile",
+                    onClick = { onDestinationClicked("profile") }
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                MyOutlinedButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
                         .testTag("drawer_appointments_button"),
                     text = "Appointments",
                     onClick = { onDestinationClicked("appointments") }
