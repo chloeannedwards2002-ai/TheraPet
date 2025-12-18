@@ -13,6 +13,7 @@ import com.example.therapet.HomeScreen
 import com.example.therapet.LoginScreen
 import com.example.therapet.ProfileScreen
 import com.example.therapet.RegisterScreen
+import com.example.therapet.ResetPasswordScreen
 import com.example.therapet.SettingsScreen
 import com.example.therapet.WelcomeScreen
 import com.example.therapet.booking.BookAppointmentScreen
@@ -114,7 +115,15 @@ fun TheraPet(navController: NavHostController) {
 
         composable("profile_screen") {
             ProfileScreen(
-                onBack = {navController.popBackStack()}
+                onBack = {navController.popBackStack()},
+                onEditPassword = {navController.navigate("reset_password_screen")}
+            )
+        }
+
+        composable("reset_password_screen"){
+            ResetPasswordScreen(
+                onBack = {navController.popBackStack()},
+                onResetPassword = {/*TODO: reset password functionality*/}
             )
         }
     }
