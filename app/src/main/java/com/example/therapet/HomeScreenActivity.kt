@@ -62,7 +62,6 @@ fun HomeScreen(
                     onClick = onBookAppt,
                     modifier = Modifier
                         .padding(16.dp)
-
                 )
             },
 

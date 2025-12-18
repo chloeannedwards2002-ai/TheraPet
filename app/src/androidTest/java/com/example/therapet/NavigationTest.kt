@@ -375,4 +375,37 @@ class NavigationTest {
             .onNodeWithTag("appointments_screen")
             .assertIsDisplayed()
     }
+
+    // Verify the book appts button on appointments screen navigates to book appointments screen
+    @Test
+    fun onClickBookApptsButtonAppointmentsScreenNavToBookAppointmentsScreen(){
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("drawer_appointments_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("appointments_screen")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithTag("book_appointment_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("book_appointment_screen")
+            .assertIsDisplayed()
+    }
 }
