@@ -329,4 +329,50 @@ class NavigationTest {
             .onNodeWithTag("reset_password_screen")
             .assertIsDisplayed()
     }
+
+    // Verify that clicking on appointments button on nav bar navigates to appointments screen
+    @Test
+    fun onClickSideOutMenuAppointmentsButtonNavigateToAppointmentsScreen() {
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("drawer_appointments_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("appointments_screen")
+            .assertIsDisplayed()
+    }
+
+    // Verify that clicking appointments ("calendar") button on the home screen navigates to appointments screen
+    @Test
+    fun onClickHomeScreenAppointmentsButtonNavigateToAppointmentsScreen() {
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("appointments_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("appointments_screen")
+            .assertIsDisplayed()
+    }
 }

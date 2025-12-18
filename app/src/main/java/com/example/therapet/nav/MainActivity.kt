@@ -16,6 +16,7 @@ import com.example.therapet.RegisterScreen
 import com.example.therapet.ResetPasswordScreen
 import com.example.therapet.SettingsScreen
 import com.example.therapet.WelcomeScreen
+import com.example.therapet.booking.AppointmentsScreen
 import com.example.therapet.booking.BookAppointmentScreen
 import com.example.therapet.booking.ChooseTherapistScreen
 import com.example.therapet.ui.theme.TheraPetTheme
@@ -86,14 +87,16 @@ fun TheraPet(navController: NavHostController) {
                     navController.navigate("")
                 },
 
-                //TODO: Add appointments screen
                 onAppts = {
-                    navController.navigate("")
+                    navController.navigate("appointments_screen")
                 },
 
                 onBookAppt = { navController.navigate("choose_therapist_screen")}
             )
+        }
 
+        composable("appointments_screen"){
+            AppointmentsScreen(onBack = {navController.popBackStack()})
         }
 
         composable("settings_screen"){

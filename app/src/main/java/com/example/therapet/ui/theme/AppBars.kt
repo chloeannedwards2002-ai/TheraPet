@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BasicTopBar(
     text: String,
-    onBackClick: (() -> Unit)? = null
+    onBackClick: (() -> Unit)? = null,
 ) {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -70,7 +70,7 @@ fun BasicTopBar(
 // Main top bar for the home screen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainTopBar(text: String, onMenuClick: () -> Unit) {
+fun MainTopBar(text: String, onMenuClick: () -> Unit, onApptsClick: () -> Unit) {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -91,10 +91,10 @@ fun MainTopBar(text: String, onMenuClick: () -> Unit) {
             )
         },
         actions = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = { } , modifier = Modifier.testTag("notifications_button")) {
                 Icon(Icons.Filled.Notifications, contentDescription = "Notifications")
             }
-            IconButton(onClick = {}) {
+            IconButton(onClick = onApptsClick, modifier = Modifier.testTag("appointments_button")) {
                 Icon(Icons.Filled.CalendarMonth, contentDescription = "Calendar")
             }
         }
@@ -145,7 +145,7 @@ fun CompileAllTopBars(){
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        MainTopBar(text = "Main Top Bar", onMenuClick = {})
+        MainTopBar(text = "Main Top Bar", onMenuClick = {}, onApptsClick ={})
 
         Spacer(modifier = Modifier.height(16.dp))
 
