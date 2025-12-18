@@ -71,7 +71,8 @@ fun HomeScreen(
                     text = stringResource(R.string.app_name),
                     onMenuClick = {
                         scope.launch { drawerState.open() }
-                    }
+                    },
+                    onApptsClick = onAppts
                 )
             },
             bottomBar = {
