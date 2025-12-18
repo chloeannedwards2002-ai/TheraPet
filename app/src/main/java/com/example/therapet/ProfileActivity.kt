@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.ui.theme.BasicTopBar
 import com.example.therapet.ui.theme.MyReadOnlyEditableField
+import com.example.therapet.ui.theme.MyReadOnlyField
 import com.example.therapet.ui.theme.ProfileAvatar
 import com.example.therapet.ui.theme.TheraPetTheme
 
@@ -23,6 +24,7 @@ import com.example.therapet.ui.theme.TheraPetTheme
 @Composable
 fun ProfileScreen(
     onBack: () -> Unit,
+    onEditPassword: () -> Unit,
     modifier: Modifier = Modifier
 ){
     Scaffold(
@@ -51,35 +53,43 @@ fun ProfileScreen(
 
             MyReadOnlyEditableField(
                 "First name",
-                onEditClick = { /* TODO: eventually add editing */}
+                onEditClick = { /* TODO: eventually add editing */},
+                modifier = modifier.testTag("edit_first_name_field"),
+                editTestTag = "first_name_edit_button"
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
             MyReadOnlyEditableField(
                 "Surname",
-                onEditClick = { /* TODO: eventually add editing */}
+                onEditClick = { /* TODO: eventually add editing */},
+                modifier = modifier.testTag("edit_surname_field"),
+                editTestTag = "surname_edit_button"
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            MyReadOnlyEditableField(
+            MyReadOnlyField(
                 "Patient ID",
-                onEditClick = { /* TODO: eventually add editing */}
+                modifier = modifier.testTag("patient_id_field"),
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
             MyReadOnlyEditableField(
                 "Mobile",
-                onEditClick = { /* TODO: eventually add editing */}
+                onEditClick = { /* TODO: eventually add editing */},
+                modifier = modifier.testTag("edit_mobile_field"),
+                editTestTag = "mobile_edit_button"
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
             MyReadOnlyEditableField(
                 "Password",
-                onEditClick = { /* TODO: eventually add editing */}
+                onEditClick = onEditPassword,
+                modifier = modifier.testTag("edit_password_field"),
+                editTestTag = "reset_password_button"
             )
         }
     }
@@ -90,7 +100,8 @@ fun ProfileScreen(
 fun ProfilePreview() {
     TheraPetTheme {
         ProfileScreen(
-            onBack = {}
+            onBack = {},
+            onEditPassword = {}
         )
     }
 }

@@ -295,4 +295,38 @@ class NavigationTest {
             .onNodeWithTag("profile_screen")
             .assertIsDisplayed()
     }
+
+    // Verify when clicking edit password button on profile page, navigate to reset password screen
+    @Test
+    fun onClickEditPasswordProfileScreenNavigateToResetPassword(){
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("drawer_profile_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("profile_screen")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithTag("reset_password_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("reset_password_screen")
+            .assertIsDisplayed()
+    }
 }

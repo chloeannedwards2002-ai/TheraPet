@@ -157,11 +157,14 @@ fun MyCheckBox(
     }
 }
 
+// Read only editable field
+
 @Composable
 fun MyReadOnlyEditableField(
     value: String,
     modifier: Modifier = Modifier,
-    onEditClick: () -> Unit
+    onEditClick: () -> Unit,
+    editTestTag: String,
 ) {
     OutlinedTextField(
         value = value,
@@ -173,7 +176,9 @@ fun MyReadOnlyEditableField(
         readOnly = true,
         singleLine = true,
         trailingIcon = {
-            IconButton(onClick = onEditClick) {
+            IconButton(onClick = onEditClick,
+                modifier = Modifier.testTag(editTestTag)
+            ) {
                 Icon(
                     imageVector = Icons.Filled.Edit,
                     contentDescription = "Edit"
@@ -183,6 +188,23 @@ fun MyReadOnlyEditableField(
     )
 }
 
+// Read only field
+@Composable
+fun MyReadOnlyField(
+    value: String,
+    modifier: Modifier = Modifier,
+){
+    OutlinedTextField(
+        value = value,
+        onValueChange = {},
+        modifier = modifier
+            .height(60.dp)
+            .fillMaxWidth(),
+        textStyle = MaterialTheme.typography.labelSmall,
+        readOnly = true,
+        singleLine = true
+    )
+}
 
 
 @Composable
@@ -230,7 +252,8 @@ fun ShowInputFields() {
 
         MyReadOnlyEditableField(
             value = "Read-only text",
-            onEditClick = { }
+            onEditClick = { },
+            editTestTag = ""
         )
     }
 }
