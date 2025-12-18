@@ -24,6 +24,7 @@ import com.example.therapet.ui.theme.TheraPetTheme
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     onBack: () -> Unit,
+    onPetSettings: () -> Unit
 ){
     Scaffold(
 
@@ -53,7 +54,7 @@ fun SettingsScreen(
 
             BackupButton(onClick = {/* TODO: Navigate to Backup settings */})
 
-            PetSettingsButton(onClick = {/* TODO: Navigate to Pet settings settings */})
+            PetSettingsButton(onClick = onPetSettings)
 
             SecurityButton(onClick = {/* TODO: Navigate to Security settings */})
 
@@ -202,7 +203,8 @@ fun DeleteAccountButton(onClick: () -> Unit){
 fun SettingsPreview() {
     TheraPetTheme {
         SettingsScreen(
-            onBack = {}
+            onBack = {},
+            onPetSettings = {}
         )
     }
 }
