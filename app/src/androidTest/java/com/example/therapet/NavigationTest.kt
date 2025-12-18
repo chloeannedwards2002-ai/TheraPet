@@ -408,4 +408,37 @@ class NavigationTest {
             .onNodeWithTag("book_appointment_screen")
             .assertIsDisplayed()
     }
+
+    // Verify the pet settings button on settings screen navigates to pet settings screen
+    @Test
+    fun onClickPetSettingsOnSettingsScreenNavigateToPetSettingsScreen(){
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("drawer_settings_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("settings_screen")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithTag("pet_settings_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("pet_settings_screen")
+            .assertIsDisplayed()
+    }
 }

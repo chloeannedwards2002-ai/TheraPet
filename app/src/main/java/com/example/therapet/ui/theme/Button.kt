@@ -4,11 +4,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Pets
@@ -19,6 +24,8 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
@@ -145,6 +152,44 @@ fun CircularAppointmentButton(onClick: () -> Unit, modifier: Modifier = Modifier
     }
 }
 
+/* Toggle field */
+
+@Composable
+fun ToggleField(
+    label: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(60.dp),
+        shape = RoundedCornerShape(12.dp),
+        tonalElevation = 1.dp,
+        color = MaterialTheme.colorScheme.primaryContainer
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier.weight(1f)
+            )
+
+            Switch(
+                checked = checked,
+                onCheckedChange = onCheckedChange,
+            )
+        }
+    }
+}
+
+
 /* A grid to compose all buttons for preview */
 @Composable
 fun AllButtonsGrid() {
@@ -161,6 +206,7 @@ fun AllButtonsGrid() {
         item { MyTextButton(text = "Text", onClick = {}) }
         item { CircularBarButton(onClick = {}) }
         item { CircularAppointmentButton(onClick = {}) }
+        item { ToggleField(label = "Toggle", checked = false, onCheckedChange = { }) }
     }
 }
 
