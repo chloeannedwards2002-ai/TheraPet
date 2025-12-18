@@ -96,7 +96,8 @@ fun TheraPet(navController: NavHostController) {
         }
 
         composable("appointments_screen"){
-            AppointmentsScreen(onBack = {navController.popBackStack()})
+            AppointmentsScreen(onBack = {navController.popBackStack()},
+                onBookAppt = {navController.navigate("book_appointment_screen")})
         }
 
         composable("settings_screen"){
