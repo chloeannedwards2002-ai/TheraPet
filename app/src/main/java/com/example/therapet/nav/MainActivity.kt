@@ -12,6 +12,7 @@ import com.example.therapet.CreatePetScreen
 import com.example.therapet.HomeScreen
 import com.example.therapet.LoginScreen
 import com.example.therapet.PetSettingsScreen
+import com.example.therapet.PrivacyPolicyScreen
 import com.example.therapet.ProfileScreen
 import com.example.therapet.RegisterScreen
 import com.example.therapet.ResetPasswordScreen
@@ -103,7 +104,8 @@ fun TheraPet(navController: NavHostController) {
 
         composable("settings_screen"){
             SettingsScreen(onBack = {navController.popBackStack()},
-                onPetSettings = {navController.navigate("pet_settings_screen")})
+                onPetSettings = {navController.navigate("pet_settings_screen")},
+                onPrivacyPolicy = {navController.navigate("privacy_policy_screen")})
         }
 
         composable("choose_therapist_screen"){
@@ -135,6 +137,12 @@ fun TheraPet(navController: NavHostController) {
 
         composable("pet_settings_screen"){
             PetSettingsScreen(
+                onBack = {navController.popBackStack()}
+            )
+        }
+
+        composable("privacy_policy_screen"){
+            PrivacyPolicyScreen(
                 onBack = {navController.popBackStack()}
             )
         }
