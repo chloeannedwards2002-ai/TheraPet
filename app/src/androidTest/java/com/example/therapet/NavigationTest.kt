@@ -441,4 +441,37 @@ class NavigationTest {
             .onNodeWithTag("pet_settings_screen")
             .assertIsDisplayed()
     }
+
+    // Verify that privacy poliy button on settings screen navigates to privacy policy screen
+    @Test
+    fun onClickPrivacyPolicyNavigateToPrivacyPolicyScreen(){
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("drawer_settings_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("settings_screen")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithTag("privacy_policy_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("privacy_policy_screen")
+            .assertIsDisplayed()
+    }
 }

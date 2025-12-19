@@ -24,7 +24,8 @@ import com.example.therapet.ui.theme.TheraPetTheme
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     onBack: () -> Unit,
-    onPetSettings: () -> Unit
+    onPetSettings: () -> Unit,
+    onPrivacyPolicy: () -> Unit
 ){
     Scaffold(
 
@@ -60,9 +61,9 @@ fun SettingsScreen(
 
             PermissionsButton(onClick = {/* TODO: Navigate to Permissions settings */})
 
-            PrivacyButton(onClick = {/* TODO: Navigate to Privacy settings */})
+            PrivacyButton(onClick = onPrivacyPolicy)
 
-            HelpSupportButton(onClick = {/* TODO: Navigate to Help and support*/})
+            HelpSupportButton(onClick = { /*TODO: Help support */ })
             Spacer(modifier = Modifier.height(20.dp))
 
             DeleteAccountButton(onClick = {/* TODO: Navigate to Delete account settings */})
@@ -204,7 +205,8 @@ fun SettingsPreview() {
     TheraPetTheme {
         SettingsScreen(
             onBack = {},
-            onPetSettings = {}
+            onPetSettings = {},
+            onPrivacyPolicy = {}
         )
     }
 }
