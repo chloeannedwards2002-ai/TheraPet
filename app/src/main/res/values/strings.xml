@@ -2,15 +2,83 @@
     <!-- App name -->
     <string name="app_name">TheraPet</string>
 
-    <!-- Welcome screen -->
+    <!-- Welcome Screen -->
     <string name="register">Register</string>
     <string name="login">Login</string>
-    <string name="title_activity_register">RegisterActivity</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="title_activity_create_pet">CreatePetActivity</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_home_screen">HomeScreenActivity</string>
-    <string name="title_activity_home_nav_drawer">HomeNavDrawer</string>
-    <string name="privacy_policy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce convallis mauris sed diam placerat condimentum eu non nisl. Donec hendrerit neque sem, ac facilisis risus tristique ut. Phasellus scelerisque elit elit, eu convallis ante volutpat vel. Vestibulum id commodo dui, ut blandit arcu. Sed est metus, elementum eu nisi maximus, elementum suscipit neque. Integer lorem justo, interdum vel risus ut, blandit molestie nunc.</string>
+
+    <!-- Login Screen -->
+    <string name="forgot_password">Forgot password?</string>
+
+    <!-- Reset Password Screen -->
+    <string name="reset_password_title">Reset Password</string>
+    <string name="new_password_unique">Your new password must be different from previously used passwords</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="confirm_password">Confirm password</string>
+
+    <!-- Appointments Screen -->
+    <string name="appointments">Appointments</string>
+    <string name="book_appointment_nav"> + Book Appointment</string>
+
+    <!-- Book Appointment Screen -->
+    <string name="choose_date_and_time">Choose date and time</string>
+    <string name="book">Book</string>
+
+    <!-- Book Appointment Screen -->
+    <string name="choose_therapist">Choose Therapist</string>
+    <string name="continue_button">Continue</string>
+
+    <!-- Home Nav Drawer -->
+    <string name="nav_drawer_menu">Menu</string>
+    <string name="profile">Profile</string>
+    <string name="notifications">Notifications</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+
+    <!-- Profile Screen -->
+    <string name="first_name">First name</string>
+    <string name="surname">Surname</string>
+    <string name="patient_id">Patient ID</string>
+    <string name="mobile">Mobile</string>
+    <string name="password">Password</string>
+
+    <!-- Create Pet Screen -->
+    <string name="choose_colour">Choose colour</string>
+    <string name="choose_name">Choose name</string>
+
+    <!-- Pet Settings Screen -->
+    <string name="pet_settings">Pet settings</string>
+    <string name="appointment_reminders">Appointment Reminders</string>
+    <string name="appt_reminders_warning">By turning off these notifications, your pet will no longer remind you of upcoming appointments</string>
+    <string name="pet_sounds">Pet Sounds</string>
+    <string name="pet_sounds_warning">By turning off this setting, your pet will no longer make sounds</string>
+    <string name="hibernation">Hibernation</string>
+    <string name="hibernation_warning">This will put your pet in 'hibernation' mode, you will no longer have to care for it until your turn it back on</string>
+
+    <!-- Pet Settings Screen -->
+    <string name="confirm_acc_deletion_title">Confirm Account Deletion</string>
     <string name="confirm_deletion">You\'re about to delete all the data in your TheraPet account. Are you sure? You cannot undo this action.</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="enter_password">Enter password</string>
+
+    <!-- Help & Support Screen -->
+    <string name="help_and_support">Help and Support</string>
+    <string name="get_in_touch">Or get in touch on social media</string>
+    <string name="call_us">Call us</string>
+    <string name="email_us">Email us</string>
+    <string name="instagram">Instagram</string>
+    <string name="facebook">Facebook</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="twitter">Twitter</string>
+
+    <!-- Privacy Policy Screen -->
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce convallis mauris sed diam placerat condimentum eu non nisl. Donec hendrerit neque sem, ac facilisis risus tristique ut. Phasellus scelerisque elit elit, eu convallis ante volutpat vel. Vestibulum id commodo dui, ut blandit arcu. Sed est metus, elementum eu nisi maximus, elementum suscipit neque. Integer lorem justo, interdum vel risus ut, blandit molestie nunc.</string>
+
+    <!-- Settings Screen -->
+    <string name="language">Language</string>
+    <string name="permissions">Permissions</string>
+    <string name="security">Security</string>
+    <string name="backup">Backup</string>
+
 </resources>

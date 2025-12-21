@@ -7,7 +7,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
-import com.example.therapet.nav.TheraPet
+import com.example.therapet.app.nav.TheraPet
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
