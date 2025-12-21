@@ -507,4 +507,37 @@ class NavigationTest {
             .onNodeWithTag("help_support_screen")
             .assertIsDisplayed()
     }
+
+    // Verify delete account button navigates to delete account screen
+    @Test
+    fun onClickDeleteAccountNavigateToDeleteAccountScreen(){
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("drawer_settings_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("settings_screen")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithTag("delete_account_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("delete_account_screen")
+            .assertIsDisplayed()
+    }
 }

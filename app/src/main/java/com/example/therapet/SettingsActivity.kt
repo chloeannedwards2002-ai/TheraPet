@@ -26,7 +26,8 @@ fun SettingsScreen(
     onBack: () -> Unit,
     onPetSettings: () -> Unit,
     onPrivacyPolicy: () -> Unit,
-    onHelpSupport: () -> Unit
+    onHelpSupport: () -> Unit,
+    onDeleteAccount: () -> Unit
 ){
     Scaffold(
 
@@ -67,7 +68,7 @@ fun SettingsScreen(
             HelpSupportButton(onClick = onHelpSupport)
             Spacer(modifier = Modifier.height(20.dp))
 
-            DeleteAccountButton(onClick = {/* TODO: Navigate to Delete account settings */})
+            DeleteAccountButton(onClick = onDeleteAccount)
         }
     }
 }
@@ -208,7 +209,8 @@ fun SettingsPreview() {
             onBack = {},
             onPetSettings = {},
             onPrivacyPolicy = {},
-            onHelpSupport = {}
+            onHelpSupport = {},
+            onDeleteAccount = {}
         )
     }
 }
