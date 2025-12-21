@@ -72,7 +72,8 @@ fun PasswordTextField(modifier: Modifier = Modifier){
 @Composable
 fun ContinueButton(modifier: Modifier = Modifier, onClick: () -> Unit){
     MyElevatedButton(
-        modifier = modifier,
+        modifier = modifier
+            .testTag("delete_account_confirm_button"),
         text = "Continue",
         onClick = onClick
     )

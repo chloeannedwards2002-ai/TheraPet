@@ -68,7 +68,7 @@ fun SettingsScreen(
             HelpSupportButton(onClick = onHelpSupport)
             Spacer(modifier = Modifier.height(20.dp))
 
-            DeleteAccountButton(onClick = onDeleteAccount)
+            DeleteAccountNavButton(onClick = onDeleteAccount)
         }
     }
 }
@@ -187,7 +187,7 @@ fun HelpSupportButton(onClick: () -> Unit){
 
 // Delete account button
 @Composable
-fun DeleteAccountButton(onClick: () -> Unit){
+fun DeleteAccountNavButton(onClick: () -> Unit){
     MyFilledTonalButton(
         onClick = onClick,
         text = "Delete Account",
