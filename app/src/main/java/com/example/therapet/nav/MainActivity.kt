@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.therapet.CreatePetScreen
+import com.example.therapet.DeleteAccountConfirmScreen
 import com.example.therapet.DeleteAccountScreen
 import com.example.therapet.HelpSupportScreen
 import com.example.therapet.HomeScreen
@@ -160,7 +161,14 @@ fun TheraPet(navController: NavHostController) {
         composable("delete_account_screen"){
             DeleteAccountScreen(
                 onBack = {navController.popBackStack()},
-                onContinue = {/* TODO:: Navigate to delete account confirmation */}
+                onContinue = {navController.navigate("delete_account_confirm_screen")}
+            )
+        }
+
+        composable("delete_account_confirm_screen"){
+            DeleteAccountConfirmScreen(
+                onBack = {navController.popBackStack()},
+                onDeleteAccount = {}
             )
         }
     }

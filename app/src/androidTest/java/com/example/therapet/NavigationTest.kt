@@ -540,4 +540,45 @@ class NavigationTest {
             .onNodeWithTag("delete_account_screen")
             .assertIsDisplayed()
     }
+
+    // Verify continue button on delete acc screen navigates to the confirm deletion screen
+    @Test
+    fun onClickContinueNavigateToDeleteAccountConfirmationScreen(){
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("drawer_settings_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("settings_screen")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithTag("delete_account_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("delete_account_screen")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithTag("delete_account_confirm_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("delete_account_confirm_screen")
+            .assertIsDisplayed()
+    }
 }

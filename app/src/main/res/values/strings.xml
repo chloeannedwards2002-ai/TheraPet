@@ -12,4 +12,5 @@
     <string name="title_activity_home_screen">HomeScreenActivity</string>
     <string name="title_activity_home_nav_drawer">HomeNavDrawer</string>
     <string name="privacy_policy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce convallis mauris sed diam placerat condimentum eu non nisl. Donec hendrerit neque sem, ac facilisis risus tristique ut. Phasellus scelerisque elit elit, eu convallis ante volutpat vel. Vestibulum id commodo dui, ut blandit arcu. Sed est metus, elementum eu nisi maximus, elementum suscipit neque. Integer lorem justo, interdum vel risus ut, blandit molestie nunc.</string>
+    <string name="confirm_deletion">You\'re about to delete all the data in your TheraPet account. Are you sure? You cannot undo this action.</string>
 </resources>
