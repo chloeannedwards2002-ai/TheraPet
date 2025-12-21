@@ -474,4 +474,37 @@ class NavigationTest {
             .onNodeWithTag("privacy_policy_screen")
             .assertIsDisplayed()
     }
+
+    // Verify help support button on settings screen goes to help support screen
+    @Test
+    fun onClickHelpSupportNavigateToHelpSupportScreen(){
+        composeTestRule
+            .onNodeWithTag("choose_login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("login_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("menu_button")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("drawer_settings_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("settings_screen")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithTag("help_support_button")
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag("help_support_screen")
+            .assertIsDisplayed()
+    }
 }

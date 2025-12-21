@@ -4,12 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -96,6 +99,73 @@ fun MyOutlinedButton(
             text,
             style = MaterialTheme.typography.labelMedium
         )
+    }
+}
+
+// To determine where the icon in the below button sits
+enum class IconPosition(){
+    START,
+    END,
+    BOTTOM
+}
+
+//Outlined with icon (using class above)
+@Composable
+fun MyOutlinedButtonIcon(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    icon: (@Composable () -> Unit)? = null,
+    iconPosition: IconPosition = IconPosition.BOTTOM
+) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = modifier
+            .height(96.dp)
+            .fillMaxWidth()
+    ) {
+        when (iconPosition) {
+
+            IconPosition.BOTTOM -> {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = text,
+                        style = MaterialTheme.typography.labelMedium
+                    )
+
+                    if (icon != null) {
+                        Spacer(modifier = Modifier.height(15.dp))
+                        icon()
+                    }
+                }
+            }
+
+            IconPosition.START,
+            IconPosition.END -> {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    if (icon != null && iconPosition == IconPosition.START) {
+                        icon()
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
+
+                    Text(
+                        text = text,
+                        style = MaterialTheme.typography.labelMedium
+                    )
+
+                    if (icon != null && iconPosition == IconPosition.END) {
+                        Spacer(modifier = Modifier.width(8.dp))
+                        icon()
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -207,6 +277,7 @@ fun AllButtonsGrid() {
         item { CircularBarButton(onClick = {}) }
         item { CircularAppointmentButton(onClick = {}) }
         item { ToggleField(label = "Toggle", checked = false, onCheckedChange = { }) }
+        item { MyOutlinedButtonIcon(onClick = {}, text = "Outline Icon")}
     }
 }
 
