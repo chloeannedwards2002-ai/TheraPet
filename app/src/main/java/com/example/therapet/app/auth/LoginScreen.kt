@@ -21,15 +21,22 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.therapet.app.ui.components.MyOutlinedTextField
-import com.example.therapet.app.ui.components.MyPasswordTextField
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
-import com.example.therapet.app.ui.components.BasicTopBar
-import com.example.therapet.app.ui.components.MyCheckBox
-import com.example.therapet.app.ui.components.MyFilledButton
-import com.example.therapet.app.ui.components.MyTextButton
+import com.example.therapet.app.ui.components.bars.BasicTopBar
+import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
+import com.example.therapet.app.ui.components.buttons.general.CustomTextButton
+import com.example.therapet.app.ui.components.buttons.toggle.CheckBox
+import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
+import com.example.therapet.app.ui.components.fields.input.CustomPasswordTextField
+
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Login screen UI
+ */
 
 @Composable
 fun LoginScreen(
@@ -109,7 +116,7 @@ fun LoginScreen(
 @Composable
 fun UserLoginIDInput(modifier: Modifier = Modifier){
     var loginID by remember { mutableStateOf("") }
-    MyOutlinedTextField(
+    CustomOutlinedTextField(
         value = loginID,
         onValueChange = { loginID = it },
         placeholder = "Enter User ID",
@@ -124,14 +131,14 @@ fun UserLoginIDInput(modifier: Modifier = Modifier){
 fun LoginPasswordInput(modifier: Modifier = Modifier){
     var password by remember { mutableStateOf("") }
 
-    MyPasswordTextField(
+    CustomPasswordTextField(
         value = password,
         onValueChange = { password = it },
         placeholder = "Password",
         label = "Password",
         modifier = modifier
             .testTag("login_password_input"),
-        toggleTestTag = "login_password_toggle"
+        testTag = "login_password_toggle"
     )
 }
 
@@ -139,18 +146,18 @@ fun LoginPasswordInput(modifier: Modifier = Modifier){
 @Composable
 fun RememberPasswordCheckBox(modifier: Modifier = Modifier){
     var checked by remember { mutableStateOf(false) }
-    MyCheckBox(
+    CheckBox(
         label = "Remember password",
         checked = checked,
         onCheckedChange = {checked = it},
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
 // Login button
 @Composable
 fun LoginButton(onClick: () -> Unit){
-    MyFilledButton(
+    CustomFilledButton(
         onClick = onClick,
         text = stringResource(R.string.login),
         modifier = Modifier
@@ -163,7 +170,7 @@ fun LoginButton(onClick: () -> Unit){
 // Register button
 @Composable
 fun ToRegisterButton(onClick: () -> Unit) {
-    MyFilledButton(
+    CustomFilledButton(
         onClick = onClick,
         text = stringResource(R.string.register),
         modifier = Modifier
@@ -176,7 +183,7 @@ fun ToRegisterButton(onClick: () -> Unit) {
 // Forgot password? button
 @Composable
 fun ForgotPasswordButton(onClick: () -> Unit){
-    MyTextButton(
+    CustomTextButton(
         onClick = onClick,
         text = stringResource(R.string.forgot_password),
         modifier = Modifier.fillMaxWidth(0.5F).padding(top = 20.dp)

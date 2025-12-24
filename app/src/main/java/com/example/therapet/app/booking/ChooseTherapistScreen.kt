@@ -9,10 +9,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.therapet.app.ui.components.BasicTopBar
-import com.example.therapet.app.ui.components.MyFilledButton
+import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import com.example.therapet.R
+import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
+
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Choose therapist screen UI
+ */
 
 @Composable
 fun ChooseTherapistScreen(
@@ -46,7 +53,7 @@ fun ChooseTherapistScreen(
 // Continue button
 @Composable
 fun ContinueButton(onClick: () -> Unit){
-    MyFilledButton(
+    CustomFilledButton(
         onClick = onClick,
         text = stringResource(R.string.continue_button),
         modifier = Modifier

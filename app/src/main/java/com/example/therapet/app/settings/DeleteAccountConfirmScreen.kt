@@ -19,12 +19,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.R
-import com.example.therapet.app.ui.components.BasicTopBar
-import com.example.therapet.app.ui.components.MyFilledTonalButton
-import com.example.therapet.app.ui.components.MyOutlinedButton
+import com.example.therapet.app.ui.components.bars.BasicTopBar
+import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButton
+import com.example.therapet.app.ui.components.buttons.general.CustomTonalFilledButton
 import com.example.therapet.app.ui.theme.TheraPetTheme
 
 
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Delete account confirmation screen UI
+ */
 
 @Composable
 fun DeleteAccountConfirmScreen(
@@ -70,7 +76,7 @@ fun DeleteAccountConfirmScreen(
 // Cancel button
 @Composable
 fun CancelButton(modifier: Modifier = Modifier, onClick: () -> Unit){
-    MyOutlinedButton(
+    CustomOutlinedButton(
         modifier = modifier,
         text = stringResource(R.string.cancel),
         onClick = onClick
@@ -80,7 +86,7 @@ fun CancelButton(modifier: Modifier = Modifier, onClick: () -> Unit){
 // Delete Account button
 @Composable
 fun DeleteAccountButton(modifier: Modifier = Modifier, onClick: () -> Unit){
-    MyFilledTonalButton(
+    CustomTonalFilledButton(
         text = stringResource(R.string.delete_account),
         onClick = onClick,
         modifier = modifier

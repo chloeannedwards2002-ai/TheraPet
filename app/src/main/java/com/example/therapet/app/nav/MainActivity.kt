@@ -26,6 +26,13 @@ import com.example.therapet.app.booking.BookAppointmentScreen
 import com.example.therapet.app.booking.ChooseTherapistScreen
 import com.example.therapet.app.ui.theme.TheraPetTheme
 
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Main activity utilising single activity architecture. Uses NavGraph and Routes to navigate through screens
+ */
+
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,142 +41,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             TheraPetTheme {
                 val navController = rememberNavController()
-                TheraPet(navController)
+                NavGraph(navController = navController)
             }
         }
     }
 }
 
-@Composable
-fun TheraPet(navController: NavHostController) {
-
-    NavHost(
-        navController = navController,
-        startDestination = "welcome_screen"
-    ) {
-        composable("welcome_screen") {
-            WelcomeScreen(
-                onRegisterNav = { navController.navigate("register") },
-                onLoginNav = { navController.navigate("login") }
-            )
-        }
-        composable("register") {
-            RegisterScreen(
-                onRegister = { navController.navigate("create_pet")},
-                onBack = { navController.popBackStack() }
-            )
-        }
-        composable("login") {
-            LoginScreen(
-                onRegisterNav = {navController.navigate("register")},
-                onLogin = {navController.navigate("home_screen")},
-                onBack = {navController.popBackStack()}
-            )
-        }
-        composable("create_pet") {
-            CreatePetScreen(
-                onCreatePet = {navController.navigate("home_screen")}
-            )
-        }
-        composable("home_screen") {
-            HomeScreen(
-                onLogout = {
-                navController.navigate("welcome_screen") {
-                    popUpTo("home_screen") { inclusive = true }
-                    launchSingleTop = true
-                }
-            },
-                onProfile = {
-                    navController.navigate("profile_screen")
-                            },
-
-                onSettings = {
-                    navController.navigate("settings_screen")
-                },
-
-                //TODO: Add notifs screen
-                onNotifs = {
-                    navController.navigate("")
-                },
-
-                onAppts = {
-                    navController.navigate("appointments_screen")
-                },
-
-                onBookAppt = { navController.navigate("choose_therapist_screen")}
-            )
-        }
-
-        composable("appointments_screen"){
-            AppointmentsScreen(onBack = {navController.popBackStack()},
-                onBookAppt = {navController.navigate("book_appointment_screen")})
-        }
-
-        composable("settings_screen"){
-            SettingsScreen(onBack = {navController.popBackStack()},
-                onPetSettings = {navController.navigate("pet_settings_screen")},
-                onPrivacyPolicy = {navController.navigate("privacy_policy_screen")},
-                onHelpSupport = {navController.navigate("help_support_screen")},
-                onDeleteAccount = {navController.navigate("delete_account_screen")})
-        }
-
-        composable("choose_therapist_screen"){
-            ChooseTherapistScreen(onBack = {navController.popBackStack()
-            },
-                onContinue = {navController.navigate("book_appointment_screen")})
-        }
-
-        composable("book_appointment_screen") {
-            BookAppointmentScreen(
-                onBack = {navController.popBackStack()},
-                onBook = {/*Show popup*/}
-            )
-        }
-
-        composable("profile_screen") {
-            ProfileScreen(
-                onBack = {navController.popBackStack()},
-                onEditPassword = {navController.navigate("reset_password_screen")}
-            )
-        }
-
-        composable("reset_password_screen"){
-            ResetPasswordScreen(
-                onBack = {navController.popBackStack()},
-                onResetPassword = {/*TODO: reset password functionality*/}
-            )
-        }
-
-        composable("pet_settings_screen"){
-            PetSettingsScreen(
-                onBack = {navController.popBackStack()}
-            )
-        }
-
-        composable("privacy_policy_screen"){
-            PrivacyPolicyScreen(
-                onBack = {navController.popBackStack()}
-            )
-        }
-
-        composable("help_support_screen"){
-            HelpSupportScreen(
-                onBack = {navController.popBackStack()}
-            )
-        }
-
-        composable("delete_account_screen"){
-            DeleteAccountScreen(
-                onBack = {navController.popBackStack()},
-                onContinue = {navController.navigate("delete_account_confirm_screen")}
-            )
-        }
-
-        composable("delete_account_confirm_screen"){
-            DeleteAccountConfirmScreen(
-                onBack = {navController.popBackStack()},
-                onDeleteAccount = {}
-            )
-        }
-    }
-}

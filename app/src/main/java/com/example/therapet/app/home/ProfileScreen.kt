@@ -15,13 +15,18 @@ import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.therapet.app.ui.components.BasicTopBar
-import com.example.therapet.app.ui.components.MyReadOnlyEditableField
-import com.example.therapet.app.ui.components.MyReadOnlyField
 import com.example.therapet.app.ui.components.ProfileAvatar
+import com.example.therapet.app.ui.components.bars.BasicTopBar
+import com.example.therapet.app.ui.components.fields.read_only.ReadOnlyEditableField
+import com.example.therapet.app.ui.components.fields.read_only.ReadOnlyField
 import com.example.therapet.app.ui.theme.TheraPetTheme
 
-// Profile screen
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Profile screen UI
+ */
 
 @Composable
 fun ProfileScreen(
@@ -53,7 +58,7 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(60.dp))
 
-            MyReadOnlyEditableField(
+            ReadOnlyEditableField(
                 stringResource(R.string.first_name),
                 onEditClick = { /* TODO: eventually add editing */},
                 modifier = modifier.testTag("edit_first_name_field"),
@@ -62,7 +67,7 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            MyReadOnlyEditableField(
+            ReadOnlyEditableField(
                 stringResource(R.string.surname),
                 onEditClick = { /* TODO: eventually add editing */},
                 modifier = modifier.testTag("edit_surname_field"),
@@ -71,14 +76,14 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            MyReadOnlyField(
+            ReadOnlyField(
                 stringResource(R.string.patient_id),
                 modifier = modifier.testTag("patient_id_field"),
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            MyReadOnlyEditableField(
+            ReadOnlyEditableField(
                 stringResource(R.string.mobile),
                 onEditClick = { /* TODO: eventually add editing */},
                 modifier = modifier.testTag("edit_mobile_field"),
@@ -87,7 +92,7 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            MyReadOnlyEditableField(
+            ReadOnlyEditableField(
                 stringResource(R.string.password),
                 onEditClick = onEditPassword,
                 modifier = modifier.testTag("edit_password_field"),

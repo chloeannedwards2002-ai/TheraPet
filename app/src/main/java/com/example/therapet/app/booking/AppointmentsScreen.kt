@@ -13,10 +13,18 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.therapet.app.ui.components.BasicTopBar
-import com.example.therapet.app.ui.components.MyOutlinedButton
+import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import com.example.therapet.R
+import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButton
+
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Appointments screen UI
+ */
+
 
 @Composable
 fun AppointmentsScreen(
@@ -58,7 +66,7 @@ fun MyBookAppointmentsButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ){
-    MyOutlinedButton(
+    CustomOutlinedButton(
         onClick = onClick,
         text = stringResource(R.string.book_appointment_nav),
         modifier = modifier

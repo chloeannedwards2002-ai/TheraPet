@@ -23,12 +23,19 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.therapet.app.ui.components.BasicTopBar
-import com.example.therapet.app.ui.components.IconPosition
-import com.example.therapet.app.ui.components.MyOutlinedButtonIcon
+import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
+import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButtonIcon
+import com.example.therapet.app.ui.components.buttons.general.IconPosition
+
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Help and support screen UI
+ */
 
 @Composable
 fun HelpSupportScreen(
@@ -96,7 +103,7 @@ fun HelpSupportScreen(
 // Buttons for this screen
 @Composable
 fun CallUsButton(modifier: Modifier = Modifier){
-    MyOutlinedButtonIcon(
+    CustomOutlinedButtonIcon(
         modifier = modifier,
         text = stringResource(R.string.call_us),
         icon = {
@@ -108,7 +115,7 @@ fun CallUsButton(modifier: Modifier = Modifier){
 
 @Composable
 fun EmailUsButton(modifier: Modifier = Modifier){
-    MyOutlinedButtonIcon(
+    CustomOutlinedButtonIcon(
         modifier = modifier,
         text = stringResource(R.string.email_us),
         icon = {
@@ -120,7 +127,7 @@ fun EmailUsButton(modifier: Modifier = Modifier){
 
 @Composable
 fun InstagramButton(modifier: Modifier = Modifier){
-    MyOutlinedButtonIcon(
+    CustomOutlinedButtonIcon(
         modifier = modifier,
         text = stringResource(R.string.instagram),
         icon = {
@@ -133,7 +140,7 @@ fun InstagramButton(modifier: Modifier = Modifier){
 
 @Composable
 fun FacebookButton(modifier: Modifier = Modifier){
-    MyOutlinedButtonIcon(
+    CustomOutlinedButtonIcon(
         modifier = modifier,
         text = stringResource(R.string.facebook),
         icon = {
@@ -146,7 +153,7 @@ fun FacebookButton(modifier: Modifier = Modifier){
 
 @Composable
 fun WhatsappButton(modifier: Modifier = Modifier){
-    MyOutlinedButtonIcon(
+    CustomOutlinedButtonIcon(
         modifier = modifier,
         text = stringResource(R.string.whatsapp),
         icon = {
@@ -159,7 +166,7 @@ fun WhatsappButton(modifier: Modifier = Modifier){
 
 @Composable
 fun TwitterButton(modifier: Modifier = Modifier){
-    MyOutlinedButtonIcon(
+    CustomOutlinedButtonIcon(
         modifier = modifier,
         text = stringResource(R.string.twitter),
         icon = {
