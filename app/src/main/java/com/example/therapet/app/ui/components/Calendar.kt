@@ -27,8 +27,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 
-/* This custom calendar was created using: https://medium.com/@kiwi47/create-a-flexible-and-customizable-calendar-view-in-android-with-jetpack-compose-56dfb911c2ab */
-
+/**
+ * @Author: Chloe Edwards
+ * @Date: 24/12/2025
+ *
+ * This is a custom calendar that was created using guidance from https://medium.com/@kiwi47/create-a-flexible-and-customizable-calendar-view-in-android-with-jetpack-compose-56dfb911c2ab
+ * TODO: At the moment it is simply just a calendar with dates, there is no functionality regarding booking appointments yet
+ */
 
 private fun Date.dayString(): String =
     SimpleDateFormat("d", Locale.getDefault()).format(this)

@@ -20,11 +20,18 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.therapet.app.ui.components.BasicTopBar
+import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
-import com.example.therapet.app.ui.components.ToggleField
+import com.example.therapet.app.ui.components.buttons.toggle.ToggleButton
 import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
+
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Pet settings screen UI
+ */
 
 @Composable
 fun PetSettingsScreen(
@@ -57,7 +64,7 @@ fun PetSettingsScreen(
 
             Spacer(modifier = Modifier.height(100.dp))
 
-            ToggleField(
+            ToggleButton(
                 label = stringResource(R.string.appointment_reminders),
                 checked = remindersEnabled,
                 onCheckedChange = { remindersEnabled = it }
@@ -73,7 +80,7 @@ fun PetSettingsScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            ToggleField(
+            ToggleButton(
                 label = stringResource(R.string.pet_sounds),
                 checked = petSoundsEnabled,
                 onCheckedChange = { remindersEnabled = it }
@@ -89,7 +96,7 @@ fun PetSettingsScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            ToggleField(
+            ToggleButton(
                 label = stringResource(R.string.hibernation),
                 checked = hibernationEnabled,
                 onCheckedChange = { remindersEnabled = it }

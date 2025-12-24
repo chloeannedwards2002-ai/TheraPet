@@ -15,12 +15,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.therapet.app.ui.components.BasicTopBar
-import com.example.therapet.app.ui.components.MyFilledTonalButton
-import com.example.therapet.app.ui.components.MyOutlinedButton
+import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
+import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButton
+import com.example.therapet.app.ui.components.buttons.general.CustomTonalFilledButton
+
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Settings screen UI
+ */
+
 
 @Composable
 fun SettingsScreen(
@@ -78,7 +86,7 @@ fun SettingsScreen(
 // Language button
 @Composable
 fun LanguageButton(onClick: () -> Unit){
-    MyOutlinedButton(
+    CustomOutlinedButton(
         onClick = onClick,
         text = stringResource(R.string.language),
         modifier = Modifier
@@ -92,7 +100,7 @@ fun LanguageButton(onClick: () -> Unit){
 // Notifs button
 @Composable
 fun NotificationButton(onClick: () -> Unit){
-    MyOutlinedButton(
+    CustomOutlinedButton(
         onClick = onClick,
         text = stringResource(R.string.notifications),
         modifier = Modifier
@@ -106,7 +114,7 @@ fun NotificationButton(onClick: () -> Unit){
 // Backup button
 @Composable
 fun BackupButton(onClick: () -> Unit){
-    MyOutlinedButton(
+    CustomOutlinedButton(
         onClick = onClick,
         text = stringResource(R.string.backup),
         modifier = Modifier
@@ -120,7 +128,7 @@ fun BackupButton(onClick: () -> Unit){
 //Pet Settings button
 @Composable
 fun PetSettingsButton(onClick: () -> Unit){
-    MyOutlinedButton(
+    CustomOutlinedButton(
         onClick = onClick,
         text = stringResource(R.string.pet_settings),
         modifier = Modifier
@@ -134,7 +142,7 @@ fun PetSettingsButton(onClick: () -> Unit){
 //Security button
 @Composable
 fun SecurityButton(onClick: () -> Unit){
-    MyOutlinedButton(
+    CustomOutlinedButton(
         onClick = onClick,
         text = stringResource(R.string.security),
         modifier = Modifier
@@ -148,7 +156,7 @@ fun SecurityButton(onClick: () -> Unit){
 //Permissions button
 @Composable
 fun PermissionsButton(onClick: () -> Unit){
-    MyOutlinedButton(
+    CustomOutlinedButton(
         onClick = onClick,
         text = stringResource(R.string.permissions),
         modifier = Modifier
@@ -162,7 +170,7 @@ fun PermissionsButton(onClick: () -> Unit){
 // Privacy policy button
 @Composable
 fun PrivacyButton(onClick: () -> Unit){
-    MyOutlinedButton(
+    CustomOutlinedButton(
         onClick = onClick,
         text = stringResource(R.string.privacy_policy),
         modifier = Modifier
@@ -176,7 +184,7 @@ fun PrivacyButton(onClick: () -> Unit){
 @Composable
 // Help & support button
 fun HelpSupportButton(onClick: () -> Unit){
-    MyOutlinedButton(
+    CustomOutlinedButton(
         onClick = onClick,
         text = stringResource(R.string.help_and_support),
         modifier = Modifier
@@ -190,7 +198,7 @@ fun HelpSupportButton(onClick: () -> Unit){
 // Delete account button
 @Composable
 fun DeleteAccountNavButton(onClick: () -> Unit){
-    MyFilledTonalButton(
+    CustomTonalFilledButton(
         onClick = onClick,
         text = stringResource(R.string.delete_account),
         modifier = Modifier

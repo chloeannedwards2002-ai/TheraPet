@@ -14,10 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import com.example.therapet.app.ui.components.MyOutlinedButton
 import com.example.therapet.R
 import androidx.compose.ui.res.stringResource
+import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButton
 
+
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Home nav drawer UI
+ */
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +48,7 @@ fun HomeNavigationDrawer(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                MyOutlinedButton(
+                CustomOutlinedButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -52,7 +59,7 @@ fun HomeNavigationDrawer(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                MyOutlinedButton(
+                CustomOutlinedButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -63,7 +70,7 @@ fun HomeNavigationDrawer(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                MyOutlinedButton(
+                CustomOutlinedButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -74,7 +81,7 @@ fun HomeNavigationDrawer(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                MyOutlinedButton(
+                CustomOutlinedButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -85,7 +92,7 @@ fun HomeNavigationDrawer(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                MyOutlinedButton(
+                CustomOutlinedButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)

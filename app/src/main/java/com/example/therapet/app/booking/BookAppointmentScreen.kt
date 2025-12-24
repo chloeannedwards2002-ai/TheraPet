@@ -17,16 +17,17 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.therapet.ui.calendar.CustomCalendar
-import com.example.therapet.app.ui.components.BasicTopBar
-import com.example.therapet.app.ui.components.MyFilledButton
+import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import com.example.therapet.R
+import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
 
-/*
-    This is the appointment booking screen where the patient can book an appointment. It will also be state controlled later on
-    so the therapist can input available appointments
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Appointment booking screen UI
  */
-
 
 @Composable
 fun BookAppointmentScreen(
@@ -69,7 +70,7 @@ fun BookAppointmentScreen(
 
 @Composable
 fun BookButton(onClick: () -> Unit){
-    MyFilledButton(
+    CustomFilledButton(
         onClick = onClick,
         text = stringResource(R.string.book),
         modifier = Modifier

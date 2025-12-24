@@ -14,6 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
+/**
+ * @Author: Chloe Edwards
+ * @Date: 24/12/2025
+ *
+ * This is a placeholder avatar component used for the profile screen
+ * It will eventually be replaced with a customizable profile photo component that can be changed locally by the user
+ */
+
 @Composable
 fun ProfileAvatar(
     modifier: Modifier = Modifier

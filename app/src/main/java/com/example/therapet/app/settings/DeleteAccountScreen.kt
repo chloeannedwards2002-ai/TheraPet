@@ -17,12 +17,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.therapet.app.ui.components.BasicTopBar
-import com.example.therapet.app.ui.components.MyElevatedButton
-import com.example.therapet.app.ui.components.MyOutlinedTextField
+import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
+import com.example.therapet.app.ui.components.buttons.general.CustomElevatedButton
+import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
+
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Delete account screen UI
+ */
 
 @Composable
 fun DeleteAccountScreen(
@@ -61,7 +68,7 @@ fun DeleteAccountScreen(
 @Composable
 fun PasswordTextField(modifier: Modifier = Modifier){
     var password by remember { mutableStateOf("") }
-    MyOutlinedTextField(
+    CustomOutlinedTextField(
         value = password,
         onValueChange = { password = it },
         placeholder = stringResource(R.string.enter_password),
@@ -73,7 +80,7 @@ fun PasswordTextField(modifier: Modifier = Modifier){
 
 @Composable
 fun ContinueButton(modifier: Modifier = Modifier, onClick: () -> Unit){
-    MyElevatedButton(
+    CustomElevatedButton(
         modifier = modifier
             .testTag("delete_account_confirm_button"),
         text = stringResource(R.string.continue_button),

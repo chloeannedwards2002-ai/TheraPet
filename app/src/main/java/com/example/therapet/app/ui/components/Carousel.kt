@@ -23,6 +23,14 @@ import androidx.compose.ui.semantics.SemanticsPropertyReceiver
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 
+/**
+ * @Author: Chloe Edwards
+ * @Date: 24/12/2025
+ *
+ * This is a custom carousel used on the create/edit pet screen to select the pets colour.
+ * This functionality has yet to be implemented bu the carousel itself works
+ */
+
 val isSelectedCircleKey = SemanticsPropertyKey<Boolean>("IsSelectedCircle")
 var SemanticsPropertyReceiver.isSelectedCircle by isSelectedCircleKey
 
@@ -58,7 +66,7 @@ fun CircularCarousel(
         ){
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Prev"
+                contentDescription = "Previous colour"
             )
         }
 
@@ -94,7 +102,7 @@ fun CircularCarousel(
         ){
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = "Next"
+                contentDescription = "Next colour"
             )
         }
     }

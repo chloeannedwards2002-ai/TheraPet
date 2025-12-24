@@ -18,8 +18,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.R
-import com.example.therapet.app.ui.components.BasicTopBar
+import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
+
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Privacy policy screen UI
+ */
+
 
 @Composable
 fun PrivacyPolicyScreen(

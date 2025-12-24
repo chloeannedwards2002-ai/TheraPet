@@ -52,11 +52,11 @@
     <string name="pet_sounds">Pet Sounds</string>
     <string name="pet_sounds_warning">By turning off this setting, your pet will no longer make sounds</string>
     <string name="hibernation">Hibernation</string>
-    <string name="hibernation_warning">This will put your pet in 'hibernation' mode, you will no longer have to care for it until your turn it back on</string>
+    <string name="hibernation_warning">This will put your pet in hibernation mode, you will no longer have to care for it until your turn it back on</string>
 
     <!-- Pet Settings Screen -->
     <string name="confirm_acc_deletion_title">Confirm Account Deletion</string>
-    <string name="confirm_deletion">You\'re about to delete all the data in your TheraPet account. Are you sure? You cannot undo this action.</string>
+    <string name="confirm_deletion">You are about to delete all the data in your TheraPet account. Are you sure? You cannot undo this action.</string>
     <string name="cancel">Cancel</string>
     <string name="delete_account">Delete Account</string>
     <string name="enter_password">Enter password</string>

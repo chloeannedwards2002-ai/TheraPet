@@ -23,14 +23,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.therapet.app.ui.components.MyFilledButton
-import com.example.therapet.app.ui.components.MyOutlinedTextField
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.platform.testTag
 import com.example.therapet.R
-import com.example.therapet.app.ui.components.BasicTopBar
-import com.example.therapet.app.ui.components.MyPasswordTextField
+import com.example.therapet.app.ui.components.bars.BasicTopBar
+import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
+import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
+import com.example.therapet.app.ui.components.fields.input.CustomPasswordTextField
 
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Registration screen UI
+ */
 
 @Composable
 fun RegisterScreen(
@@ -108,7 +114,7 @@ fun RegisterScreen(
 @Composable
 fun UserIDInput(modifier: Modifier = Modifier){
     var userID by remember { mutableStateOf("") }
-    MyOutlinedTextField(
+    CustomOutlinedTextField(
         value = userID,
         onValueChange = { userID = it },
         placeholder = "Enter User ID",
@@ -123,7 +129,7 @@ fun UserIDInput(modifier: Modifier = Modifier){
 @Composable
 fun FirstNameInput(modifier: Modifier = Modifier){
     var firstName by remember { mutableStateOf("") }
-    MyOutlinedTextField(
+    CustomOutlinedTextField(
         value = firstName,
         onValueChange = { firstName = it },
         placeholder = "First Name",
@@ -138,7 +144,7 @@ fun FirstNameInput(modifier: Modifier = Modifier){
 @Composable
 fun SurnameInput(modifier: Modifier = Modifier){
     var surname by remember { mutableStateOf("") }
-    MyOutlinedTextField(
+    CustomOutlinedTextField(
         value = surname,
         onValueChange = { surname = it },
         placeholder = "Surname",
@@ -154,14 +160,14 @@ fun SurnameInput(modifier: Modifier = Modifier){
 fun PasswordInput(modifier: Modifier = Modifier){
     var password by remember { mutableStateOf("") }
 
-    MyPasswordTextField(
+    CustomPasswordTextField(
         value = password,
         onValueChange = { password = it },
         placeholder = "Password",
         label = "Password",
         modifier = modifier
             .testTag("password_input"),
-        toggleTestTag = "password_toggle"
+        testTag = "password_toggle"
     )
 }
 
@@ -170,21 +176,21 @@ fun PasswordInput(modifier: Modifier = Modifier){
 @Composable
 fun ConfPasswordInput(modifier: Modifier = Modifier){
     var confPassword by remember { mutableStateOf("") }
-    MyPasswordTextField(
+    CustomPasswordTextField(
         value = confPassword,
         onValueChange = { confPassword = it },
         placeholder = "Confirm Password",
         label = "Confirm Password",
         modifier = modifier
             .testTag("confirm_password_input"),
-        toggleTestTag = "confirm_password_toggle"
+        testTag = "confirm_password_toggle"
     )
 }
 
 //Register button -> Navigates to registration page
 @Composable
 fun RegisterButton(onClick: () -> Unit){
-    MyFilledButton(
+    CustomFilledButton(
         onClick = onClick,
         text = stringResource(R.string.register),
         modifier = Modifier

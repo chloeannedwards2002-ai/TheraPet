@@ -16,18 +16,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import com.example.therapet.app.ui.components.MainTopBar
+import com.example.therapet.app.ui.components.bars.MainTopBar
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.R
 import com.example.therapet.app.pet.PetPlaceholder
-import com.example.therapet.app.ui.components.CircularAppointmentButton
-import com.example.therapet.app.ui.components.CustomBottomBar
+import com.example.therapet.app.ui.components.bars.PetCareBar
+import com.example.therapet.app.ui.components.buttons.home.CircularButton
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import kotlinx.coroutines.launch
 
-/*
-    This composable holds the home screen. It can be in either a "patient" state, or a "therapist" state depending on who has logged in
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * Home screen UI
  */
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,10 +62,11 @@ fun HomeScreen(
 
         Scaffold(
             floatingActionButton = {
-                CircularAppointmentButton(
+                CircularButton(
                     onClick = onBookAppt,
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(16.dp),
+                    testTag = "choose_therapist_button"
                 )
             },
 
@@ -76,7 +80,7 @@ fun HomeScreen(
                 )
             },
             bottomBar = {
-                CustomBottomBar()
+               PetCareBar()
             }
         ) { innerPadding ->
 

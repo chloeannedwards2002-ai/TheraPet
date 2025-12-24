@@ -23,13 +23,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.therapet.app.ui.components.BasicTopBar
+import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.components.CircularCarousel
-import com.example.therapet.app.ui.components.MyElevatedButton
-import com.example.therapet.app.ui.components.MyOutlinedTextField
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
+import com.example.therapet.app.ui.components.buttons.general.CustomElevatedButton
+import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
+
+
+/**
+ * @author: Chloe Edwards
+ * @date: 24/12/2025
+ *
+ * CreatePet screen UI
+ */
 
 @Composable
 fun CreatePetScreen(
@@ -140,7 +148,7 @@ fun PetNameInputField(
     onNameChanged: (String) -> Unit,
     modifier: Modifier = Modifier
 ){
-    MyOutlinedTextField(
+    CustomOutlinedTextField(
         value = petName,
         onValueChange = onNameChanged,
         placeholder = "Pet name",
@@ -153,7 +161,7 @@ fun PetNameInputField(
 // Reset button
 @Composable
 fun ResetButton(onClick: () -> Unit, modifier: Modifier = Modifier){
-    MyElevatedButton(
+    CustomElevatedButton(
         onClick = onClick,
         text = "Reset",
         modifier = modifier
@@ -165,7 +173,7 @@ fun ResetButton(onClick: () -> Unit, modifier: Modifier = Modifier){
 // Confirm button
 @Composable
 fun ConfirmButton(onClick: () -> Unit, modifier: Modifier = Modifier){
-    MyElevatedButton(
+    CustomElevatedButton(
         onClick = onClick,
         text = "Confirm",
         modifier = modifier
