@@ -45,15 +45,22 @@ fun RegisterScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    // field states (name and user id)
+    var userId by remember { mutableStateOf("") }
+    var firstName by remember { mutableStateOf("") }
+    var surname by remember { mutableStateOf("") }
 
+    // field states (password)
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
-    val isPasswordValid = PasswordValidator.isPasswordValid(password)
-    val passwordsMatch =
-        password == confirmPassword && confirmPassword.isNotEmpty()
-
-    val canRegister = isPasswordValid && passwordsMatch
+    val canRegister = RegisterValidation.canRegister(
+        userId = userId,
+        firstName = firstName,
+        surname = surname,
+        password = password,
+        confirmPassword = confirmPassword
+    )
 
     Scaffold(
 
@@ -83,7 +90,10 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            UserIDInput()
+            UserIDInput(
+                value = userId,
+                onValueChange = { userId = it }
+            )
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -92,10 +102,16 @@ fun RegisterScreen(
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Box(modifier = Modifier.weight(1f)) {
-                    FirstNameInput()
+                    FirstNameInput(
+                        value = firstName,
+                        onValueChange = { firstName = it }
+                    )
                 }
                 Box(modifier = Modifier.weight(1f)) {
-                    SurnameInput()
+                    SurnameInput(
+                        value = surname,
+                        onValueChange = { surname = it }
+                    )
                 }
             }
 
@@ -130,26 +146,31 @@ fun RegisterScreen(
 // User ID input text field
 
 @Composable
-fun UserIDInput(modifier: Modifier = Modifier){
-    var userID by remember { mutableStateOf("") }
+fun UserIDInput(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     CustomOutlinedTextField(
-        value = userID,
-        onValueChange = { userID = it },
+        value = value,
+        onValueChange = onValueChange,
         placeholder = "Enter User ID",
         label = "User ID",
-        modifier = modifier
-            .testTag("user_id_input")
+        modifier = modifier.testTag("user_id_input")
     )
 }
 
 // First name input text field
 
 @Composable
-fun FirstNameInput(modifier: Modifier = Modifier){
-    var firstName by remember { mutableStateOf("") }
+fun FirstNameInput(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+){
     CustomOutlinedTextField(
-        value = firstName,
-        onValueChange = { firstName = it },
+        value = value,
+        onValueChange = onValueChange,
         placeholder = "First Name",
         label = "First Name",
         modifier = modifier
@@ -160,11 +181,15 @@ fun FirstNameInput(modifier: Modifier = Modifier){
 // Surname input text field
 
 @Composable
-fun SurnameInput(modifier: Modifier = Modifier){
-    var surname by remember { mutableStateOf("") }
+fun SurnameInput(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+)
+    {
     CustomOutlinedTextField(
-        value = surname,
-        onValueChange = { surname = it },
+        value = value,
+        onValueChange = onValueChange,
         placeholder = "Surname",
         label = "Surname",
         modifier = modifier
@@ -240,9 +265,13 @@ fun ConfPasswordInput(
 
 //Register button -> Navigates to registration page
 @Composable
-fun RegisterButton(onClick: () -> Unit, enabled: Boolean){
+fun RegisterButton(
+    onClick: () -> Unit,
+    enabled: Boolean
+) {
     CustomFilledButton(
         onClick = onClick,
+        enabled = enabled,
         text = stringResource(R.string.register),
         modifier = Modifier
             .fillMaxWidth(0.5F)
