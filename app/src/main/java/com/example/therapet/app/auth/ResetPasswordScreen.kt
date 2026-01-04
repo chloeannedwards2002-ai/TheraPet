@@ -11,6 +11,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -21,7 +25,10 @@ import androidx.compose.ui.unit.dp
 import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import com.example.therapet.R
+import com.example.therapet.app.auth.register.ConfPasswordInput
+import com.example.therapet.app.auth.register.PasswordInput
 import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
+
 
 /**
  * @author: Chloe Edwards
@@ -36,6 +43,9 @@ fun ResetPasswordScreen(
     modifier: Modifier = Modifier,
     onResetPassword: () -> Unit
 ){
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+
     Scaffold(
         
     ){
@@ -73,7 +83,10 @@ fun ResetPasswordScreen(
                 style = MaterialTheme.typography.labelMedium
             )
 
-            PasswordInput()
+            PasswordInput(
+                password = password,
+                onPasswordChange = { password = it }
+            )
 
             Spacer(modifier = Modifier.height(40.dp))
 
@@ -84,7 +97,11 @@ fun ResetPasswordScreen(
                 style = MaterialTheme.typography.labelMedium
             )
 
-            PasswordInput()
+            ConfPasswordInput(
+                password = password,
+                confirmPassword = confirmPassword,
+                onConfirmPasswordChange = { confirmPassword = it }
+            )
 
             Spacer(modifier = Modifier.height(20.dp))
 

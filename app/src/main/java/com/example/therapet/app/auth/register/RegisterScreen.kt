@@ -1,4 +1,4 @@
-package com.example.therapet.app.auth
+package com.example.therapet.app.auth.register
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,6 +45,10 @@ fun RegisterScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+
     Scaffold(
 
     ) { innerPadding ->
@@ -90,11 +95,17 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            PasswordInput()
+            PasswordInput(
+                password = password,
+                onPasswordChange = { password = it })
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            ConfPasswordInput()
+            ConfPasswordInput(
+                password = password,
+                confirmPassword = confirmPassword,
+                onConfirmPasswordChange = { confirmPassword = it }
+            )
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -157,34 +168,67 @@ fun SurnameInput(modifier: Modifier = Modifier){
 // Password input text field
 
 @Composable
-fun PasswordInput(modifier: Modifier = Modifier){
-    var password by remember { mutableStateOf("") }
+fun PasswordInput(
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val requirements = remember(password) {
+        PasswordValidator.validate(password)
+    }
 
-    CustomPasswordTextField(
-        value = password,
-        onValueChange = { password = it },
-        placeholder = "Password",
-        label = "Password",
-        modifier = modifier
-            .testTag("password_input"),
-        testTag = "password_toggle"
-    )
+    Column(modifier = modifier) {
+        CustomPasswordTextField(
+            value = password,
+            onValueChange = onPasswordChange,
+            placeholder = "Password",
+            label = "Password",
+            modifier = Modifier.testTag("password_input"),
+            testTag = "password_toggle"
+        )
+
+        if (password.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(8.dp))
+            PasswordChecklist(requirements)
+        }
+    }
 }
 
 // Confirm password input text field
 
 @Composable
-fun ConfPasswordInput(modifier: Modifier = Modifier){
-    var confPassword by remember { mutableStateOf("") }
-    CustomPasswordTextField(
-        value = confPassword,
-        onValueChange = { confPassword = it },
-        placeholder = "Confirm Password",
-        label = "Confirm Password",
-        modifier = modifier
-            .testTag("confirm_password_input"),
-        testTag = "confirm_password_toggle"
-    )
+fun ConfPasswordInput(
+    password: String,
+    confirmPassword: String,
+    onConfirmPasswordChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val passwordsMatch =
+        confirmPassword.isNotEmpty() && confirmPassword == password
+
+    Column(modifier = modifier) {
+        CustomPasswordTextField(
+            value = confirmPassword,
+            onValueChange = onConfirmPasswordChange,
+            placeholder = "Confirm Password",
+            label = "Confirm Password",
+            modifier = Modifier.testTag("confirm_password_input"),
+            testTag = "confirm_password_toggle"
+        )
+
+        if (confirmPassword.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = if (passwordsMatch)
+                    "Passwords match!" else
+                    "Passwords do not match!",
+                style = MaterialTheme.typography.bodySmall,
+                color = if (passwordsMatch)
+                    Color(0xFF2E7D32) else
+                    MaterialTheme.colorScheme.error
+            )
+        }
+    }
 }
 
 //Register button -> Navigates to registration page
