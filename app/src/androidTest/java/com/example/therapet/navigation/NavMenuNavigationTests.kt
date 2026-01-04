@@ -1,4 +1,4 @@
-package com.example.therapet
+package com.example.therapet.navigation
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithTag

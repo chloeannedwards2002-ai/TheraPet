@@ -1,11 +1,10 @@
-package com.example.therapet
+package com.example.therapet.navigation
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import com.example.therapet.helpers.BaseNav
 import org.junit.Test
-import com.example.therapet.helpers.login
 
 /**
  * @Author: Chloe Edwards
