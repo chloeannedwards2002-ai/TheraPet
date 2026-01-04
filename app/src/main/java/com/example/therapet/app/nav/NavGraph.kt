@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.therapet.app.auth.LoginScreen
-import com.example.therapet.app.auth.RegisterScreen
+import com.example.therapet.app.auth.register.RegisterScreen
 import com.example.therapet.app.auth.ResetPasswordScreen
 import com.example.therapet.app.auth.WelcomeScreen
 import com.example.therapet.app.booking.AppointmentsScreen
