@@ -10,6 +10,10 @@ package com.example.therapet.app.auth.register
 
 object PasswordValidator {
 
+    // Final validation regex (not used for live checklist)
+    private val VALIDATION_REGEX =
+        Regex("^(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$")
+
     fun validate(password: String): List<PasswordRequirement>
     {
         return listOf(
@@ -32,6 +36,7 @@ object PasswordValidator {
         )
     }
 
-    fun isPasswordValid(password: String): Boolean =
-        validate(password).all { it.reqIsMet }
+    fun isPasswordValid(password: String): Boolean {
+        return VALIDATION_REGEX.matches(password)
+    }
 }

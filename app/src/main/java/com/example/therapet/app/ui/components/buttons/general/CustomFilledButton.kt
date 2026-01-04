@@ -19,9 +19,10 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 fun CustomFilledButton(
     modifier: Modifier = Modifier,
     text: String,
-    onClick: () -> Unit)
+    onClick: () -> Unit,
+    enabled: Boolean = true)
     {
-    Button(onClick = { onClick() }, modifier = modifier) {
+    Button(onClick = { onClick() }, modifier = modifier, enabled = enabled) {
         Text(text,
             style = MaterialTheme.typography.labelMedium)
     }

@@ -49,6 +49,12 @@ fun RegisterScreen(
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
+    val isPasswordValid = PasswordValidator.isPasswordValid(password)
+    val passwordsMatch =
+        password == confirmPassword && confirmPassword.isNotEmpty()
+
+    val canRegister = isPasswordValid && passwordsMatch
+
     Scaffold(
 
     ) { innerPadding ->
@@ -110,7 +116,8 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             RegisterButton(
-                onClick = onRegister
+                onClick = onRegister,
+                enabled = canRegister
             )
         }
     }
@@ -233,7 +240,7 @@ fun ConfPasswordInput(
 
 //Register button -> Navigates to registration page
 @Composable
-fun RegisterButton(onClick: () -> Unit){
+fun RegisterButton(onClick: () -> Unit, enabled: Boolean){
     CustomFilledButton(
         onClick = onClick,
         text = stringResource(R.string.register),
