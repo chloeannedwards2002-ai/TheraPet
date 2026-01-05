@@ -9,21 +9,21 @@ import org.junit.Test
  * @Author: Chloe Edwards
  * @Date: 04/01/2026
  *
- * These tests are for password validation (register screen only for now)
+ * These tests are for registration validation
  *
  * Password validation tests:
- *  1. Testing a valid password is valid
- *  2. Password is too short
- *  3. Password without number
- *  4. Password without special character
- *  5. Password without uppercase
+ *  1. All fields are valid
+ *  2. Empty user ID
+ *  3. Passwords do not match
+ *  4. Invalid password
+ *  5.
  */
 
 class RegisterValidationTest {
     @Test
     fun all_fields_are_valid(){
         val result = RegisterValidation.canRegister(
-            userId = "userid123",
+            userId = "userid1234567891",
             firstName = "Bob",
             surname = "Bobbington",
             password = "Abcdef1!",
@@ -69,5 +69,17 @@ class RegisterValidationTest {
         assertFalse(result)
     }
 
+    @Test
+    fun user_id_shorter_than_16_characters_is_invalid(){
+        val result = RegisterValidation.canRegister(
+            userId = "ID",
+            firstName = "Bob",
+            surname = "Bobbington",
+            password = "Abcdef1!",
+            confirmPassword = "Abcdef1!"
+        )
+
+        assertFalse(result)
+    }
 
 }

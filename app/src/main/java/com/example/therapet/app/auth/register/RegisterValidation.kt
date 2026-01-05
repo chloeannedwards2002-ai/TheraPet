@@ -1,7 +1,11 @@
 package com.example.therapet.app.auth.register
 
 object RegisterValidation {
-    //Validationg passwords match
+    //validating user ID length
+    fun userIdIsValid(userId: String): Boolean =
+        userId.length >= 16
+
+    //Validating passwords match
     fun passwordsMatch(
         password: String,
         confirmPassword: String
@@ -18,7 +22,7 @@ object RegisterValidation {
         password: String,
         confirmPassword: String
     ): Boolean {
-        return userId.isNotBlank() &&
+        return userIdIsValid(userId) &&
                 firstName.isNotBlank() &&
                 surname.isNotBlank() &&
                 PasswordValidator.isPasswordValid(password) &&
