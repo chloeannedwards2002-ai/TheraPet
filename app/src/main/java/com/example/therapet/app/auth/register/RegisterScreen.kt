@@ -95,6 +95,15 @@ fun RegisterScreen(
                 onValueChange = { userId = it }
             )
 
+            if (userId.isNotEmpty() && userId.length < 16) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "User ID must be at least 16 characters",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+
             Spacer(modifier = Modifier.height(20.dp))
 
             Row(
