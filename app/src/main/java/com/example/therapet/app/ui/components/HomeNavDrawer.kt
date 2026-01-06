@@ -1,4 +1,4 @@
-package com.example.therapet.app.home
+package com.example.therapet.app.ui.components
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth

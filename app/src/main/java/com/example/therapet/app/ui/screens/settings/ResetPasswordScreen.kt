@@ -1,4 +1,4 @@
-package com.example.therapet.app.auth
+package com.example.therapet.app.ui.screens.settings
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,9 +25,9 @@ import androidx.compose.ui.unit.dp
 import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import com.example.therapet.R
-import com.example.therapet.app.auth.register.ConfPasswordInput
-import com.example.therapet.app.auth.register.PasswordInput
 import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
+import com.example.therapet.app.ui.screens.register.ConfPasswordInput
+import com.example.therapet.app.ui.screens.register.PasswordInput
 
 
 /**

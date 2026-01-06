@@ -1,4 +1,4 @@
-package com.example.therapet.app.pet
+package com.example.therapet.app.ui.screens.pet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

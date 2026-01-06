@@ -1,4 +1,4 @@
-package com.example.therapet.app.home
+package com.example.therapet.app.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,9 +20,10 @@ import com.example.therapet.app.ui.components.bars.MainTopBar
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.R
-import com.example.therapet.app.pet.PetPlaceholder
+import com.example.therapet.app.ui.components.HomeNavigationDrawer
 import com.example.therapet.app.ui.components.bars.PetCareBar
 import com.example.therapet.app.ui.components.buttons.home.CircularButton
+import com.example.therapet.app.ui.screens.pet.PetPlaceholder
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import kotlinx.coroutines.launch
 
@@ -80,7 +81,7 @@ fun HomeScreen(
                 )
             },
             bottomBar = {
-               PetCareBar()
+                PetCareBar()
             }
         ) { innerPadding ->
 

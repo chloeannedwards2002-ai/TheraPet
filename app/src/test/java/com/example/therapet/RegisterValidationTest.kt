@@ -16,14 +16,16 @@ import org.junit.Test
  *  2. Empty user ID
  *  3. Passwords do not match
  *  4. Invalid password
- *  5.
+ *  5. Valid / invalid user IDs
  */
 
 class RegisterValidationTest {
+
+    // 1. All fields are valid
     @Test
     fun all_fields_are_valid(){
         val result = RegisterValidation.canRegister(
-            userId = "userid1234567891",
+            userId = "userid123456",
             firstName = "Bob",
             surname = "Bobbington",
             password = "Abcdef1!",
@@ -32,6 +34,7 @@ class RegisterValidationTest {
         assertTrue(result)
     }
 
+    // 2. Empty user ID
     @Test
     fun empty_user_id() {
         val result = RegisterValidation.canRegister(
@@ -44,6 +47,7 @@ class RegisterValidationTest {
         assertFalse(result)
     }
 
+    // 3. Passwords do not match
     @Test
     fun passwords_do_not_match(){
         val result = RegisterValidation.canRegister(
@@ -56,6 +60,7 @@ class RegisterValidationTest {
         assertFalse(result)
     }
 
+    // 4. Invalid password
     @Test
     fun invalid_password(){
         val result = RegisterValidation.canRegister(
@@ -69,17 +74,14 @@ class RegisterValidationTest {
         assertFalse(result)
     }
 
+    //5. Valid / invalid User IDs
     @Test
-    fun user_id_shorter_than_16_characters_is_invalid(){
-        val result = RegisterValidation.canRegister(
-            userId = "ID",
-            firstName = "Bob",
-            surname = "Bobbington",
-            password = "Abcdef1!",
-            confirmPassword = "Abcdef1!"
-        )
-
-        assertFalse(result)
+    fun userIdIsValid_12_to_16_characters_only(){
+        assertTrue(RegisterValidation.userIdIsValid("123456789012"))
+        assertTrue(RegisterValidation.userIdIsValid("1234567890123456"))
+        assertFalse(RegisterValidation.userIdIsValid("12345678901"))
+        assertFalse(RegisterValidation.userIdIsValid("1234567890123"))
+        assertFalse(RegisterValidation.userIdIsValid("123456789012345"))
+        assertFalse(RegisterValidation.userIdIsValid("12345678901234567"))
     }
-
 }

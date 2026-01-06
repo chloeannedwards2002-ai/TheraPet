@@ -1,4 +1,4 @@
-package com.example.therapet.app.settings
+package com.example.therapet.app.ui.screens.settings
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
 import com.example.therapet.app.ui.components.buttons.general.CustomElevatedButton
 import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
+import com.example.therapet.app.ui.screens.booking.ContinueButton
 
 /**
  * @author: Chloe Edwards

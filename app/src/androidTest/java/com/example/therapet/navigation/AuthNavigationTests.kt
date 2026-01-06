@@ -4,6 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import com.example.therapet.helpers.BaseNav
+import com.example.therapet.helpers.register
 import org.junit.Test
 
 /**
@@ -80,16 +81,7 @@ class AuthNavigationTests : BaseNav() {
     // 5. Welcome -> Register -> Create Pet
     @Test
     fun onClickRegisterButtonRegisterScreenNavigatesToCreatePetScreen(){
-        composeTestRule
-            .onNodeWithTag("choose_register_button")
-            .assertIsDisplayed()
-            .performClick()
-
-        // Click "Register" button on the Register screen
-        composeTestRule
-            .onNodeWithTag("register_button")
-            .assertIsDisplayed()
-            .performClick()
+        composeTestRule.register()
 
         // Verify the register screen is loaded
         composeTestRule
@@ -100,17 +92,7 @@ class AuthNavigationTests : BaseNav() {
     // 6. Welcome -> Register -> Create Pet -> Home
     @Test
     fun onClickConfirmButtonRegisterScreenNavigatesToHomeScreen() {
-        // Navigate to the create pet screen
-        composeTestRule
-            .onNodeWithTag(testTag = "choose_register_button")
-            .assertIsDisplayed()
-            .performClick()
-
-        // Click register button
-        composeTestRule
-            .onNodeWithTag(testTag = "register_button")
-            .assertIsDisplayed()
-            .performClick()
+        composeTestRule.register()
 
         // Click the "Confirm" button
         composeTestRule
