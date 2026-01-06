@@ -1,4 +1,4 @@
-package com.example.therapet.app.auth.register
+package com.example.therapet.app.ui.screens.register
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,6 +27,9 @@ import androidx.compose.ui.unit.dp
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.platform.testTag
 import com.example.therapet.R
+import com.example.therapet.app.auth.register.PasswordChecklist
+import com.example.therapet.app.auth.register.PasswordValidator
+import com.example.therapet.app.auth.register.RegisterValidation
 import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
 import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
@@ -98,7 +101,7 @@ fun RegisterScreen(
             if (userId.isNotEmpty() && userId.length < 16) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "User ID must be at least 16 characters",
+                    text = "Enter valid user ID",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.error
                 )

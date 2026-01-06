@@ -1,4 +1,4 @@
-package com.example.therapet.app.booking
+package com.example.therapet.app.ui.screens.booking
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

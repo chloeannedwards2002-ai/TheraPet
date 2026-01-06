@@ -4,6 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 
 /**
  * @Author: Chloe Edwards
@@ -37,6 +38,33 @@ fun ComposeTestRule.navDrawer(){
 
     onNodeWithTag("nav_drawer")
         .assertIsDisplayed()
+}
+
+// Register help - Now that registration is validated, a valid registration is needed
+
+fun ComposeTestRule.register(
+    userId: String = "123456789012",
+    firstName: String = "Bob",
+    surname: String = "Bobbington",
+    password: String = "Password_123"
+) {
+    // Navigate to registration screen
+    onNodeWithTag("choose_register_button")
+        .assertIsDisplayed()
+        .performClick()
+
+    // Fill in the registration form
+    onNodeWithTag("user_id_input").performTextInput(userId)
+    onNodeWithTag("first_name_input").performTextInput(firstName)
+    onNodeWithTag("surname_input").performTextInput(surname)
+    onNodeWithTag("password_input").performTextInput(password)
+    onNodeWithTag("confirm_password_input").performTextInput(password)
+
+    val registerButton = onNodeWithTag("register_button")
+    registerButton.assertIsDisplayed()
+
+    //wait for button to become available
+    registerButton.performClick()
 }
 
 
