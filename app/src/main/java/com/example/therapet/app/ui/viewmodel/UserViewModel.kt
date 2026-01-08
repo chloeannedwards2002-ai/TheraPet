@@ -43,12 +43,14 @@ class UserViewModel(
         password: String
     ) {
         viewModelScope.launch {
-            try {
-                repository.register(userid, firstname, surname, password)
-                _registerResult.value = true
-            } catch (e: Exception) {
+// check if user exists
+            if (repository.userExists(userid)) {
                 _registerResult.value = false
+                return@launch
             }
+
+            repository.register(userid, firstname, surname, password)
+            _registerResult.value = true
         }
     }
 

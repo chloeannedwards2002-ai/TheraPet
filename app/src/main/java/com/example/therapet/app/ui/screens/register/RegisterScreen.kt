@@ -44,7 +44,12 @@ import com.example.therapet.app.ui.components.fields.input.CustomPasswordTextFie
 
 @Composable
 fun RegisterScreen(
-    onRegister: () -> Unit,
+    onRegister: (
+            userId: String,
+            firstName: String,
+            surname: String,
+            password: String
+            ) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -98,7 +103,7 @@ fun RegisterScreen(
                 onValueChange = { userId = it }
             )
 
-            if (userId.isNotEmpty() && userId.length < 16) {
+            if (userId.isNotEmpty() && !RegisterValidation.userIdIsValid(userId)) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "Enter valid user ID",
@@ -144,7 +149,9 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             RegisterButton(
-                onClick = onRegister,
+                onClick = {
+                    onRegister(userId, firstName, surname, password)
+                },
                 enabled = canRegister
             )
         }
@@ -298,7 +305,7 @@ fun RegisterButton(
 fun RegistrationPreview() {
     TheraPetTheme {
         RegisterScreen(
-            onRegister = {},
+            onRegister = { _, _, _, _ -> },
             onBack = {}
         )
     }

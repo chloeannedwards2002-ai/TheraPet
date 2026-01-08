@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.foundation.layout)
     implementation(libs.androidx.ui)
+    implementation(libs.mediation.test.suite)
     androidTestImplementation(libs.androidx.ui.test.junit4)
     // For navigation
     val nav_version = "2.9.6"

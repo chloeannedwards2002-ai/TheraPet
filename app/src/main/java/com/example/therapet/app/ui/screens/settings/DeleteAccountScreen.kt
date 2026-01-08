@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
 import com.example.therapet.app.ui.components.buttons.general.CustomElevatedButton
 import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
-import com.example.therapet.app.ui.screens.booking.ContinueButton
+
 
 /**
  * @author: Chloe Edwards
@@ -61,7 +61,7 @@ fun DeleteAccountScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            ContinueButton(onClick = onContinue)
+            DeleteAccountContinueButton(onClick = onContinue)
         }
     }
 }
@@ -80,7 +80,7 @@ fun PasswordTextField(modifier: Modifier = Modifier){
 }
 
 @Composable
-fun ContinueButton(modifier: Modifier = Modifier, onClick: () -> Unit){
+fun DeleteAccountContinueButton(modifier: Modifier = Modifier, onClick: () -> Unit){
     CustomElevatedButton(
         modifier = modifier
             .testTag("delete_account_confirm_button"),
