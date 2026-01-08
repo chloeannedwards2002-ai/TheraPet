@@ -19,15 +19,19 @@ interface UserDao {
     @Insert
     suspend fun insertUser(user: UserEntity)
 
+    //Login query
     @Query("""
         SELECT * FROM users
         WHERE userid = :userid
         AND password = :password
     """)
-
     suspend fun login(
         userid: String,
         password: String
     ): UserEntity?
+
+    // Check user exists query
+    @Query("SELECT EXISTS(SELECT 1 FROM users WHERE userid = :userid)")
+    suspend fun userExists(userid: String): Boolean
 
 }

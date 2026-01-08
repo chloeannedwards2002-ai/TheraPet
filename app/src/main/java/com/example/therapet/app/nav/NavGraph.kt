@@ -1,11 +1,12 @@
 package com.example.therapet.app.nav
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.therapet.app.ui.screens.login.LoginScreen
-import com.example.therapet.app.ui.screens.register.RegisterScreen
 import com.example.therapet.app.ui.screens.settings.ResetPasswordScreen
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
@@ -15,11 +16,15 @@ import com.example.therapet.app.ui.screens.home.HomeScreen
 import com.example.therapet.app.ui.screens.settings.ProfileScreen
 import com.example.therapet.app.ui.screens.pet.CreatePetScreen
 import com.example.therapet.app.ui.screens.pet.PetSettingsScreen
+import com.example.therapet.app.ui.screens.register.RegisterRoute
 import com.example.therapet.app.ui.screens.settings.DeleteAccountConfirmScreen
 import com.example.therapet.app.ui.screens.settings.DeleteAccountScreen
 import com.example.therapet.app.ui.screens.settings.HelpSupportScreen
 import com.example.therapet.app.ui.screens.settings.PrivacyPolicyScreen
 import com.example.therapet.app.ui.screens.settings.SettingsScreen
+import com.google.android.ads.mediationtestsuite.viewmodels.ViewModelFactory
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 /**
  * @Author: Chloe Edwards
@@ -44,10 +49,13 @@ fun NavGraph(
             )
         }
 
+        //Navgraph now doesn't call register screen anymore because of RegisterRoute
         composable(Routes.REGISTER) { // Composable for the Registration screen
-            RegisterScreen(
-                onRegister = { navController.navigate(Routes.CREATE_PET) },
-                onBack = { navController.popBackStack() }
+            RegisterRoute(
+                onBack = { navController.popBackStack() },
+                onRegisterSuccess = {
+                    navController.navigate(Routes.CREATE_PET)
+                }
             )
         }
 

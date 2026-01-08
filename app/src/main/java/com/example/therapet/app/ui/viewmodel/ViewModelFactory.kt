@@ -1,7 +1,6 @@
 package com.example.therapet.app.ui.viewmodel
 
 import android.content.Context
-import androidx.compose.ui.tooling.data.ContextCache
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.therapet.app.data.local.AppDatabase
@@ -17,7 +16,7 @@ import com.example.therapet.app.data.repository.UserRepository
 // Nesting
 class ViewModelFactory {
 
-    class userViewModelFactory(
+    class UserViewModelFactory(
         // Class receives a context, implements ViewModelProvider and will be passed to viewModels {}
         context: Context
 

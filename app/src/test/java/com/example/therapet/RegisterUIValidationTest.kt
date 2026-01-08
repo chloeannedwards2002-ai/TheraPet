@@ -19,7 +19,7 @@ import org.junit.Test
  *  5. Valid / invalid user IDs
  */
 
-class RegisterValidationTest {
+class RegisterUIValidationTest {
 
     // 1. All fields are valid
     @Test

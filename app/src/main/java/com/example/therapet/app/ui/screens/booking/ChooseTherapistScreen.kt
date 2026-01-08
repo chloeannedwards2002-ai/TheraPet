@@ -35,7 +35,7 @@ fun ChooseTherapistScreen(
             )
         },
         floatingActionButton = {
-            ContinueButton(
+            ChooseTherapistContinueButton(
                 onClick = onContinue,
             )
         }
@@ -52,7 +52,7 @@ fun ChooseTherapistScreen(
 
 // Continue button
 @Composable
-fun ContinueButton(onClick: () -> Unit){
+fun ChooseTherapistContinueButton(onClick: () -> Unit){
     CustomFilledButton(
         onClick = onClick,
         text = stringResource(R.string.continue_button),

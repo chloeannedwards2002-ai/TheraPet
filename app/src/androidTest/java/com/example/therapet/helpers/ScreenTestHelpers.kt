@@ -18,7 +18,7 @@ object RegisterScreenTestHelpers {
     ) {
         composeRule.setContent {
             RegisterScreen(
-                onRegister = {},
+                onRegister = {_, _, _, _ -> },
                 onBack = {}
             )
         }

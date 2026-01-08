@@ -19,7 +19,7 @@ import org.junit.Test
  *  5. Password without uppercase
  */
 
-class PasswordValidationTest {
+class PasswordUIValidationTest {
 
     // 1. Testing a valid password is valid
     @Test
