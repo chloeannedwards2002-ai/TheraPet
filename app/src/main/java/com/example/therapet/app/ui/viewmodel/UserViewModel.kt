@@ -3,6 +3,7 @@ package com.example.therapet.app.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.therapet.app.data.repository.UserRepositoryContract
+import com.example.therapet.app.data.session.SessionManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -17,12 +18,14 @@ import kotlinx.coroutines.launch
  */
 
 class UserViewModel(
-    private val repository: UserRepositoryContract
+    private val repository: UserRepositoryContract,
+    private val sessionManager: SessionManager
 ) : ViewModel() {
-//_loginResult is mutable and private, loginResult is read-only and public
+    //_loginResult is mutable and private, loginResult is read-only and public
     private val _loginResult = MutableStateFlow<Boolean?>(null)
     val loginResult: StateFlow<Boolean?> = _loginResult
-//same here for register
+
+    //same here for register
     private val _registerResult = MutableStateFlow<Boolean?>(null)
     val registerResult: StateFlow<Boolean?> = _registerResult
 
@@ -30,35 +33,42 @@ class UserViewModel(
     // gets called by the UI and launches the viewmodel lifecycle coroutine (also updates state)
     fun login(
         userid: String,
-        password: String){
-        viewModelScope.launch{
-            _loginResult.value = repository.login(userid, password)
-        }
-    }
-
-    fun register(
-        userid: String,
-        firstname: String,
-        surname: String,
         password: String
     ) {
         viewModelScope.launch {
-// check if user exists
-            if (repository.userExists(userid)) {
-                _registerResult.value = false
-                return@launch
-            }
+            val success = repository.login(userid, password)
+            _loginResult.value = success
 
-            repository.register(userid, firstname, surname, password)
-            _registerResult.value = true
+            if (success) {
+                sessionManager.login(userid)
+            }
         }
     }
 
-    fun clearLoginResult() {
-        _loginResult.value = null
+        fun register(
+            userid: String,
+            firstname: String,
+            surname: String,
+            password: String
+        ) {
+            viewModelScope.launch {
+// check if user exists
+                if (repository.userExists(userid)) {
+                    _registerResult.value = false
+                    return@launch
+                }
+
+                repository.register(userid, firstname, surname, password)
+                _registerResult.value = true
+            }
+        }
+
+        fun clearLoginResult() {
+            _loginResult.value = null
+        }
+
+        fun clearRegisterResult() {
+            _registerResult.value = null
+        }
     }
 
-    fun clearRegisterResult() {
-        _registerResult.value = null
-    }
-}
