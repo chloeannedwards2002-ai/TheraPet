@@ -1,4 +1,4 @@
-package com.example.therapet
+package com.example.therapet.helpers
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher

@@ -2,7 +2,7 @@ package com.example.therapet.app.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.therapet.app.data.repository.UserRepository
+import com.example.therapet.app.data.repository.UserRepositoryContract
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  */
 
 class UserViewModel(
-    private val repository: UserRepository
+    private val repository: UserRepositoryContract
 ) : ViewModel() {
 //_loginResult is mutable and private, loginResult is read-only and public
     private val _loginResult = MutableStateFlow<Boolean?>(null)
