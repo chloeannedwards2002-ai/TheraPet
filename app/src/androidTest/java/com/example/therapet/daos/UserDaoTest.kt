@@ -1,4 +1,4 @@
-package com.example.therapet.daotests
+package com.example.therapet.daos
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -29,6 +29,8 @@ class UserDaoTest {
     private lateinit var database: AppDatabase
     private lateinit var dao: UserDao
 
+
+    //Setting up the in-memory room database
     @Before
     fun setup(){
         database = Room.inMemoryDatabaseBuilder(

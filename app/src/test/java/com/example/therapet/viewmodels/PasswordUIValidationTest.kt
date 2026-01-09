@@ -1,4 +1,4 @@
-package com.example.therapet
+package com.example.therapet.viewmodels
 
 import com.example.therapet.app.auth.register.PasswordValidator
 import org.junit.Assert.assertFalse

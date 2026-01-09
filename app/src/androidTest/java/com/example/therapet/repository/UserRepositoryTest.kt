@@ -1,10 +1,13 @@
-package com.example.therapet
+package com.example.therapet.repository
 
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
+import com.example.therapet.app.data.local.AppDatabase
+import com.example.therapet.app.data.local.dao.UserDao
 import com.example.therapet.app.data.repository.UserRepository
-import com.example.therapet.helpers.FakeUserDao
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.After
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
@@ -20,11 +23,25 @@ import org.junit.Test
 
 class UserRepositoryTest {
 
+    private lateinit var db: AppDatabase
+    private lateinit var userDao: UserDao
     private lateinit var repository: UserRepository
 
+    //Setting up the in-memory room database
     @Before
     fun setup(){
-        repository = UserRepository(FakeUserDao())
+        db = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            AppDatabase::class.java)
+            .allowMainThreadQueries().build()
+
+        userDao = db.userDao()
+        repository = UserRepository(userDao)
+    }
+
+    @After
+    fun shutdown(){
+        db.close()
     }
 
     //1. Registration - no invalid test needed because invalid details are caught by the UI and register button is disabled until details ARE valid
@@ -33,7 +50,7 @@ class UserRepositoryTest {
         repository.register("X328DFSJ108Z", "Bob", "Bobbington", "Password_123")
 
         val exists = repository.userExists("X328DFSJ108Z")
-        assertTrue(exists)
+        Assert.assertTrue(exists)
     }
 
     //2. Logging in with valid details TODO: Implement login state functionality
@@ -48,6 +65,6 @@ class UserRepositoryTest {
     @Test
     fun login_with_invalid_details() = runBlocking {
         val result = repository.login("83248ndsfnskjjesnf838", "invalid")
-        assertFalse(result)
+        Assert.assertFalse(result)
     }
 }

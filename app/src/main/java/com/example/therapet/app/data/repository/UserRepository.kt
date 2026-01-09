@@ -5,10 +5,10 @@ import com.example.therapet.app.data.entity.UserEntity
 
 class UserRepository(
     private val userDao: UserDao
-    )
+    ): UserRepositoryContract
 {
     //Register
-    suspend fun register(
+    override suspend fun register(
         userid: String,
         firstname: String,
         surname: String,
@@ -25,7 +25,7 @@ class UserRepository(
     }
 
     //Login
-    suspend fun login(
+    override suspend fun login(
         userid: String,
         password: String
     ): Boolean {
@@ -33,7 +33,7 @@ class UserRepository(
     }
 
     // check user exists
-    suspend fun userExists(userid: String): Boolean {
+    override suspend fun userExists(userid: String): Boolean {
         return userDao.userExists(userid)
     }
 }

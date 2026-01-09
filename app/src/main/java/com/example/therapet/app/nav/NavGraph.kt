@@ -1,12 +1,9 @@
 package com.example.therapet.app.nav
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.therapet.app.ui.screens.login.LoginScreen
 import com.example.therapet.app.ui.screens.settings.ResetPasswordScreen
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
@@ -22,8 +19,7 @@ import com.example.therapet.app.ui.screens.settings.DeleteAccountScreen
 import com.example.therapet.app.ui.screens.settings.HelpSupportScreen
 import com.example.therapet.app.ui.screens.settings.PrivacyPolicyScreen
 import com.example.therapet.app.ui.screens.settings.SettingsScreen
-import com.google.android.ads.mediationtestsuite.viewmodels.ViewModelFactory
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.therapet.app.ui.screens.login.LoginRoute
 
 
 /**
@@ -60,9 +56,12 @@ fun NavGraph(
         }
 
         composable(Routes.LOGIN) { // Composable for the Login screen
-            LoginScreen(
+            LoginRoute(
                 onRegisterNav = { navController.navigate(Routes.REGISTER) },
-                onLogin = { navController.navigate(Routes.HOME) },
+                onLoginSuccess = { navController.navigate(Routes.HOME){
+                    // Once logged in, cannot go back to login page
+                    popUpTo(Routes.LOGIN) { inclusive = true }
+                } },
                 onBack = { navController.popBackStack() }
             )
         }

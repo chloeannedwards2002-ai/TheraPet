@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
+import com.example.therapet.app.auth.login.LoginValidation
 import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
 import com.example.therapet.app.ui.components.buttons.general.CustomTextButton
@@ -40,11 +41,23 @@ import com.example.therapet.app.ui.components.fields.input.CustomPasswordTextFie
 
 @Composable
 fun LoginScreen(
+    onLogin: (
+        userId: String,
+        password: String
+    ) -> Unit,
     onRegisterNav: () -> Unit,
-    onLogin: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var userId by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    //Checking if all inputs are filled in
+    val canLogin = LoginValidation.canLogin(
+        userId = userId,
+        password = password
+    )
+
     Scaffold(
 
     ) { innerPadding ->
@@ -74,18 +87,22 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            UserLoginIDInput()
+            UserLoginIDInput(value = userId, onValueChange = { userId = it })
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            LoginPasswordInput()
+            LoginPasswordInput(value = password, onValueChange = { password = it}
+            )
 
             RememberPasswordCheckBox(
                 modifier = Modifier.align(Alignment.Start)
             )
 
             LoginButton(
-                onClick = onLogin,
+                onClick = {
+                    onLogin(userId, password)
+                },
+                enabled = canLogin
             )
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -114,11 +131,13 @@ fun LoginScreen(
 
 // User ID input
 @Composable
-fun UserLoginIDInput(modifier: Modifier = Modifier){
-    var loginID by remember { mutableStateOf("") }
+fun UserLoginIDInput(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier){
     CustomOutlinedTextField(
-        value = loginID,
-        onValueChange = { loginID = it },
+        value = value,
+        onValueChange = onValueChange,
         placeholder = "Enter User ID",
         label = "User ID",
         modifier = modifier
@@ -128,12 +147,14 @@ fun UserLoginIDInput(modifier: Modifier = Modifier){
 
 // Password input
 @Composable
-fun LoginPasswordInput(modifier: Modifier = Modifier){
-    var password by remember { mutableStateOf("") }
-
+fun LoginPasswordInput(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+){
     CustomPasswordTextField(
-        value = password,
-        onValueChange = { password = it },
+        value = value,
+        onValueChange = onValueChange,
         placeholder = "Password",
         label = "Password",
         modifier = modifier
@@ -156,14 +177,16 @@ fun RememberPasswordCheckBox(modifier: Modifier = Modifier){
 
 // Login button
 @Composable
-fun LoginButton(onClick: () -> Unit){
+fun LoginButton(onClick: () -> Unit,
+                enabled: Boolean){
     CustomFilledButton(
         onClick = onClick,
         text = stringResource(R.string.login),
         modifier = Modifier
             .fillMaxWidth(0.5F)
             .padding(top = 20.dp)
-            .testTag("login_button")
+            .testTag("login_button"),
+        enabled = enabled
     )
 }
 
@@ -196,7 +219,7 @@ fun ForgotPasswordButton(onClick: () -> Unit){
 fun LoginPreview() {
     TheraPetTheme {
         LoginScreen(
-            onLogin = {},
+            onLogin = {_, _ ->},
             onBack = {},
             onRegisterNav = {}
         )
