@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.therapet.app.data.local.AppDatabase
 import com.example.therapet.app.data.repository.UserRepository
+import com.example.therapet.app.data.session.SessionManager
 
 /**
  * @author: Chloe Edwards
@@ -23,9 +24,10 @@ class ViewModelFactory {
     ): ViewModelProvider.Factory {
 
         // getDatabase returns the Room database
+        private val sessionManager = SessionManager()
+
         private val repository: UserRepository =
             UserRepository(
-                // userDao() gives access to the database
                 AppDatabase.getDatabase(context).userDao()
             )
 
@@ -33,7 +35,10 @@ class ViewModelFactory {
             // Checks whic view model is requested
             if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return UserViewModel(repository) as T
+                return UserViewModel(
+                    repository = repository,
+                    sessionManager = sessionManager
+                ) as T
             }
             //Fall back
             throw IllegalArgumentException("Unknown ViewModel class")
