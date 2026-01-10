@@ -1,5 +1,7 @@
 package com.example.therapet.repositories
 
+import com.example.therapet.app.data.entity.UserEntity
+import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.repository.UserRepositoryContract
 
 /**
@@ -10,7 +12,7 @@ import com.example.therapet.app.data.repository.UserRepositoryContract
  */
 
 class FakeUserRepository : UserRepositoryContract {
-    private val users = mutableMapOf<String, String>()
+    private val users = mutableMapOf<String, UserEntity>()
 
     override suspend fun register(
         userid: String,
@@ -18,14 +20,34 @@ class FakeUserRepository : UserRepositoryContract {
         surname: String,
         password: String
     ) {
-        users[userid] = password
+        val role = determineUserRole(userid)
+        users[userid] = UserEntity(
+            userid = userid,
+            firstname = firstname,
+            surname = surname,
+            password = password,
+            role = role
+        )
     }
 
-    override suspend fun login(userid: String, password: String): Boolean {
-        return users[userid] == password
+    override suspend fun login(userid: String, password: String): UserEntity? {
+        val user = users[userid]
+        return if (user != null && user.password == password) user else null
     }
 
     override suspend fun userExists(userid: String): Boolean {
         return users.containsKey(userid)
+    }
+
+    override suspend fun getUserRole(userid: String, password: String): UserRole? {
+        return login(userid, password)?.role
+    }
+
+    private fun determineUserRole(userid: String): UserRole {
+        return when (userid.length) {
+            12 -> UserRole.PATIENT
+            16 -> UserRole.THERAPIST
+            else -> throw IllegalArgumentException("Invalid user ID")
+        }
     }
 }

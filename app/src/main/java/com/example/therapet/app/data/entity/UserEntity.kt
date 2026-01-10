@@ -2,6 +2,7 @@ package com.example.therapet.app.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.therapet.app.data.model.UserRole
 
 /**
  * @author: Chloe Edwards
@@ -18,5 +19,6 @@ data class UserEntity(
     val userid: String,
     val firstname: String,
     val surname: String,
-    val password: String
+    val password: String,
+    val role: UserRole
 )

@@ -36,11 +36,13 @@ class UserViewModel(
         password: String
     ) {
         viewModelScope.launch {
-            val success = repository.login(userid, password)
-            _loginResult.value = success
+            val user = repository.login(userid, password)
 
-            if (success) {
-                sessionManager.login(userid)
+            if (user != null) {
+                _loginResult.value = true
+                sessionManager.login(user.userid, user.role)
+            } else {
+                _loginResult.value = false
             }
         }
     }
@@ -59,7 +61,14 @@ class UserViewModel(
                 }
 
                 repository.register(userid, firstname, surname, password)
-                _registerResult.value = true
+
+                val user = repository.login(userid, password)
+                if (user != null) {
+                    sessionManager.login(user.userid, user.role)
+                    _registerResult.value = true
+                } else {
+                    _registerResult.value = false
+                }
             }
         }
 
