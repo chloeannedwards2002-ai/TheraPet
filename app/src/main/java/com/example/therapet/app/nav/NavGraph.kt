@@ -1,9 +1,15 @@
 package com.example.therapet.app.nav
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.screens.settings.ResetPasswordScreen
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
@@ -20,6 +26,8 @@ import com.example.therapet.app.ui.screens.settings.HelpSupportScreen
 import com.example.therapet.app.ui.screens.settings.PrivacyPolicyScreen
 import com.example.therapet.app.ui.screens.settings.SettingsScreen
 import com.example.therapet.app.ui.screens.login.LoginRoute
+import com.example.therapet.app.ui.viewmodel.UserViewModel
+import com.example.therapet.app.ui.viewmodel.ViewModelFactory
 
 
 /**
@@ -45,12 +53,24 @@ fun NavGraph(
             )
         }
 
-        //Navgraph now doesn't call register screen anymore because of RegisterRoute
+        // User role determines what screen apears after registration TODO: Login determines home screen
         composable(Routes.REGISTER) { // Composable for the Registration screen
             RegisterRoute(
                 onBack = { navController.popBackStack() },
                 onRegisterSuccess = {
-                    navController.navigate(Routes.CREATE_PET)
+                    role ->
+                    when(role){
+                        UserRole.PATIENT -> {
+                            navController.navigate(Routes.CREATE_PET){
+                                popUpTo(Routes.REGISTER) { inclusive = true }
+                            }
+                        }
+                        UserRole.THERAPIST -> {
+                            navController.navigate(Routes.HOME){
+                                popUpTo(Routes.REGISTER) {inclusive = true}
+                            }
+                        }
+                    }
                 }
             )
         }
@@ -73,19 +93,27 @@ fun NavGraph(
         }
 
         composable(Routes.HOME) { // Composable for the Home screen including navigation in NavDrawer
-            HomeScreen(
-                onLogout = {
-                    navController.navigate(Routes.WELCOME) {
-                        popUpTo(Routes.HOME) { inclusive = true }
-                        launchSingleTop = true
-                    }
-                },
-                onProfile = { navController.navigate(Routes.PROFILE) },
-                onSettings = { navController.navigate(Routes.SETTINGS) },
-                onNotifs = { /* TODO: When notifs screen is created ! */ },
-                onAppts = { navController.navigate(Routes.APPOINTMENTS) },
-                onBookAppt = { navController.navigate(Routes.CHOOSE_THERAPIST) }
+            val userViewModel: UserViewModel = viewModel(
+                factory = ViewModelFactory.UserViewModelFactory(LocalContext.current)
             )
+            val role by userViewModel.loggedInRole.collectAsState()
+
+            role?.let {
+                HomeScreen(
+                    onLogout = {
+                        navController.navigate(Routes.WELCOME) {
+                            popUpTo(Routes.HOME) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    },
+                    onProfile = { navController.navigate(Routes.PROFILE) },
+                    onSettings = { navController.navigate(Routes.SETTINGS) },
+                    onNotifs = { /* TODO: When notifs screen is created ! */ },
+                    onAppts = { navController.navigate(Routes.APPOINTMENTS) },
+                    onBookAppt = { navController.navigate(Routes.CHOOSE_THERAPIST) },
+                    role = it
+                    )
+            }
         }
 
         composable(Routes.SETTINGS) { // Composable for the Settings screen

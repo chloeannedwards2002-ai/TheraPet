@@ -20,6 +20,7 @@ import com.example.therapet.app.ui.components.bars.MainTopBar
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.R
+import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.HomeNavigationDrawer
 import com.example.therapet.app.ui.components.bars.PetCareBar
 import com.example.therapet.app.ui.components.buttons.home.CircularButton
@@ -32,11 +33,14 @@ import kotlinx.coroutines.launch
  * @date: 24/12/2025
  *
  * Home screen UI
+ *
+ * Repeated if statements about PATIENT role are no optimal but will work for now
  */
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    role: UserRole, // used to adjust what is shown on the screen
     modifier: Modifier = Modifier,
     onLogout: () -> Unit,
     onSettings: () -> Unit,
@@ -63,12 +67,14 @@ fun HomeScreen(
 
         Scaffold(
             floatingActionButton = {
-                CircularButton(
-                    onClick = onBookAppt,
-                    modifier = Modifier
-                        .padding(16.dp),
-                    testTag = "choose_therapist_button"
-                )
+                if(role == UserRole.PATIENT){ 
+                    CircularButton(
+                        onClick = onBookAppt,
+                        modifier = Modifier
+                            .padding(16.dp),
+                        testTag = "choose_therapist_button"
+                    )
+                }
             },
 
             topBar = {
@@ -81,32 +87,53 @@ fun HomeScreen(
                 )
             },
             bottomBar = {
-                PetCareBar()
+                if (role == UserRole.PATIENT) {
+                    PetCareBar()
+                }
             }
         ) { innerPadding ->
 
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .testTag("home_screen"),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Spacer(modifier = Modifier.height(150.dp))
+            if(role == UserRole.PATIENT) {
+                Column(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .testTag("home_screen"),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Spacer(modifier = Modifier.height(150.dp))
 
-                PetPlaceholder()
+                    PetPlaceholder()
 
+                }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "Patient Home Screen")
 @Composable
-fun HomeScreenPreview() {
+fun HomeScreenPatientPreview() {
     TheraPetTheme {
         HomeScreen(
+            role = UserRole.PATIENT,
+            onLogout = {},
+            onSettings = {},
+            onNotifs = {},
+            onAppts = {},
+            onBookAppt = {},
+            onProfile = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Therapist Home Screen")
+@Composable
+fun HomeScreenTherapistPreview() {
+    TheraPetTheme {
+        HomeScreen(
+            role = UserRole.THERAPIST,
             onLogout = {},
             onSettings = {},
             onNotifs = {},

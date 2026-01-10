@@ -12,6 +12,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.Assert.assertNull
+import com.example.therapet.app.data.model.UserRole
 
 /**
  * @author: Chloe Edwards
@@ -21,9 +22,10 @@ import org.junit.Assert.assertNull
  * 1. Registration is successful and sets register result to true
  * 2. Registration is not successful and register result is set to false
  * 3. When register result is cleared, becomes null
- * 4.  With valid login details, login result is true
+ * 4. With valid login details, login result is true
  * 5. With invalid login details, login result is false
- * 6. When login is done, login result is cleared
+ * 6. When login is done, login result is cleared#
+ * 7. registering logs the user in straight away
  */
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -42,6 +44,7 @@ class UserViewModelTest {
         viewModel = UserViewModel(repository, sessionManager)
     }
 
+    //1. Registration is successful and sets register result to true
     @Test
     fun successful_register_gives_register_result_true() = runTest {
         viewModel.register("X328DFSJ108Z", "Bob", "Bobbington", "Password_123")
@@ -49,6 +52,7 @@ class UserViewModelTest {
         assertEquals(true, viewModel.registerResult.value)
     }
 
+    //2. Registration is not successful and register result is set to false
     @Test
     fun register_existing_userid_gives_register_result_false() = runTest {
         viewModel.register("X328DFSJ108Z", "Bob", "Bobbington", "Password_123")
@@ -57,7 +61,7 @@ class UserViewModelTest {
         advanceUntilIdle()
         assertEquals(false, viewModel.registerResult.value)
     }
-
+    // 3. When register result is cleared, becomes null
     @Test
     fun register_result_clear_is_null() = runTest {
         viewModel.register("X328DFSJ108Z", "Bob", "Bobbington", "Password_123")
@@ -66,6 +70,7 @@ class UserViewModelTest {
         assertNull(viewModel.registerResult.value)
     }
 
+    // 4. With valid login details, login result is true
     @Test
     fun valid_login_details_set_login_result_true() = runTest {
         viewModel.register("X328DFSJ108Z", "Bob", "Bobbington", "Password_123")
@@ -75,6 +80,7 @@ class UserViewModelTest {
         assertEquals(true, viewModel.loginResult.value)
     }
 
+    // 5. With invalid login details, login result is false
     @Test
     fun invalid_login_details_set_login_result_false() = runTest {
         viewModel.login("X328DFSJ108Z", "invalid")
@@ -82,6 +88,7 @@ class UserViewModelTest {
         assertEquals(false, viewModel.loginResult.value)
     }
 
+    //6. When login is done, login result is cleared
     @Test
     fun login_result_cleared() = runTest {
         viewModel.login("X328DFSJ108Z", "Password_123")
@@ -90,6 +97,7 @@ class UserViewModelTest {
         assertNull(viewModel.loginResult.value)
     }
 
+    // 7. registering logs the user in straight away
     @Test
     fun registering_logs_user_in_automatically() = runTest {
         // now you can use the sessionManager you created in setup()
@@ -102,6 +110,41 @@ class UserViewModelTest {
         assertEquals("123456789012", session?.userid)
         assertEquals(com.example.therapet.app.data.model.UserRole.PATIENT, session?.role)
     }
+
+    //8. registering as a patient sets the logged in role to patient
+    @Test
+    fun registering_patient_sets_loggedInRole_to_patient() = runTest {
+        viewModel.register(
+            userid = "123456123456",
+            firstname = "Bob",
+            surname = "Bobbington",
+            password = "Password_123"
+        )
+        advanceUntilIdle()
+
+        assertEquals(
+            UserRole.PATIENT,
+            viewModel.loggedInRole.value
+        )
+    }
+
+    // 9. registering as a therapist sets the logged in role to therapist
+    @Test
+    fun registering_therapist_sets_loggedInRole_to_therapist() = runTest {
+        viewModel.register(
+            userid = "1234567891234567",
+            firstname = "Callie",
+            surname = "Callaway",
+            password = "Password_123"
+        )
+        advanceUntilIdle()
+
+        assertEquals(
+            UserRole.THERAPIST,
+            viewModel.loggedInRole.value
+        )
+    }
+
 }
 
 

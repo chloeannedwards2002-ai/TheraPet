@@ -2,6 +2,7 @@ package com.example.therapet.app.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.repository.UserRepositoryContract
 import com.example.therapet.app.data.session.SessionManager
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +30,9 @@ class UserViewModel(
     private val _registerResult = MutableStateFlow<Boolean?>(null)
     val registerResult: StateFlow<Boolean?> = _registerResult
 
+    private val _loggedInRole = MutableStateFlow<UserRole?>(null)
+
+    val loggedInRole: StateFlow<UserRole?> = _loggedInRole
 
     // gets called by the UI and launches the viewmodel lifecycle coroutine (also updates state)
     fun login(
@@ -41,6 +45,8 @@ class UserViewModel(
             if (user != null) {
                 _loginResult.value = true
                 sessionManager.login(user.userid, user.role)
+                // UI can now see what the logged in role is
+                _loggedInRole.value = user.role
             } else {
                 _loginResult.value = false
             }
@@ -65,6 +71,8 @@ class UserViewModel(
                 val user = repository.login(userid, password)
                 if (user != null) {
                     sessionManager.login(user.userid, user.role)
+                    // same here
+                    _loggedInRole.value = user.role
                     _registerResult.value = true
                 } else {
                     _registerResult.value = false
@@ -80,4 +88,5 @@ class UserViewModel(
             _registerResult.value = null
         }
     }
+
 

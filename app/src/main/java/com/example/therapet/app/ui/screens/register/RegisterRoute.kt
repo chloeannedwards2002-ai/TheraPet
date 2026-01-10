@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.viewmodel.UserViewModel
 import com.example.therapet.app.ui.viewmodel.ViewModelFactory
 
@@ -30,11 +31,12 @@ import com.example.therapet.app.ui.viewmodel.ViewModelFactory
 @Composable
 fun RegisterRoute(
     onBack: () -> Unit,
-    onRegisterSuccess: () -> Unit,
+    onRegisterSuccess: (UserRole) -> Unit,
     viewModel: UserViewModel = viewModel(
         factory = ViewModelFactory.UserViewModelFactory(LocalContext.current)
     )
 ) {
+    val loggedInRole by viewModel.loggedInRole.collectAsState(initial = null)
     val snackbarHostState = remember { SnackbarHostState() }
     val registerResult by viewModel.registerResult.collectAsState(initial = null)
 
@@ -56,16 +58,12 @@ fun RegisterRoute(
     }
 
     LaunchedEffect(registerResult) {
-        when (registerResult) {
-            true -> {
-                onRegisterSuccess()
-                viewModel.clearRegisterResult()
-            }
-            false -> {
-                snackbarHostState.showSnackbar("User ID is already in use")
-                viewModel.clearRegisterResult()
-            }
-            null -> Unit
+        if (registerResult == true && loggedInRole != null) {
+            onRegisterSuccess(loggedInRole!!)
+            viewModel.clearRegisterResult()
+        } else if (registerResult == false) {
+            snackbarHostState.showSnackbar("User ID is already in use")
+            viewModel.clearRegisterResult()
         }
     }
 }
