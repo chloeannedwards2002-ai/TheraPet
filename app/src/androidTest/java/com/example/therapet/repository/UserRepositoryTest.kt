@@ -4,7 +4,10 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.example.therapet.app.data.local.AppDatabase
 import com.example.therapet.app.data.local.dao.UserDao
+import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.repository.UserRepository
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert
@@ -61,10 +64,22 @@ class UserRepositoryTest {
         val result = repository.login("X328DFSJ108Z", "Password_123")
     }
 
-    //3. Logging in with invalid details TODO: Implement login state functionality
+    // 3. Logging in with invalid details TODO: Implement login state functionality
     @Test
     fun login_with_invalid_details() = runBlocking {
         val result = repository.login("83248ndsfnskjjesnf838", "invalid")
-        Assert.assertFalse(result)
+        Assert.assertNull(result)
+    }
+
+    // 4.
+    @Test
+    fun registering_with_12_char_id_creates_patient_record() = runBlocking {
+        repository.register("123123123123", "test", "test", "Password_123")
+
+        //Not ideal way of testing but works for now
+        val user = repository.login("123123123123", "Password_123") // returns UserEntity?
+        assertNotNull(user)
+
+        assertEquals(UserRole.PATIENT, user?.role)
     }
 }

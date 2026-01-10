@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.local.AppDatabase
 import com.example.therapet.app.data.local.dao.UserDao
+import com.example.therapet.app.data.model.UserRole
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertNotNull
@@ -53,7 +54,9 @@ class UserDaoTest {
                 userid = "MNU82910CWLP",
                 firstname = "Bill",
                 surname = "Billington",
-                password = "_Password_123"
+                password = "_Password_123",
+                // user role is determined by id length in real app
+                role = UserRole.PATIENT
             )
         )
         assertTrue(dao.userExists("MNU82910CWLP"))
@@ -66,7 +69,8 @@ class UserDaoTest {
                 userid = "MNU82910CWLP",
                 firstname = "Bill",
                 surname = "Billington",
-                password = "_Password_123"
+                password = "_Password_123",
+                role = UserRole.PATIENT
             )
         )
 

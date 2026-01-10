@@ -4,9 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.therapet.app.nav.Routes
 import com.example.therapet.app.ui.screens.WelcomeScreen
-import kotlin.String
 
 /**
  * @Author: Chloe Edwards
