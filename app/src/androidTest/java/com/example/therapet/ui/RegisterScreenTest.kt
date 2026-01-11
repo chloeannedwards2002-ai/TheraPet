@@ -4,7 +4,7 @@ import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import com.example.therapet.helpers.RegisterScreenTestHelpers
+import com.example.therapet.helpers.ScreenTestHelpers
 import org.junit.Rule
 import org.junit.Test
 
@@ -22,7 +22,7 @@ class RegisterScreenTest {
 
     @Test
     fun register_button_disabled_before_all_fields_valid() {
-        RegisterScreenTestHelpers.launchRegisterScreen(composeRule)
+        ScreenTestHelpers.launchRegisterScreen(composeRule)
 
         composeRule
             .onNodeWithTag("register_button")

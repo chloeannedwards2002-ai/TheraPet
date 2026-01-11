@@ -98,7 +98,7 @@ fun NavGraph(
             )
             val role by userViewModel.loggedInRole.collectAsState()
 
-            role?.let {
+            if (role != null) {
                 HomeScreen(
                     onLogout = {
                         navController.navigate(Routes.WELCOME) {
@@ -111,19 +111,29 @@ fun NavGraph(
                     onNotifs = { /* TODO: When notifs screen is created ! */ },
                     onAppts = { navController.navigate(Routes.APPOINTMENTS) },
                     onBookAppt = { navController.navigate(Routes.CHOOSE_THERAPIST) },
-                    role = it
+                    role = role!!
                     )
             }
         }
 
         composable(Routes.SETTINGS) { // Composable for the Settings screen
-            SettingsScreen(
-                onBack = { navController.popBackStack() },
-                onPetSettings = { navController.navigate(Routes.PET_SETTINGS) },
-                onPrivacyPolicy = { navController.navigate(Routes.PRIVACY_POLICY) },
-                onHelpSupport = { navController.navigate(Routes.HELP_SUPPORT) },
-                onDeleteAccount = { navController.navigate(Routes.DELETE_ACCOUNT) }
+            //TODO: Duplicated logic is not ideal will adjust later
+            val userViewModel: UserViewModel = viewModel(
+                factory = ViewModelFactory.UserViewModelFactory(LocalContext.current)
             )
+            val role by userViewModel.loggedInRole.collectAsState()
+
+            if (role != null) {
+                SettingsScreen(
+                    onBack = { navController.popBackStack() },
+                    onPetSettings = { navController.navigate(Routes.PET_SETTINGS) },
+                    onPrivacyPolicy = { navController.navigate(Routes.PRIVACY_POLICY) },
+                    onHelpSupport = { navController.navigate(Routes.HELP_SUPPORT) },
+                    onDeleteAccount = { navController.navigate(Routes.DELETE_ACCOUNT) },
+                    role = role!!
+                )
+            }
+
         }
 
         composable(Routes.APPOINTMENTS) { // Composable for the Appointments screen
