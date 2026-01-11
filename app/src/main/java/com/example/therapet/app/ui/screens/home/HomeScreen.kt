@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,7 +25,7 @@ import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.HomeNavigationDrawer
 import com.example.therapet.app.ui.components.bars.PetCareBar
 import com.example.therapet.app.ui.components.buttons.home.CircularButton
-import com.example.therapet.app.ui.screens.pet.PetPlaceholder
+import com.example.therapet.app.ui.components.pet.PetPenguin
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import kotlinx.coroutines.launch
 
@@ -104,8 +105,11 @@ fun HomeScreen(
                 ) {
                     Spacer(modifier = Modifier.height(150.dp))
 
-                    PetPlaceholder()
-
+                    PetPenguin(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .offset(y = 30.dp)
+                    )
                 }
             }
         }
