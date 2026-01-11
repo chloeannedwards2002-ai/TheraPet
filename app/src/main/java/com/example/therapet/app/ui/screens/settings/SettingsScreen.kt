@@ -19,6 +19,7 @@ import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
+import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButton
 import com.example.therapet.app.ui.components.buttons.general.CustomTonalFilledButton
 
@@ -32,6 +33,7 @@ import com.example.therapet.app.ui.components.buttons.general.CustomTonalFilledB
 
 @Composable
 fun SettingsScreen(
+    role: UserRole,
     modifier: Modifier = Modifier,
     onBack: () -> Unit,
     onPetSettings: () -> Unit,
@@ -67,7 +69,9 @@ fun SettingsScreen(
 
             BackupButton(onClick = {/* TODO: Navigate to Backup settings */})
 
-            PetSettingsButton(onClick = onPetSettings)
+            if (role == UserRole.PATIENT) {
+                PetSettingsButton(onClick = onPetSettings)
+            }
 
             SecurityButton(onClick = {/* TODO: Navigate to Security settings */})
 
@@ -213,14 +217,30 @@ fun DeleteAccountNavButton(onClick: () -> Unit){
 
 @Preview(showBackground = true)
 @Composable
-fun SettingsPreview() {
+fun SettingsPatientPreview() {
     TheraPetTheme {
         SettingsScreen(
             onBack = {},
             onPetSettings = {},
             onPrivacyPolicy = {},
             onHelpSupport = {},
-            onDeleteAccount = {}
+            onDeleteAccount = {},
+            role = UserRole.PATIENT
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SettingsTherapistPreview() {
+    TheraPetTheme {
+        SettingsScreen(
+            onBack = {},
+            onPetSettings = {},
+            onPrivacyPolicy = {},
+            onHelpSupport = {},
+            onDeleteAccount = {},
+            role = UserRole.THERAPIST
         )
     }
 }

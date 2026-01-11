@@ -112,7 +112,7 @@ fun HomeScreen(
     }
 }
 
-@Preview(showBackground = true, name = "Patient Home Screen")
+@Preview(showBackground = true)
 @Composable
 fun HomeScreenPatientPreview() {
     TheraPetTheme {
@@ -128,7 +128,7 @@ fun HomeScreenPatientPreview() {
     }
 }
 
-@Preview(showBackground = true, name = "Therapist Home Screen")
+@Preview(showBackground = true)
 @Composable
 fun HomeScreenTherapistPreview() {
     TheraPetTheme {
