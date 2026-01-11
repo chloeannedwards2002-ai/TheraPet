@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.therapet.R
 import com.example.therapet.app.ui.components.buttons.general.CustomElevatedButton
 import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
+import com.example.therapet.app.ui.components.pet.PetPenguin
 
 
 /**
@@ -57,7 +59,7 @@ fun CreatePetScreen(
 
         CreatePetTopBar(onBack = {})
 
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
         Column(
             modifier = Modifier
@@ -65,24 +67,28 @@ fun CreatePetScreen(
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            PetPlaceholder()
-            Spacer(modifier = Modifier.height(30.dp))
+            PetPenguin(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .offset(y = 50.dp)
+            )
+
+            Spacer(modifier = Modifier.height(130.dp))
 
             Text(
                 text = stringResource(R.string.choose_colour),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.titleMedium
             )
-
-            Spacer(modifier = Modifier.height(20.dp))
 
             CircularCarousel(
                 selectedIndex = selectedIndex,
                 onIndexChanged = { selectedIndex = it }
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Text(
                 text = stringResource(R.string.choose_name),
@@ -91,14 +97,10 @@ fun CreatePetScreen(
                 style = MaterialTheme.typography.titleMedium
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
-
             PetNameInputField(
                 petName = petName,
                 onNameChanged = { petName = it }
             )
-
-            Spacer(modifier = Modifier.height(20.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -128,16 +130,6 @@ fun CreatePetTopBar(onBack: (() -> Unit)? = null){
     BasicTopBar(
         text = "Create your pet",
         onBackClick = null,
-    )
-}
-
-// !! PLACEHOLDER PET SMILEY FACE FOR NOW TODO: Create a fully designed pet
-@Composable
-fun PetPlaceholder(size: TextUnit = 260.sp){
-    Text(
-        text = "\uD83D\uDE0A",
-        fontSize = size,
-        style = MaterialTheme.typography.labelLarge
     )
 }
 
