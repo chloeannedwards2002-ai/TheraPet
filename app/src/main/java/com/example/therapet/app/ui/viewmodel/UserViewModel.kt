@@ -3,7 +3,7 @@ package com.example.therapet.app.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.therapet.app.data.model.UserRole
-import com.example.therapet.app.data.repository.UserRepositoryContract
+import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
 import com.example.therapet.app.data.session.SessionManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -87,6 +87,11 @@ class UserViewModel(
         fun clearRegisterResult() {
             _registerResult.value = null
         }
+
+    fun logout() {
+        sessionManager.logout()
+        _loggedInRole.value = null
+    }
     }
 
 

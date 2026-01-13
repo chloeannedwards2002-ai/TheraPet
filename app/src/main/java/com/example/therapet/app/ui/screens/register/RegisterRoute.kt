@@ -32,10 +32,9 @@ import com.example.therapet.app.ui.viewmodel.ViewModelFactory
 fun RegisterRoute(
     onBack: () -> Unit,
     onRegisterSuccess: (UserRole) -> Unit,
-    viewModel: UserViewModel = viewModel(
-        factory = ViewModelFactory.UserViewModelFactory(LocalContext.current)
+    viewModel: UserViewModel
     )
-) {
+ {
     val loggedInRole by viewModel.loggedInRole.collectAsState(initial = null)
     val snackbarHostState = remember { SnackbarHostState() }
     val registerResult by viewModel.registerResult.collectAsState(initial = null)

@@ -1,4 +1,4 @@
-package com.example.therapet.app.data.repository
+package com.example.therapet.app.data.repository.contracts
 
 import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
@@ -7,7 +7,7 @@ import com.example.therapet.app.data.model.UserRole
  * @author: Chloe Edwards
  * @date: 09/01/2026
  *
- *
+ * User repo contract (abstraction)
  */
 
 interface UserRepositoryContract {

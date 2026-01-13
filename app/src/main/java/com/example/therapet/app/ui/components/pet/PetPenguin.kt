@@ -22,8 +22,10 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 
 @Composable
 fun PetPenguin
-    (modifier: Modifier = Modifier,
-     bodyColour: Color? = null){
+    (
+    modifier: Modifier = Modifier,
+    bodyColour: Color? = null
+){
     Box(
         modifier = modifier
     ) {

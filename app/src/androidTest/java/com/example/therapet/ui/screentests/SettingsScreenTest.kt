@@ -1,10 +1,8 @@
-package com.example.therapet.ui
+package com.example.therapet.ui.screentests
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.example.therapet.helpers.ScreenTestHelpers
 import org.junit.Rule
@@ -35,7 +33,7 @@ class SettingsScreenTest {
     }
 
     @Test
-    fun therapist_role_doesnt_shows_pet_settings_button(){
+    fun therapist_role_does_not_shows_pet_settings_button(){
         ScreenTestHelpers.launchTherapistSettingsScreen(composeRule)
 
         composeRule

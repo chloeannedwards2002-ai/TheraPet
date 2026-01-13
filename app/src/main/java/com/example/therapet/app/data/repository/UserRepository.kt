@@ -3,6 +3,7 @@ package com.example.therapet.app.data.repository
 import com.example.therapet.app.data.local.dao.UserDao
 import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
 
 class UserRepository(
     private val userDao: UserDao

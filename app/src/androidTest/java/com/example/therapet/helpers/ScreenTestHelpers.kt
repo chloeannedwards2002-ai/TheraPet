@@ -3,8 +3,11 @@ package com.example.therapet.helpers
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.ui.screens.home.HomeScreen
+import com.example.therapet.app.ui.screens.pet.CreatePetScreen
 import com.example.therapet.app.ui.screens.register.RegisterScreen
 import com.example.therapet.app.ui.screens.settings.SettingsScreen
+import com.example.therapet.app.ui.theme.TheraPetTheme
 
 /**
  * @author: Chloe Edwards
@@ -56,6 +59,64 @@ object ScreenTestHelpers {
                 onHelpSupport = {},
                 onDeleteAccount = {}
             )
+        }
+    }
+
+    //create pet screen
+    fun launchCreatePetScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent {
+            TheraPetTheme {
+                CreatePetScreen(
+                    selectedColourIndex = 0,
+                    onColourSelected = {},
+                    onCreatePet = {}
+                )
+            }
+        }
+    }
+
+    //homescreen
+    fun launchPatientHomeScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>,
+        role: UserRole = UserRole.PATIENT,
+        petColourIndex: Int = 0
+    ){
+        composeRule.setContent {
+            TheraPetTheme {
+                HomeScreen(
+                    role = role,
+                    petColourIndex = petColourIndex,
+                    onLogout = {},
+                    onSettings = {},
+                    onNotifs = {},
+                    onAppts = {},
+                    onBookAppt = {},
+                    onProfile = {}
+                )
+            }
+        }
+    }
+
+    fun launchTherapistHomeScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>,
+        role: UserRole = UserRole.THERAPIST,
+        petColourIndex: Int = 0
+    ){
+        composeRule.setContent {
+            TheraPetTheme {
+                HomeScreen(
+                    role = role,
+                    petColourIndex = petColourIndex,
+                    onLogout = {},
+                    onSettings = {},
+                    onNotifs = {},
+                    onAppts = {},
+                    onBookAppt = {},
+                    onProfile = {}
+                )
+            }
         }
     }
 
