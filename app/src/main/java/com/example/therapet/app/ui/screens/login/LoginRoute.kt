@@ -31,10 +31,9 @@ fun LoginRoute(
     onLoginSuccess: () -> Unit,
     onRegisterNav: () -> Unit,
     onBack: () -> Unit,
-    viewModel: UserViewModel = viewModel(
-        factory = ViewModelFactory.UserViewModelFactory(LocalContext.current)
-    )
-){
+    viewModel: UserViewModel
+)
+{
     val snackbarHostState = remember { SnackbarHostState() }
     val loginResult by viewModel.loginResult.collectAsState(initial = null)
 

@@ -1,5 +1,6 @@
 package com.example.therapet.app.nav
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,14 +11,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.data.session.SessionManager
 import com.example.therapet.app.ui.screens.settings.ResetPasswordScreen
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
 import com.example.therapet.app.ui.screens.booking.BookAppointmentScreen
 import com.example.therapet.app.ui.screens.booking.ChooseTherapistScreen
-import com.example.therapet.app.ui.screens.home.HomeScreen
+import com.example.therapet.app.ui.screens.home.HomeRoute
 import com.example.therapet.app.ui.screens.settings.ProfileScreen
-import com.example.therapet.app.ui.screens.pet.CreatePetScreen
 import com.example.therapet.app.ui.screens.pet.PetSettingsScreen
 import com.example.therapet.app.ui.screens.register.RegisterRoute
 import com.example.therapet.app.ui.screens.settings.DeleteAccountConfirmScreen
@@ -26,6 +27,7 @@ import com.example.therapet.app.ui.screens.settings.HelpSupportScreen
 import com.example.therapet.app.ui.screens.settings.PrivacyPolicyScreen
 import com.example.therapet.app.ui.screens.settings.SettingsScreen
 import com.example.therapet.app.ui.screens.login.LoginRoute
+import com.example.therapet.app.ui.screens.pet.CreatePetRoute
 import com.example.therapet.app.ui.viewmodel.UserViewModel
 import com.example.therapet.app.ui.viewmodel.ViewModelFactory
 
@@ -42,6 +44,17 @@ fun NavGraph(
     navController: NavHostController,
     startDestination: String = Routes.WELCOME
 ){
+    val context = LocalContext.current
+
+    val sessionManager = remember { SessionManager() }
+    // bringing userviewmodel up above navigation
+    val userViewModel: UserViewModel = viewModel(
+        factory = ViewModelFactory.UserViewModelFactory(
+            context = context,
+            sessionManager
+        )
+    )
+
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -53,74 +66,63 @@ fun NavGraph(
             )
         }
 
-        // User role determines what screen apears after registration TODO: Login determines home screen
-        composable(Routes.REGISTER) { // Composable for the Registration screen
+        // User role determines what screen appears after registration
+        composable(Routes.REGISTER) {
             RegisterRoute(
                 onBack = { navController.popBackStack() },
-                onRegisterSuccess = {
-                    role ->
-                    when(role){
-                        UserRole.PATIENT -> {
-                            navController.navigate(Routes.CREATE_PET){
-                                popUpTo(Routes.REGISTER) { inclusive = true }
-                            }
-                        }
-                        UserRole.THERAPIST -> {
-                            navController.navigate(Routes.HOME){
-                                popUpTo(Routes.REGISTER) {inclusive = true}
-                            }
-                        }
+                onRegisterSuccess = { role ->
+                    when (role) {
+                        UserRole.PATIENT -> navController.navigate(Routes.CREATE_PET)
+                        UserRole.THERAPIST -> navController.navigate(Routes.HOME)
+                    }
+                },
+                viewModel = userViewModel
+            )
+        }
+
+        composable(Routes.LOGIN) {
+            LoginRoute(
+                onRegisterNav = { navController.navigate(Routes.REGISTER) },
+                onLoginSuccess = { navController.navigate(Routes.HOME){
+                    popUpTo(Routes.LOGIN) { inclusive = true }
+                } },
+                onBack = { navController.popBackStack() },
+                viewModel = userViewModel
+            )
+        }
+
+        composable(Routes.CREATE_PET) {
+            CreatePetRoute(
+                sessionManager = sessionManager,
+                onCreatePet = {
+                    navController.navigate(Routes.HOME) {
+                        popUpTo(Routes.CREATE_PET) { inclusive = true }
                     }
                 }
             )
         }
 
-        composable(Routes.LOGIN) { // Composable for the Login screen
-            LoginRoute(
-                onRegisterNav = { navController.navigate(Routes.REGISTER) },
-                onLoginSuccess = { navController.navigate(Routes.HOME){
-                    // Once logged in, cannot go back to login page
-                    popUpTo(Routes.LOGIN) { inclusive = true }
-                } },
-                onBack = { navController.popBackStack() }
+        composable(Routes.HOME) {
+            HomeRoute(
+                onLogout = {
+                    userViewModel.logout()
+                    navController.navigate(Routes.WELCOME) {
+                        popUpTo(Routes.HOME) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onProfile = { navController.navigate(Routes.PROFILE) },
+                onSettings = { navController.navigate(Routes.SETTINGS) },
+                onNotifs = { /* TODO */ },
+                onAppts = { navController.navigate(Routes.APPOINTMENTS) },
+                onBookAppt = { navController.navigate(Routes.CHOOSE_THERAPIST) },
+                sessionManager = sessionManager,
+                userViewModel = userViewModel
             )
-        }
-
-        composable(Routes.CREATE_PET) { // Composable for the pet creation screen
-            CreatePetScreen(
-                onCreatePet = { navController.navigate(Routes.HOME) }
-            )
-        }
-
-        composable(Routes.HOME) { // Composable for the Home screen including navigation in NavDrawer
-            val userViewModel: UserViewModel = viewModel(
-                factory = ViewModelFactory.UserViewModelFactory(LocalContext.current)
-            )
-            val role by userViewModel.loggedInRole.collectAsState()
-
-            if (role != null) {
-                HomeScreen(
-                    onLogout = {
-                        navController.navigate(Routes.WELCOME) {
-                            popUpTo(Routes.HOME) { inclusive = true }
-                            launchSingleTop = true
-                        }
-                    },
-                    onProfile = { navController.navigate(Routes.PROFILE) },
-                    onSettings = { navController.navigate(Routes.SETTINGS) },
-                    onNotifs = { /* TODO: When notifs screen is created ! */ },
-                    onAppts = { navController.navigate(Routes.APPOINTMENTS) },
-                    onBookAppt = { navController.navigate(Routes.CHOOSE_THERAPIST) },
-                    role = role!!
-                    )
-            }
         }
 
         composable(Routes.SETTINGS) { // Composable for the Settings screen
             //TODO: Duplicated logic is not ideal will adjust later
-            val userViewModel: UserViewModel = viewModel(
-                factory = ViewModelFactory.UserViewModelFactory(LocalContext.current)
-            )
             val role by userViewModel.loggedInRole.collectAsState()
 
             if (role != null) {

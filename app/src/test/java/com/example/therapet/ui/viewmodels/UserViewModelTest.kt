@@ -1,4 +1,4 @@
-package com.example.therapet.viewmodels
+package com.example.therapet.ui.viewmodels
 
 import com.example.therapet.app.data.session.SessionManager
 import com.example.therapet.helpers.TestDispatcher
@@ -108,7 +108,7 @@ class UserViewModelTest {
 
         val session = sessionManager.session.value
         assertEquals("123456789012", session?.userid)
-        assertEquals(com.example.therapet.app.data.model.UserRole.PATIENT, session?.role)
+        assertEquals(UserRole.PATIENT, session?.role)
     }
 
     //8. registering as a patient sets the logged in role to patient

@@ -33,6 +33,7 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 fun BasicTopBar(
     text: String,
     onBackClick: (() -> Unit)? = null,
+    modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(

@@ -1,4 +1,4 @@
-package com.example.therapet.ui
+package com.example.therapet.ui.screentests
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsNotEnabled

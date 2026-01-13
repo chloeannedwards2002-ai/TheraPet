@@ -28,6 +28,7 @@ import com.example.therapet.app.ui.components.buttons.home.CircularButton
 import com.example.therapet.app.ui.components.pet.PetPenguin
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import kotlinx.coroutines.launch
+import com.example.therapet.app.ui.theme.PetColours
 
 /**
  * @author: Chloe Edwards
@@ -42,6 +43,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     role: UserRole, // used to adjust what is shown on the screen
+    petColourIndex: Int, // used to determine colour of pet
     modifier: Modifier = Modifier,
     onLogout: () -> Unit,
     onSettings: () -> Unit,
@@ -106,6 +108,7 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(150.dp))
 
                     PetPenguin(
+                        bodyColour = PetColours.getOrNull(petColourIndex),
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .offset(y = 30.dp)
@@ -127,7 +130,8 @@ fun HomeScreenPatientPreview() {
             onNotifs = {},
             onAppts = {},
             onBookAppt = {},
-            onProfile = {}
+            onProfile = {},
+            petColourIndex = 5
         )
     }
 }
@@ -143,7 +147,8 @@ fun HomeScreenTherapistPreview() {
             onNotifs = {},
             onAppts = {},
             onBookAppt = {},
-            onProfile = {}
+            onProfile = {},
+            petColourIndex = 0
         )
     }
 }

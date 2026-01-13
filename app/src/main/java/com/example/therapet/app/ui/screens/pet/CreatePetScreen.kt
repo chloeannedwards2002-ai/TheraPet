@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,17 +22,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.components.CircularCarousel
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.therapet.R
 import com.example.therapet.app.ui.components.buttons.general.CustomElevatedButton
 import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
 import com.example.therapet.app.ui.components.pet.PetPenguin
+import com.example.therapet.app.ui.theme.PetColours
+import com.example.therapet.app.ui.viewmodel.PetViewModel
+
 
 
 /**
@@ -43,11 +46,13 @@ import com.example.therapet.app.ui.components.pet.PetPenguin
 
 @Composable
 fun CreatePetScreen(
+    selectedColourIndex: Int,
+    onColourSelected: (Int) -> Unit,
     onCreatePet: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var petName by remember { mutableStateOf("") }
-    var selectedIndex by remember { mutableStateOf(0) }
+
 
     Column(
         modifier = modifier
@@ -57,7 +62,11 @@ fun CreatePetScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        CreatePetTopBar(onBack = {})
+        CreatePetTopBar(
+            onBack = {},
+            modifier = Modifier
+                .testTag("create_pet_top_bar")
+        )
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -68,9 +77,11 @@ fun CreatePetScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PetPenguin(
+                bodyColour = PetColours[selectedColourIndex],
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .offset(y = 50.dp)
+                    .testTag("pet_penguin")
             )
 
             Spacer(modifier = Modifier.height(130.dp))
@@ -78,28 +89,33 @@ fun CreatePetScreen(
             Text(
                 text = stringResource(R.string.choose_colour),
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag("choose_colour_text"),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.titleMedium
             )
 
             CircularCarousel(
-                selectedIndex = selectedIndex,
-                onIndexChanged = { selectedIndex = it }
+                selectedIndex = selectedColourIndex,
+                onIndexChanged = onColourSelected
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
                 text = stringResource(R.string.choose_name),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("choose_name_text"),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.titleMedium
             )
 
             PetNameInputField(
                 petName = petName,
-                onNameChanged = { petName = it }
+                onNameChanged = { petName = it },
+                modifier = Modifier
+                 .testTag("pet_name_input")
             )
 
             Row(
@@ -109,9 +125,10 @@ fun CreatePetScreen(
                 ResetButton(
                     onClick = {
                         petName = ""
-                        selectedIndex = 0
+                        onColourSelected(0)
                     },
                     modifier = Modifier.weight(1f)
+                        .testTag("reset_button")
                 )
                 ConfirmButton(
                     onClick = onCreatePet,
@@ -126,10 +143,13 @@ fun CreatePetScreen(
 
 // Top bar
 @Composable
-fun CreatePetTopBar(onBack: (() -> Unit)? = null){
+fun CreatePetTopBar(
+    onBack: (() -> Unit)? = null,
+    modifier: Modifier = Modifier){
     BasicTopBar(
         text = "Create your pet",
         onBackClick = null,
+        modifier = modifier
     )
 }
 
@@ -146,7 +166,6 @@ fun PetNameInputField(
         placeholder = "Pet name",
         label = "Pet name",
         modifier = modifier
-            .testTag("pet_name_input")
     )
 }
 
@@ -158,7 +177,6 @@ fun ResetButton(onClick: () -> Unit, modifier: Modifier = Modifier){
         text = "Reset",
         modifier = modifier
             .padding(top = 20.dp)
-            .testTag("reset_button")
     )
 }
 
@@ -170,7 +188,6 @@ fun ConfirmButton(onClick: () -> Unit, modifier: Modifier = Modifier){
         text = "Confirm",
         modifier = modifier
             .padding(top = 20.dp)
-            .testTag("confirm_button")
     )
 }
 
@@ -180,6 +197,8 @@ fun ConfirmButton(onClick: () -> Unit, modifier: Modifier = Modifier){
 fun CreatePetPreview() {
     TheraPetTheme {
         CreatePetScreen(
+            selectedColourIndex = 0,
+            onColourSelected = {},
             onCreatePet = {}
         )
     }

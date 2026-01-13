@@ -2,7 +2,7 @@ package com.example.therapet.repositories
 
 import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
-import com.example.therapet.app.data.repository.UserRepositoryContract
+import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
 
 /**
  * @author: Chloe Edwards

@@ -16,12 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsPropertyKey
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.example.therapet.app.ui.theme.PetColours
 
 /**
  * @Author: Chloe Edwards
@@ -38,22 +38,15 @@ var SemanticsPropertyReceiver.isSelectedCircle by isSelectedCircleKey
 fun CircularCarousel(
     selectedIndex: Int,
     onIndexChanged: (Int) -> Unit,
-    circleCount: Int = 7
+    circleCount: Int = 7,
+    modifier: Modifier = Modifier
 ){
-    val colors = listOf(
-        Color(0xFFFF69B4),
-        Color(0xFF9C27B0),
-        Color(0xFFF44336),
-        Color(0xFFFF9800),
-        Color(0xFF4CAF50),
-        Color(0xFF2196F3),
-        Color(0xFFFFFF00)
-    )
-
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .testTag("colour_carousel")
     ){
         // Left Arrow
         IconButton(
@@ -85,7 +78,7 @@ fun CircularCarousel(
                         .testTag("circle_$index")
                         .size(size)
                         .clip(CircleShape)
-                        .background(colors[index])
+                        .background(PetColours[index])
                         .semantics{ isSelectedCircle = isSelected }
                 )
             }
