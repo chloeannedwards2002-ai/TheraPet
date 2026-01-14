@@ -67,7 +67,8 @@ fun PetSettingsScreen(
             ToggleButton(
                 label = stringResource(R.string.appointment_reminders),
                 checked = remindersEnabled,
-                onCheckedChange = { remindersEnabled = it }
+                onCheckedChange = { remindersEnabled = it },
+                modifier = Modifier.testTag("appointment_reminders_toggle")
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -75,7 +76,8 @@ fun PetSettingsScreen(
             Text(
                 text = stringResource(R.string.appt_reminders_warning),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelSmall
+                style = MaterialTheme.typography.labelSmall,
+                modifier = Modifier.testTag("turn_off_notifs_text")
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -83,7 +85,8 @@ fun PetSettingsScreen(
             ToggleButton(
                 label = stringResource(R.string.pet_sounds),
                 checked = petSoundsEnabled,
-                onCheckedChange = { remindersEnabled = it }
+                onCheckedChange = { remindersEnabled = it },
+                modifier = Modifier.testTag("pet_sounds_toggle")
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -91,7 +94,8 @@ fun PetSettingsScreen(
             Text(
                 text = stringResource(R.string.pet_sounds_warning),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelSmall
+                style = MaterialTheme.typography.labelSmall,
+                modifier = Modifier.testTag("toggle_pet_sounds_text")
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -99,7 +103,8 @@ fun PetSettingsScreen(
             ToggleButton(
                 label = stringResource(R.string.hibernation),
                 checked = hibernationEnabled,
-                onCheckedChange = { remindersEnabled = it }
+                onCheckedChange = { remindersEnabled = it },
+                modifier = Modifier.testTag("hibernation_toggle")
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -107,7 +112,8 @@ fun PetSettingsScreen(
             Text(
                 text = stringResource(R.string.hibernation_warning),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelSmall
+                style = MaterialTheme.typography.labelSmall,
+                modifier = Modifier.testTag("toggle_hibernation_text")
             )
         }
     }

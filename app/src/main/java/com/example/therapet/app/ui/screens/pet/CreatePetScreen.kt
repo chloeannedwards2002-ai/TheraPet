@@ -64,8 +64,7 @@ fun CreatePetScreen(
 
         CreatePetTopBar(
             onBack = {},
-            modifier = Modifier
-                .testTag("create_pet_top_bar")
+            modifier = Modifier.testTag("create_pet_top_bar")
         )
 
         Spacer(modifier = Modifier.height(40.dp))

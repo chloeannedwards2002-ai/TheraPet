@@ -78,7 +78,8 @@ fun HelpSupportScreen(
             Text(
                 text = stringResource(R.string.get_in_touch),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelSmall
+                style = MaterialTheme.typography.labelSmall,
+                modifier = modifier.testTag("get_in_touch")
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -104,7 +105,7 @@ fun HelpSupportScreen(
 @Composable
 fun CallUsButton(modifier: Modifier = Modifier){
     CustomOutlinedButtonIcon(
-        modifier = modifier,
+        modifier = modifier.testTag("call_us_button"),
         text = stringResource(R.string.call_us),
         icon = {
             Icon(Icons.Default.Phone, contentDescription = null)
@@ -116,7 +117,7 @@ fun CallUsButton(modifier: Modifier = Modifier){
 @Composable
 fun EmailUsButton(modifier: Modifier = Modifier){
     CustomOutlinedButtonIcon(
-        modifier = modifier,
+        modifier = modifier.testTag("email_us_button"),
         text = stringResource(R.string.email_us),
         icon = {
             Icon(Icons.Default.Email, contentDescription = null)
@@ -128,7 +129,7 @@ fun EmailUsButton(modifier: Modifier = Modifier){
 @Composable
 fun InstagramButton(modifier: Modifier = Modifier){
     CustomOutlinedButtonIcon(
-        modifier = modifier,
+        modifier = modifier.testTag("instagram_button"),
         text = stringResource(R.string.instagram),
         icon = {
             Icon(Icons.Default.Circle, contentDescription = null)
@@ -141,7 +142,7 @@ fun InstagramButton(modifier: Modifier = Modifier){
 @Composable
 fun FacebookButton(modifier: Modifier = Modifier){
     CustomOutlinedButtonIcon(
-        modifier = modifier,
+        modifier = modifier.testTag("facebook_button"),
         text = stringResource(R.string.facebook),
         icon = {
             Icon(Icons.Default.Circle, contentDescription = null)
@@ -154,7 +155,7 @@ fun FacebookButton(modifier: Modifier = Modifier){
 @Composable
 fun WhatsappButton(modifier: Modifier = Modifier){
     CustomOutlinedButtonIcon(
-        modifier = modifier,
+        modifier = modifier.testTag("whatsapp_button"),
         text = stringResource(R.string.whatsapp),
         icon = {
             Icon(Icons.Default.Circle, contentDescription = null)
@@ -167,7 +168,7 @@ fun WhatsappButton(modifier: Modifier = Modifier){
 @Composable
 fun TwitterButton(modifier: Modifier = Modifier){
     CustomOutlinedButtonIcon(
-        modifier = modifier,
+        modifier = modifier.testTag("twitter_button"),
         text = stringResource(R.string.twitter),
         icon = {
             Icon(Icons.Default.Circle, contentDescription = null)
@@ -176,8 +177,6 @@ fun TwitterButton(modifier: Modifier = Modifier){
         iconPosition = IconPosition.START,
     )
 }
-
-
 
 @Preview(showBackground = true)
 @Composable

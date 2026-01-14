@@ -5,12 +5,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.therapet.app.data.session.SessionManager
 import com.example.therapet.app.ui.viewmodel.PetViewModel
 import com.example.therapet.app.ui.viewmodel.ViewModelFactory
+import kotlinx.coroutines.launch
 
 /**
  * @author: Chloe Edwards
@@ -36,10 +38,16 @@ fun CreatePetRoute(
 
     val selectedColourIndex by petViewModel.selectedColourIndex.collectAsState()
 
+    val coroutineScope = rememberCoroutineScope()
+
     Scaffold { innerPadding ->
         CreatePetScreen(
             selectedColourIndex = selectedColourIndex,
-            onColourSelected = petViewModel::selectColour,
+            onColourSelected = { index ->
+                coroutineScope.launch {
+                    petViewModel.selectColour(index)
+                }
+            },
             onCreatePet = onCreatePet,
             modifier = Modifier.padding(innerPadding)
         )

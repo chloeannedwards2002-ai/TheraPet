@@ -26,6 +26,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.ui.platform.testTag
 
 /**
  * @Author: Chloe Edwards
@@ -121,7 +122,7 @@ private fun CalendarGridLayout(
     val vGapPx = with(LocalDensity.current) { verticalGap.roundToPx() }
 
     Layout(
-        modifier = modifier,
+        modifier = Modifier.testTag("custom_calendar"),
         content = content
     ) { measurables, constraints ->
 

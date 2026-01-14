@@ -37,13 +37,13 @@ fun HomeNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(
-                drawerContainerColor = MaterialTheme.colorScheme.background
+                drawerContainerColor = MaterialTheme.colorScheme.background,
+                modifier = Modifier.testTag("nav_drawer")
             ) {
                 Text(
                     text = stringResource(R.string.nav_drawer_menu),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(16.dp)
-                        .testTag("nav_drawer"),
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))

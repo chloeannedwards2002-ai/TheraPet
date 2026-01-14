@@ -71,16 +71,17 @@ fun ResetPasswordScreen(
             Text(
                 text = stringResource(R.string.new_password_unique),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
+                modifier = modifier.testTag("new_password_text")
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
             Text(
                 text = stringResource(R.string.enter_new_password),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("enter_new_password_text"),
                 textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
             )
 
             PasswordInput(
@@ -92,7 +93,7 @@ fun ResetPasswordScreen(
 
             Text(
                 text = stringResource(R.string.confirm_password),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("confirm_password_text"),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.labelMedium
             )
