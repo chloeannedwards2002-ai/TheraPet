@@ -12,8 +12,8 @@ import androidx.datastore.preferences.core.intPreferencesKey
  * Pet preferences data store
  */
 
-val Context.petDataStore by preferencesDataStore(
-    name = "pet_preferences"
+val Context.therapetDataStore by preferencesDataStore(
+    name = "therapet_preferences"
 )
 
 object PetPreferencesKeys {

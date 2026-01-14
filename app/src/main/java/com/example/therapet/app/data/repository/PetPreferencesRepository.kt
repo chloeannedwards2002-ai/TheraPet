@@ -27,8 +27,7 @@ class PetPreferencesRepository private constructor(
         }
     }
 
-    override val petColourIndex: Flow<Int> = dataStore.data
-        .map { prefs -> prefs[PetPreferencesKeys.PET_COLOUR_INDEX] ?: 0 }
+    override val petColourIndex: Flow<Int> = dataStore.data.map { prefs -> prefs[PetPreferencesKeys.PET_COLOUR_INDEX] ?: 0 }
 
     override suspend fun savePetColour(index: Int) {
         dataStore.edit { prefs ->

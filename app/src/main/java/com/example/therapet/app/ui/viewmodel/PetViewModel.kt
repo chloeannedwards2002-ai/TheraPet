@@ -25,7 +25,9 @@ class PetViewModel(
             initialValue = 0
         )
 
-    suspend fun selectColour(index: Int) {
-        repository.savePetColour(index)
+    fun selectColour(index: Int) {
+        viewModelScope.launch {
+            repository.savePetColour(index)
+        }
     }
 }
