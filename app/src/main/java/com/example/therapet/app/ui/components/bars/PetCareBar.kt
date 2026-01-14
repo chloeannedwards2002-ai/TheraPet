@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.therapet.app.ui.components.buttons.home.CircularButton
 
@@ -34,6 +35,7 @@ fun PetCareBar() {
             modifier = Modifier
                 .align(Alignment.Center)
                 .fillMaxWidth()
+                .testTag("pet_care_bar")
                 .padding(horizontal = 60.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically

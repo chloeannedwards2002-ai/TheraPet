@@ -3,10 +3,22 @@ package com.example.therapet.helpers
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.ui.screens.WelcomeScreen
+import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
+import com.example.therapet.app.ui.screens.booking.BookAppointmentScreen
+import com.example.therapet.app.ui.screens.booking.ChooseTherapistScreen
 import com.example.therapet.app.ui.screens.home.HomeScreen
+import com.example.therapet.app.ui.screens.login.LoginScreen
 import com.example.therapet.app.ui.screens.pet.CreatePetScreen
+import com.example.therapet.app.ui.screens.pet.PetSettingsScreen
 import com.example.therapet.app.ui.screens.register.RegisterScreen
+import com.example.therapet.app.ui.screens.settings.DeleteAccountConfirmScreen
+import com.example.therapet.app.ui.screens.settings.DeleteAccountScreen
+import com.example.therapet.app.ui.screens.settings.HelpSupportScreen
+import com.example.therapet.app.ui.screens.settings.PrivacyPolicyScreen
 import com.example.therapet.app.ui.screens.settings.SettingsScreen
+import com.example.therapet.app.ui.screens.settings.ProfileScreen
+import com.example.therapet.app.ui.screens.settings.ResetPasswordScreen
 import com.example.therapet.app.ui.theme.TheraPetTheme
 
 /**
@@ -18,15 +30,42 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 
 object ScreenTestHelpers {
 
+    fun launchWelcomeScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent{
+            TheraPetTheme{
+                WelcomeScreen(
+                    onRegisterNav = {},
+                    onLoginNav = {}
+                )
+            }
+        }
+    }
+
+    fun launchLoginScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent{
+            LoginScreen(
+                onLogin = {_, _ ->},
+                onRegisterNav = {},
+                onBack = {}
+            )
+        }
+    }
+
     //register screen
     fun launchRegisterScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ) {
         composeRule.setContent {
-            RegisterScreen(
-                onRegister = {_, _, _, _ -> },
-                onBack = {}
-            )
+            TheraPetTheme {
+                RegisterScreen(
+                    onRegister = { _, _, _, _ -> },
+                    onBack = {}
+                )
+            }
         }
     }
 
@@ -35,14 +74,16 @@ object ScreenTestHelpers {
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
         composeRule.setContent {
-            SettingsScreen(
-                role = UserRole.PATIENT,
-                onBack = {},
-                onPetSettings = {},
-                onPrivacyPolicy = {},
-                onHelpSupport = {},
-                onDeleteAccount = {}
-            )
+            TheraPetTheme {
+                SettingsScreen(
+                    role = UserRole.PATIENT,
+                    onBack = {},
+                    onPetSettings = {},
+                    onPrivacyPolicy = {},
+                    onHelpSupport = {},
+                    onDeleteAccount = {}
+                )
+            }
         }
     }
 
@@ -51,14 +92,16 @@ object ScreenTestHelpers {
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
         composeRule.setContent {
-            SettingsScreen(
-                role = UserRole.THERAPIST,
-                onBack = {},
-                onPetSettings = {},
-                onPrivacyPolicy = {},
-                onHelpSupport = {},
-                onDeleteAccount = {}
-            )
+            TheraPetTheme {
+                SettingsScreen(
+                    role = UserRole.THERAPIST,
+                    onBack = {},
+                    onPetSettings = {},
+                    onPrivacyPolicy = {},
+                    onHelpSupport = {},
+                    onDeleteAccount = {}
+                )
+            }
         }
     }
 
@@ -99,6 +142,18 @@ object ScreenTestHelpers {
         }
     }
 
+    fun launchPetSettingsScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent{
+            TheraPetTheme{
+                PetSettingsScreen(
+                    onBack = {}
+                )
+            }
+        }
+    }
+
     fun launchTherapistHomeScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>,
         role: UserRole = UserRole.THERAPIST,
@@ -120,4 +175,119 @@ object ScreenTestHelpers {
         }
     }
 
+    fun launchAppointmentsScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent{
+            TheraPetTheme{
+                AppointmentsScreen(
+                    onBack = {},
+                    onBookAppt = {}
+                )
+            }
+        }
+    }
+
+    fun launchBookAppointmentsScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    )
+    {
+        composeRule.setContent{
+            TheraPetTheme{
+                BookAppointmentScreen(
+                    onBack ={},
+                    onBook ={}
+                )
+            }
+        }
+    }
+
+    fun launchChooseTherapistScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent{
+            TheraPetTheme{
+                ChooseTherapistScreen(
+                    onBack = {},
+                    onContinue = {}
+                )
+            }
+        }
+    }
+
+    fun launchDeleteAccountConfirmScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent{
+            TheraPetTheme{
+                DeleteAccountConfirmScreen(
+                    onBack = {},
+                    onDeleteAccount = {}
+                )
+            }
+        }
+    }
+
+    fun launchDeleteAccountScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent{
+            TheraPetTheme{
+                DeleteAccountScreen(
+                    onBack = {},
+                    onContinue = {}
+                )
+            }
+        }
+    }
+
+    fun launchHelpSupportScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent{
+            TheraPetTheme{
+                HelpSupportScreen(
+                    onBack = {}
+                )
+            }
+        }
+    }
+
+    fun launchPrivacyPolicyScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent{
+            TheraPetTheme{
+                PrivacyPolicyScreen(
+                    onBack = {},
+                )
+            }
+        }
+    }
+
+    fun launchProfileScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent{
+            TheraPetTheme{
+                ProfileScreen(
+                    onBack ={},
+                    onEditPassword={}
+                )
+            }
+        }
+    }
+
+    fun launchResetPasswordScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ){
+        composeRule.setContent{
+            TheraPetTheme{
+                ResetPasswordScreen(
+                    onBack ={},
+                    onResetPassword={}
+                )
+            }
+        }
+    }
 }

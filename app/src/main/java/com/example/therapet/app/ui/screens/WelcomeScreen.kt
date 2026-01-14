@@ -44,7 +44,7 @@ fun WelcomeScreen(
 
         Text(
             "Welcome to ${stringResource(R.string.app_name)}",
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("therapet_text"),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge
         )

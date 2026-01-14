@@ -57,7 +57,8 @@ fun PrivacyPolicyScreen(
             Text(
                 text = stringResource(R.string.privacy_policy_text),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
+                modifier = modifier.testTag("privacy_policy_text")
             )
         }
     }

@@ -21,13 +21,11 @@ class PetViewModel(
     val selectedColourIndex = repository.petColourIndex
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
+            started = SharingStarted.Eagerly,
             initialValue = 0
         )
 
-    fun selectColour(index: Int) {
-        viewModelScope.launch {
-            repository.savePetColour(index)
-        }
+    suspend fun selectColour(index: Int) {
+        repository.savePetColour(index)
     }
 }

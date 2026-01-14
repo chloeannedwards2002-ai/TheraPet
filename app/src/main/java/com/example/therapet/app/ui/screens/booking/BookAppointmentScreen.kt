@@ -69,11 +69,11 @@ fun BookAppointmentScreen(
 }
 
 @Composable
-fun BookButton(onClick: () -> Unit){
+fun BookButton(modifier: Modifier = Modifier, onClick: () -> Unit){
     CustomFilledButton(
         onClick = onClick,
         text = stringResource(R.string.book),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(0.5F)
             .testTag("book_button")
     )

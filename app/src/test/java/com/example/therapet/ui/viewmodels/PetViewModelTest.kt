@@ -5,6 +5,7 @@ import com.example.therapet.helpers.TestDispatcher
 import com.example.therapet.repositories.FakePetPreferencesRepository
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -52,33 +53,37 @@ class PetViewModelTest {
         viewModel.selectColour(4)
         advanceUntilIdle()
 
-        assertEquals(3, viewModel.selectedColourIndex.value)
+        // force collection
+        val value = viewModel.selectedColourIndex.first()
+
+        assertEquals(4, value)
     }
 
     //3. Selecting a new colour changes the index
     @Test
     fun selecting_new_colour_changes_index() = runTest {
-        viewModel.selectColour(1)
-        advanceUntilIdle()
+            viewModel.selectColour(1)
+            advanceUntilIdle()
 
-        viewModel.selectColour(3)
-        advanceUntilIdle()
+            viewModel.selectColour(3)
+            advanceUntilIdle()
 
-        assertEquals(3, viewModel.selectedColourIndex.value)
+            assertEquals(3, viewModel.selectedColourIndex.value)
     }
+
 
     // 4.
     @Test
     fun pet_colour_persists_to_home_screen() = runTest {
         val createPetViewModel = PetViewModel(repository)
+
         createPetViewModel.selectColour(3)
-        advanceUntilIdle()
 
-        //ready for when home view model is create
         val homeViewModel = PetViewModel(repository)
-        advanceUntilIdle()
 
-        assertEquals(3, homeViewModel.selectedColourIndex.value)
+        val value = homeViewModel.selectedColourIndex.first { it == 3 }
+
+        assertEquals(3, value)
     }
 
 

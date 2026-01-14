@@ -82,7 +82,8 @@ fun LoginScreen(
             Text(
                 text = stringResource(R.string.login),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.testTag("login_text")
             )
 
             Spacer(modifier = Modifier.height(40.dp))
@@ -171,7 +172,8 @@ fun RememberPasswordCheckBox(modifier: Modifier = Modifier){
         label = "Remember password",
         checked = checked,
         onCheckedChange = {checked = it},
-        modifier = modifier,
+        modifier = Modifier
+            .testTag("remember_password_check_box")
     )
 }
 
@@ -209,7 +211,10 @@ fun ForgotPasswordButton(onClick: () -> Unit){
     CustomTextButton(
         onClick = onClick,
         text = stringResource(R.string.forgot_password),
-        modifier = Modifier.fillMaxWidth(0.5F).padding(top = 20.dp)
+        modifier = Modifier.
+        fillMaxWidth(0.5F)
+            .padding(top = 20.dp)
+            .testTag("forgot_password_button")
     )
 }
 

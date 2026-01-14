@@ -59,7 +59,8 @@ fun DeleteAccountConfirmScreen(
             Text(
                 text = stringResource(R.string.confirm_deletion),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier.testTag("info_text")
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -77,7 +78,7 @@ fun DeleteAccountConfirmScreen(
 @Composable
 fun CancelButton(modifier: Modifier = Modifier, onClick: () -> Unit){
     CustomOutlinedButton(
-        modifier = modifier,
+        modifier = modifier.testTag("cancel_button"),
         text = stringResource(R.string.cancel),
         onClick = onClick
     )

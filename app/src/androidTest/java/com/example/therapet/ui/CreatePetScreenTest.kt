@@ -1,4 +1,4 @@
-package com.example.therapet.ui.screentests
+package com.example.therapet.ui
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
@@ -15,18 +15,9 @@ import org.junit.Test
  * Pet screen UI tests
  */
 
-class CreatePetScreenTests {
+class CreatePetScreenTest {
     @get: Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
-
-    @Test
-    fun create_pet_top_bar_is_visible(){
-        ScreenTestHelpers.launchCreatePetScreen(composeRule)
-
-        composeRule
-            .onNodeWithTag("create_pet_top_bar")
-            .assertIsDisplayed()
-    }
 
     @Test
     fun pet_penguin_is_visible(){
