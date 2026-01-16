@@ -41,12 +41,10 @@ import com.example.therapet.app.ui.components.fields.input.CustomPasswordTextFie
 
 @Composable
 fun LoginScreen(
-    onLogin: (
-        userId: String,
-        password: String
-    ) -> Unit,
+    onLogin: (userId: String, password: String) -> Unit,
     onRegisterNav: () -> Unit,
     onBack: () -> Unit,
+    errorMessage: String?,
     modifier: Modifier = Modifier
 ) {
     var userId by remember { mutableStateOf("") }
@@ -92,8 +90,21 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            LoginPasswordInput(value = password, onValueChange = { password = it}
+            LoginPasswordInput(
+                value = password,
+                onValueChange = { password = it }
             )
+            if (errorMessage != null) {
+                Text(
+                    text = errorMessage,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(top = 4.dp)
+                        .testTag("login_error_text")
+                )
+            }
 
             RememberPasswordCheckBox(
                 modifier = Modifier.align(Alignment.Start)
@@ -226,7 +237,8 @@ fun LoginPreview() {
         LoginScreen(
             onLogin = {_, _ ->},
             onBack = {},
-            onRegisterNav = {}
+            onRegisterNav = {},
+            errorMessage = null
         )
     }
 }

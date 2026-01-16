@@ -1,19 +1,13 @@
 package com.example.therapet.app.ui.screens.login
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.setValue
 import com.example.therapet.app.ui.viewmodel.UserViewModel
-import com.example.therapet.app.ui.viewmodel.ViewModelFactory
 
 /**
  * @author: Chloe Edwards
@@ -32,38 +26,32 @@ fun LoginRoute(
     onRegisterNav: () -> Unit,
     onBack: () -> Unit,
     viewModel: UserViewModel
-)
-{
-    val snackbarHostState = remember { SnackbarHostState() }
+) {
     val loginResult by viewModel.loginResult.collectAsState(initial = null)
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState)} )
-    {
-        innerPadding ->
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
-        LoginScreen(
-            { userId, password ->
-                viewModel.login(userId, password)
-            },
-            onRegisterNav = onRegisterNav,
-            onBack = onBack,
-            modifier = Modifier.padding(innerPadding)
-        )
-    }
+    LoginScreen(
+        onLogin = { userId, password ->
+            errorMessage = null
+            viewModel.login(userId, password)
+        },
+        onRegisterNav = onRegisterNav,
+        onBack = onBack,
+        errorMessage = errorMessage
+    )
 
-    LaunchedEffect(loginResult){
-        when(loginResult){
+    LaunchedEffect(loginResult) {
+        when (loginResult) {
             true -> {
                 onLoginSuccess()
                 viewModel.clearLoginResult()
             }
             false -> {
-                snackbarHostState.showSnackbar("Invalid user ID or password")
+                errorMessage = "Invalid user ID or password"
                 viewModel.clearLoginResult()
             }
             null -> Unit
         }
     }
-
 }
