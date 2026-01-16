@@ -5,6 +5,8 @@ import com.example.therapet.helpers.TestDispatcher
 import com.example.therapet.app.ui.viewmodel.UserViewModel
 import com.example.therapet.repositories.FakeUserRepository
 import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -13,6 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.Assert.assertNull
 import com.example.therapet.app.data.model.UserRole
+
 
 /**
  * @author: Chloe Edwards
@@ -36,6 +39,7 @@ class UserViewModelTest {
 
     private lateinit var viewModel: UserViewModel
     private lateinit var sessionManager: SessionManager
+    private lateinit var repository: FakeUserRepository
 
     @Before
     fun setup() {
@@ -143,6 +147,47 @@ class UserViewModelTest {
             UserRole.THERAPIST,
             viewModel.loggedInRole.value
         )
+    }
+
+    //10. deleting account deletes the user and log outs
+    @Test
+    fun delete_user_deletes_user_and_logs_out() = runTest {
+        val userId = "123454345643"
+        repository.register(userId, "A", "B", "Password_123")
+        sessionManager.login(userId, UserRole.PATIENT)
+
+        viewModel.deleteAccount()
+        advanceUntilIdle()
+
+        assertFalse(repository.userExists(userId))
+        assertNull(sessionManager.session.value)
+    }
+
+    //11. verifying user password before account deletion returns true
+    @Test
+    fun verify_password_returns_true_for_correct_password() = runTest{
+        val userId = "123456789012"
+        val password = "Password_123"
+
+        repository.register(userId, "Test", "Test", password)
+        sessionManager.login(userId, UserRole.PATIENT)
+
+        val result = viewModel.verifyPassword(password)
+
+        assertTrue(result)
+    }
+
+    //12. Verify password returns false for incorrect password
+    @Test
+    fun verify_password_returns_false_for_incorrect_password() =runTest {
+        val userId = "123456789012"
+
+        repository.register(userId, "Test", "Test", "Password_123")
+        sessionManager.login(userId, UserRole.PATIENT)
+
+        val result = viewModel.verifyPassword("incorrect")
+
+        assertFalse(result)
     }
 
 }

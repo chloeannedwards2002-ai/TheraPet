@@ -12,13 +12,13 @@ import com.example.therapet.app.ui.screens.login.LoginScreen
 import com.example.therapet.app.ui.screens.pet.CreatePetScreen
 import com.example.therapet.app.ui.screens.pet.PetSettingsScreen
 import com.example.therapet.app.ui.screens.register.RegisterScreen
-import com.example.therapet.app.ui.screens.settings.DeleteAccountConfirmScreen
-import com.example.therapet.app.ui.screens.settings.DeleteAccountScreen
+import com.example.therapet.app.ui.screens.settings.accountmanagement.DeleteAccountConfirmScreen
+import com.example.therapet.app.ui.screens.settings.accountmanagement.DeleteAccountScreen
 import com.example.therapet.app.ui.screens.settings.HelpSupportScreen
 import com.example.therapet.app.ui.screens.settings.PrivacyPolicyScreen
 import com.example.therapet.app.ui.screens.settings.SettingsScreen
 import com.example.therapet.app.ui.screens.settings.ProfileScreen
-import com.example.therapet.app.ui.screens.settings.ResetPasswordScreen
+import com.example.therapet.app.ui.screens.settings.accountmanagement.ResetPasswordScreen
 import com.example.therapet.app.ui.theme.TheraPetTheme
 
 /**
@@ -235,7 +235,8 @@ object ScreenTestHelpers {
             TheraPetTheme{
                 DeleteAccountScreen(
                     onBack = {},
-                    onContinue = {}
+                    onContinue = {},
+                    validatePassword = { _ -> true }
                 )
             }
         }

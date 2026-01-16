@@ -1,4 +1,4 @@
-package com.example.therapet.app.ui.screens.settings
+package com.example.therapet.app.ui.screens.settings.accountmanagement
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import com.example.therapet.R
 import com.example.therapet.app.ui.components.buttons.general.CustomElevatedButton
 import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
@@ -36,10 +39,13 @@ import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextFie
 fun DeleteAccountScreen(
     onBack: () -> Unit,
     onContinue: () -> Unit,
+    validatePassword: (String) -> Boolean,
     modifier: Modifier = Modifier
-){
-    Scaffold(){
-        innerPadding ->
+) {
+    var password by remember { mutableStateOf("") }
+    var showError by remember { mutableStateOf(false) }
+
+    Scaffold { innerPadding ->
 
         BasicTopBar(
             text = stringResource(R.string.delete_account),
@@ -54,28 +60,62 @@ fun DeleteAccountScreen(
                 .testTag("delete_account_screen"),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            Spacer(modifier = Modifier.height(180.dp))
+        ) {
+            Spacer(modifier = Modifier.height(80.dp))
 
-            PasswordTextField()
+            Text(
+                text = stringResource(R.string.delete_account_warning),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier.testTag("delete_info_text")
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            PasswordTextField(
+                password = password,
+                onPasswordChange = {
+                    password = it
+                    showError = false
+                }
+            )
+
+            if (showError) {
+                Text(
+                    text = stringResource(R.string.passwords_do_not_match),
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.labelSmall,
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .testTag("password_error_text")
+                )
+            }
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            DeleteAccountContinueButton(onClick = onContinue)
+            DeleteAccountContinueButton {
+                if (validatePassword(password)) {
+                    onContinue()
+                } else {
+                    showError = true
+                }
+            }
         }
     }
 }
 
 @Composable
-fun PasswordTextField(modifier: Modifier = Modifier){
-    var password by remember { mutableStateOf("") }
+fun PasswordTextField(
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     CustomOutlinedTextField(
         value = password,
-        onValueChange = { password = it },
+        onValueChange = onPasswordChange,
         placeholder = stringResource(R.string.enter_password),
         label = stringResource(R.string.password),
-        modifier = modifier
-            .testTag("password_confirm_input")
+        modifier = modifier.testTag("password_confirm_input")
     )
 }
 
@@ -95,7 +135,8 @@ fun DeleteAccountPreview() {
     TheraPetTheme {
         DeleteAccountScreen(
             onBack = {},
-            onContinue = {}
+            onContinue = {},
+            validatePassword = { _ -> true }
         )
     }
 }

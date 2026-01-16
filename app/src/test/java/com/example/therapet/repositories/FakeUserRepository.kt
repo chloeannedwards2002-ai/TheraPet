@@ -43,6 +43,10 @@ class FakeUserRepository : UserRepositoryContract {
         return login(userid, password)?.role
     }
 
+    override suspend fun deleteUser(userid: String){
+        users.remove(userid)
+    }
+
     private fun determineUserRole(userid: String): UserRole {
         return when (userid.length) {
             12 -> UserRole.PATIENT

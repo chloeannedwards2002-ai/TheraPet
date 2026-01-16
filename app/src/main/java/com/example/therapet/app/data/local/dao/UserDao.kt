@@ -34,4 +34,6 @@ interface UserDao {
     @Query("SELECT EXISTS(SELECT 1 FROM users WHERE userid = :userid)")
     suspend fun userExists(userid: String): Boolean
 
+    @Query("DELETE FROM users WHERE userid = :userid")
+    suspend fun deleteUserById(userid: String): Int
 }

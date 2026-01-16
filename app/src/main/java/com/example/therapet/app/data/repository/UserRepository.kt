@@ -42,6 +42,11 @@ class UserRepository(
         return userDao.userExists(userid)
     }
 
+    //Delete user
+    override suspend fun deleteUser(userid: String) {
+        userDao.deleteUserById(userid)
+    }
+
     // determining the users role - invalid user ID is already caught in UI but this is ane xtra defense
     private fun determineUserRole(userid: String): UserRole {
         return when(userid.length){

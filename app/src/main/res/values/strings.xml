@@ -54,9 +54,11 @@
     <string name="hibernation">Hibernation</string>
     <string name="hibernation_warning">This will put your pet in hibernation mode, you will no longer have to care for it until your turn it back on</string>
 
-    <!-- Pet Settings Screen -->
+    <!-- Delete account Screen -->
     <string name="confirm_acc_deletion_title">Confirm Account Deletion</string>
+    <string name="delete_account_warning">To delete your account, you must confirm your password first</string>
     <string name="confirm_deletion">You are about to delete all the data in your TheraPet account. Are you sure? You cannot undo this action.</string>
+    <string name="passwords_do_not_match">Password does not match</string>
     <string name="cancel">Cancel</string>
     <string name="delete_account">Delete Account</string>
     <string name="enter_password">Enter password</string>
