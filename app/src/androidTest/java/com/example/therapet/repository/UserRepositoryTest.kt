@@ -56,7 +56,7 @@ class UserRepositoryTest {
         Assert.assertTrue(exists)
     }
 
-    //2. Logging in with valid details TODO: Implement login state functionality
+    //2. Logging in with valid details
     @Test
     fun login_with_valid_details() = runBlocking {
         repository.register("X328DFSJ108Z", "Bob", "Bobbington", "Password_123")
@@ -64,14 +64,14 @@ class UserRepositoryTest {
         val result = repository.login("X328DFSJ108Z", "Password_123")
     }
 
-    // 3. Logging in with invalid details TODO: Implement login state functionality
+    // 3. Logging in with invalid details
     @Test
     fun login_with_invalid_details() = runBlocking {
         val result = repository.login("83248ndsfnskjjesnf838", "invalid")
         Assert.assertNull(result)
     }
 
-    // 4.
+    // 4. 12 character ID makes a patient record
     @Test
     fun registering_with_12_char_id_creates_patient_record() = runBlocking {
         repository.register("123123123123", "test", "test", "Password_123")
@@ -81,5 +81,16 @@ class UserRepositoryTest {
         assertNotNull(user)
 
         assertEquals(UserRole.PATIENT, user?.role)
+    }
+
+    //5. Delete use removes the user from the database
+    @Test
+    fun delete_user_removes_user_from_database() = runBlocking {
+        repository.register("123456789012", "test", "test", "Password_123")
+
+        repository.deleteUser("123456789012")
+
+        val exists = repository.userExists("123456789012")
+        Assert.assertFalse(exists)
     }
 }

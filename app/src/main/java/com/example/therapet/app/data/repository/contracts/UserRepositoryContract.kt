@@ -26,4 +26,6 @@ interface UserRepositoryContract {
         userid: String,
         password: String
     ): UserRole?
+
+    suspend fun deleteUser(userid: String)
 }

@@ -1,6 +1,4 @@
 package com.example.therapet.app.nav
-
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -12,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.session.SessionManager
-import com.example.therapet.app.ui.screens.settings.ResetPasswordScreen
+import com.example.therapet.app.ui.screens.settings.accountmanagement.ResetPasswordScreen
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
 import com.example.therapet.app.ui.screens.booking.BookAppointmentScreen
@@ -21,13 +19,13 @@ import com.example.therapet.app.ui.screens.home.HomeRoute
 import com.example.therapet.app.ui.screens.settings.ProfileScreen
 import com.example.therapet.app.ui.screens.pet.PetSettingsScreen
 import com.example.therapet.app.ui.screens.register.RegisterRoute
-import com.example.therapet.app.ui.screens.settings.DeleteAccountConfirmScreen
-import com.example.therapet.app.ui.screens.settings.DeleteAccountScreen
+import com.example.therapet.app.ui.screens.settings.accountmanagement.DeleteAccountScreen
 import com.example.therapet.app.ui.screens.settings.HelpSupportScreen
 import com.example.therapet.app.ui.screens.settings.PrivacyPolicyScreen
 import com.example.therapet.app.ui.screens.settings.SettingsScreen
 import com.example.therapet.app.ui.screens.login.LoginRoute
 import com.example.therapet.app.ui.screens.pet.CreatePetRoute
+import com.example.therapet.app.ui.screens.settings.accountmanagement.DeleteAccountConfirmRoute
 import com.example.therapet.app.ui.viewmodel.UserViewModel
 import com.example.therapet.app.ui.viewmodel.ViewModelFactory
 
@@ -185,17 +183,27 @@ fun NavGraph(
             HelpSupportScreen(onBack = { navController.popBackStack() })
         }
 
-        composable(Routes.DELETE_ACCOUNT) { // Composable for the Delete account screen
+        composable(Routes.DELETE_ACCOUNT) {
             DeleteAccountScreen(
                 onBack = { navController.popBackStack() },
-                onContinue = { navController.navigate(Routes.DELETE_ACCOUNT_CONFIRM) }
+                onContinue = { navController.navigate(Routes.DELETE_ACCOUNT_CONFIRM) },
+                validatePassword = { enteredPassword ->
+                    userViewModel.verifyPassword(enteredPassword)
+                }
             )
         }
 
+
         composable(Routes.DELETE_ACCOUNT_CONFIRM) { // Composable for the Delete account confirmation screen
-            DeleteAccountConfirmScreen(
+            DeleteAccountConfirmRoute(
                 onBack = { navController.popBackStack() },
-                onDeleteAccount = { /* TODO: when delete account functionality is implemented !! */ }
+                onLoggedOut = {
+                    navController.navigate(Routes.WELCOME){
+                        popUpTo(0)
+                    }
+                },
+                viewModel = userViewModel,
+                sessionManager = sessionManager
             )
         }
     }
