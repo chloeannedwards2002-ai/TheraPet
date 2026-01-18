@@ -17,7 +17,7 @@ import com.example.therapet.app.ui.screens.settings.accountmanagement.DeleteAcco
 import com.example.therapet.app.ui.screens.settings.HelpSupportScreen
 import com.example.therapet.app.ui.screens.settings.PrivacyPolicyScreen
 import com.example.therapet.app.ui.screens.settings.SettingsScreen
-import com.example.therapet.app.ui.screens.settings.ProfileScreen
+import com.example.therapet.app.ui.screens.settings.accountmanagement.profile.ProfileScreen
 import com.example.therapet.app.ui.screens.settings.accountmanagement.ResetPasswordScreen
 import com.example.therapet.app.ui.theme.TheraPetTheme
 
@@ -50,7 +50,8 @@ object ScreenTestHelpers {
             LoginScreen(
                 onLogin = {_, _ ->},
                 onRegisterNav = {},
-                onBack = {}
+                onBack = {},
+                errorMessage = null
             )
         }
     }

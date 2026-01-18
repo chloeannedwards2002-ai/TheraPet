@@ -12,6 +12,7 @@ import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
  */
 
 class FakeUserRepository : UserRepositoryContract {
+
     private val users = mutableMapOf<String, UserEntity>()
 
     override suspend fun register(
@@ -43,7 +44,11 @@ class FakeUserRepository : UserRepositoryContract {
         return login(userid, password)?.role
     }
 
-    override suspend fun deleteUser(userid: String){
+    override suspend fun getUserById(userid: String): UserEntity? {
+        return users[userid]
+    }
+
+    override suspend fun deleteUser(userid: String) {
         users.remove(userid)
     }
 

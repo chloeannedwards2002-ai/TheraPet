@@ -8,6 +8,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -24,13 +25,15 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 
 @Composable
 fun ReadOnlyEditableField(
-    value: String,
+    value: String?,
     modifier: Modifier = Modifier,
     onEditClick: () -> Unit,
     editTestTag: String,
+    label: String
 ) {
     OutlinedTextField(
-        value = value,
+        label = { Text(label) },
+        value = value.orEmpty(),
         onValueChange = {},
         modifier = modifier
             .height(60.dp)
@@ -58,7 +61,8 @@ fun ReadOnlyEditableFieldPreview() {
         ReadOnlyEditableField(
             value = "Text Field",
             onEditClick = {},
-            editTestTag = "Test"
+            editTestTag = "Test",
+            label = "Label"
         )
     }
 }

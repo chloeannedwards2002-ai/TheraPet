@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,8 +22,10 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 fun ReadOnlyField(
     value: String,
     modifier: Modifier = Modifier,
+    label: String
 ){
     OutlinedTextField(
+        label = { Text(label) },
         value = value,
         onValueChange = {},
         modifier = modifier
@@ -39,7 +42,8 @@ fun ReadOnlyField(
 fun ReadOnlyFieldPreview() {
     TheraPetTheme {
         ReadOnlyField(
-            value = "Text Field"
+            value = "Text Field",
+            label = ""
         )
     }
 }

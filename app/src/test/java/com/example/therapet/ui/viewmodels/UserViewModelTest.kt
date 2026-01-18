@@ -43,7 +43,7 @@ class UserViewModelTest {
 
     @Before
     fun setup() {
-        val repository = FakeUserRepository()
+        repository = FakeUserRepository()
         sessionManager = SessionManager()
         viewModel = UserViewModel(repository, sessionManager)
     }
@@ -188,6 +188,50 @@ class UserViewModelTest {
         val result = viewModel.verifyPassword("incorrect")
 
         assertFalse(result)
+    }
+
+    //13. Load current user loads the currently logged in user
+    @Test
+    fun load_current_user_loads_currently_logged_in_user() = runTest{
+        val userId="123456789012"
+        val password = "Password_123"
+
+        repository.register(userId, "Alice", "Smith", password)
+        sessionManager.login(userId, UserRole.PATIENT)
+
+        viewModel.loadCurrentUser()
+        advanceUntilIdle()
+
+        val user = viewModel.currentUser.value
+        assertEquals(userId, user?.userid)
+        assertEquals("Alice", user?.firstname)
+        assertEquals("Smith", user?.surname)
+    }
+
+    // 14. Load current user loads nothing if a user is not logged in
+    @Test
+    fun load_user_loads_nothing_if_not_logged_in() = runTest{
+        viewModel.loadCurrentUser()
+        advanceUntilIdle()
+
+        assertNull(viewModel.currentUser.value)
+    }
+
+    // 15. Deleting the account clears the current user
+    @Test
+    fun delete_account_clears_current_user() =runTest{
+        val userId = "123456789012"
+        repository.register(userId, "Test", "Test", "Password_123")
+        sessionManager.login(userId, UserRole.PATIENT)
+
+        viewModel.loadCurrentUser()
+        advanceUntilIdle()
+        assertEquals(userId, viewModel.currentUser.value?.userid)
+
+        viewModel.deleteAccount()
+        advanceUntilIdle()
+
+        assertNull(viewModel.currentUser.value)
     }
 
 }

@@ -28,4 +28,9 @@ interface UserRepositoryContract {
     ): UserRole?
 
     suspend fun deleteUser(userid: String)
+
+    // get user without needing password
+    suspend fun getUserById(userid: String): UserEntity?
+
+
 }

@@ -1,4 +1,4 @@
-package com.example.therapet.app.ui.screens.settings
+package com.example.therapet.app.ui.screens.settings.accountmanagement.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,8 +32,13 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 fun ProfileScreen(
     onBack: () -> Unit,
     onEditPassword: () -> Unit,
+    firstName: String,
+    surname: String,
+    userId: String,
+    mobile: String?,
     modifier: Modifier = Modifier
 ){
+
     Scaffold(
 
     ){ innerPadding ->
@@ -59,7 +64,8 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(60.dp))
 
             ReadOnlyEditableField(
-                stringResource(R.string.first_name),
+                value = firstName,
+                label = stringResource(R.string.first_name),
                 onEditClick = { /* TODO: eventually add editing */},
                 modifier = modifier.testTag("edit_first_name_field"),
                 editTestTag = "first_name_edit_button"
@@ -68,7 +74,8 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(40.dp))
 
             ReadOnlyEditableField(
-                stringResource(R.string.surname),
+                label = stringResource(R.string.surname),
+                value = surname,
                 onEditClick = { /* TODO: eventually add editing */},
                 modifier = modifier.testTag("edit_surname_field"),
                 editTestTag = "surname_edit_button"
@@ -77,26 +84,29 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(40.dp))
 
             ReadOnlyField(
-                stringResource(R.string.patient_id),
+                label = stringResource(R.string.patient_id),
+                value =  userId,
                 modifier = modifier.testTag("patient_id_field"),
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
             ReadOnlyEditableField(
-                stringResource(R.string.mobile),
+                label = stringResource(R.string.mobile),
                 onEditClick = { /* TODO: eventually add editing */},
                 modifier = modifier.testTag("edit_mobile_field"),
-                editTestTag = "mobile_edit_button"
+                editTestTag = "mobile_edit_button",
+                value = mobile
             )
 
             Spacer(modifier = Modifier.height(40.dp))
 
             ReadOnlyEditableField(
-                stringResource(R.string.password),
+                label = stringResource(R.string.password),
                 onEditClick = onEditPassword,
                 modifier = modifier.testTag("edit_password_field"),
-                editTestTag = "reset_password_button"
+                editTestTag = "reset_password_button",
+                value = "" //TODO: Once password hashing / securiry done, show password
             )
         }
     }
@@ -108,7 +118,11 @@ fun ProfilePreview() {
     TheraPetTheme {
         ProfileScreen(
             onBack = {},
-            onEditPassword = {}
+            onEditPassword = {},
+            firstName = "Chloe",
+            surname = "Edwards",
+            userId = "123456789012",
+            mobile = null
         )
     }
 }
