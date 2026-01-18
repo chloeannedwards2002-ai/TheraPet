@@ -1,10 +1,17 @@
 package com.example.therapet.ui
 
 import androidx.activity.ComponentActivity
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import com.example.therapet.app.data.entity.UserEntity
+import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.ui.components.HomeNavigationDrawer
+import com.example.therapet.app.ui.theme.TheraPetTheme
 import com.example.therapet.helpers.ScreenTestHelpers
 import org.junit.Rule
 import org.junit.Test
@@ -97,6 +104,7 @@ class HomeScreenTest {
 
         composeRule
             .onNodeWithTag("drawer_profile_button")
+            .assertIsDisplayed()
     }
 
     @Test
@@ -109,6 +117,7 @@ class HomeScreenTest {
 
         composeRule
             .onNodeWithTag("drawer_appointments_button")
+            .assertIsDisplayed()
     }
 
     @Test
@@ -121,6 +130,7 @@ class HomeScreenTest {
 
         composeRule
             .onNodeWithTag("drawer_notifications_button")
+            .assertIsDisplayed()
     }
 
     @Test
@@ -133,6 +143,7 @@ class HomeScreenTest {
 
         composeRule
             .onNodeWithTag("drawer_settings_button")
+            .assertIsDisplayed()
     }
 
     @Test
@@ -145,6 +156,62 @@ class HomeScreenTest {
 
         composeRule
             .onNodeWithTag("drawer_logout_button")
+            .assertIsDisplayed()
     }
 
+    @Test
+    fun full_name_is_visible(){
+        ScreenTestHelpers.launchPatientHomeScreen(composeRule)
+
+        composeRule
+            .onNodeWithTag("menu_button")
+            .performClick()
+
+        composeRule
+            .onNodeWithTag("full_name")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun drawer_profile_avatar_is_visible(){
+        ScreenTestHelpers.launchPatientHomeScreen(composeRule)
+
+        composeRule
+            .onNodeWithTag("menu_button")
+            .performClick()
+
+        composeRule
+            .onNodeWithTag("drawer_profile_avatar")
+            .assertIsDisplayed()
+    }
+
+    // Testing the name not just the full name text
+    @Test
+    fun drawer_header_shows_full_avatar_and_full_name() {
+        val fakeUser = UserEntity(
+            userid = "123456789012",
+            firstname = "Jane",
+            surname = "Doe",
+            password = "Password_123",
+            role = UserRole.PATIENT
+        )
+
+        composeRule.setContent {
+            TheraPetTheme {
+                HomeNavigationDrawer(
+                    drawerState = rememberDrawerState(DrawerValue.Open),
+                    user = fakeUser,
+                    onDestinationClicked = {}
+                ) {
+
+                }
+            }
+        }
+
+        composeRule.onNodeWithTag("drawer_profile_avatar")
+            .assertExists()
+
+        composeRule.onNodeWithTag("full_name")
+            .assertTextEquals("Jane Doe")
+    }
 }

@@ -2,6 +2,7 @@ package com.example.therapet.helpers
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
+import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
@@ -29,6 +30,23 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
  */
 
 object ScreenTestHelpers {
+
+    // fake users for testing
+    private val testPatientUser = UserEntity(
+        userid = "123456789123",
+        firstname = "Bob",
+        surname = "Bobbington",
+        password = "Password_123",
+        role = UserRole.PATIENT
+    )
+
+    private val testTherapistUser = UserEntity(
+        userid = "1231231231231234",
+        firstname = "Jane",
+        surname = "Doe",
+        password = "Password_123",
+        role = UserRole.THERAPIST
+    )
 
     fun launchWelcomeScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
@@ -125,7 +143,8 @@ object ScreenTestHelpers {
     fun launchPatientHomeScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>,
         role: UserRole = UserRole.PATIENT,
-        petColourIndex: Int = 0
+        petColourIndex: Int = 0,
+        user: UserEntity = testPatientUser
     ){
         composeRule.setContent {
             TheraPetTheme {
@@ -137,7 +156,8 @@ object ScreenTestHelpers {
                     onNotifs = {},
                     onAppts = {},
                     onBookAppt = {},
-                    onProfile = {}
+                    onProfile = {},
+                    user = user
                 )
             }
         }
@@ -158,7 +178,8 @@ object ScreenTestHelpers {
     fun launchTherapistHomeScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>,
         role: UserRole = UserRole.THERAPIST,
-        petColourIndex: Int = 0
+        petColourIndex: Int = 0,
+        user: UserEntity = testTherapistUser
     ){
         composeRule.setContent {
             TheraPetTheme {
@@ -170,7 +191,8 @@ object ScreenTestHelpers {
                     onNotifs = {},
                     onAppts = {},
                     onBookAppt = {},
-                    onProfile = {}
+                    onProfile = {},
+                    user = user
                 )
             }
         }
@@ -273,8 +295,12 @@ object ScreenTestHelpers {
         composeRule.setContent{
             TheraPetTheme{
                 ProfileScreen(
-                    onBack ={},
-                    onEditPassword={}
+                    onBack = {},
+                    onEditPassword = {},
+                    firstName = "Jane",
+                    surname = "Doe",
+                    userId = "123456789012",
+                    mobile = null
                 )
             }
         }

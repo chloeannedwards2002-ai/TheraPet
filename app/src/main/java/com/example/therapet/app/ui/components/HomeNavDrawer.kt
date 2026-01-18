@@ -1,10 +1,8 @@
 package com.example.therapet.app.ui.components
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -125,6 +123,7 @@ fun DrawerHeader(
     ){
         ProfileAvatar(
             modifier = Modifier.size(56.dp)
+                .testTag("drawer_profile_avatar")
         )
 
         Spacer(modifier = Modifier.width(12.dp))
@@ -132,7 +131,8 @@ fun DrawerHeader(
         Column{
             Text(
                 text = user?.let { "${it.firstname} ${it.surname}" } ?: "",
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
+                modifier = modifier.testTag("full_name")
             )
         }
     }
