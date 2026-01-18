@@ -2,6 +2,7 @@ package com.example.therapet.app.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
 import com.example.therapet.app.data.session.SessionManager
@@ -35,6 +36,9 @@ class UserViewModel(
 
     private val _loggedInRole = MutableStateFlow<UserRole?>(null)
     val loggedInRole: StateFlow<UserRole?> = _loggedInRole
+
+    private val _currentUser = MutableStateFlow<UserEntity?>(null)
+    val currentUser: StateFlow<UserEntity?> = _currentUser
 
     // Authentication
 
@@ -90,6 +94,7 @@ class UserViewModel(
             repository.deleteUser(session.userid)
             sessionManager.logout()
             _loggedInRole.value = null
+            _currentUser.value = null
         }
     }
 
@@ -115,4 +120,12 @@ class UserViewModel(
             repository.login(session.userid, input) != null
         }
     }
+
+    fun loadCurrentUser() {
+        val session = sessionManager.session.value ?: return
+        viewModelScope.launch {
+            _currentUser.value = repository.getUserById(session.userid)
+        }
+    }
+
 }

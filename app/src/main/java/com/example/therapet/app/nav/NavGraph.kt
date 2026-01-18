@@ -16,7 +16,6 @@ import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
 import com.example.therapet.app.ui.screens.booking.BookAppointmentScreen
 import com.example.therapet.app.ui.screens.booking.ChooseTherapistScreen
 import com.example.therapet.app.ui.screens.home.HomeRoute
-import com.example.therapet.app.ui.screens.settings.ProfileScreen
 import com.example.therapet.app.ui.screens.pet.PetSettingsScreen
 import com.example.therapet.app.ui.screens.register.RegisterRoute
 import com.example.therapet.app.ui.screens.settings.accountmanagement.DeleteAccountScreen
@@ -26,6 +25,7 @@ import com.example.therapet.app.ui.screens.settings.SettingsScreen
 import com.example.therapet.app.ui.screens.login.LoginRoute
 import com.example.therapet.app.ui.screens.pet.CreatePetRoute
 import com.example.therapet.app.ui.screens.settings.accountmanagement.DeleteAccountConfirmRoute
+import com.example.therapet.app.ui.screens.settings.accountmanagement.profile.ProfileRoute
 import com.example.therapet.app.ui.viewmodel.UserViewModel
 import com.example.therapet.app.ui.viewmodel.ViewModelFactory
 
@@ -157,10 +157,11 @@ fun NavGraph(
             )
         }
 
-        composable(Routes.PROFILE) { // Composable for the Profile screen
-            ProfileScreen(
+        composable(Routes.PROFILE) {
+            ProfileRoute(
                 onBack = { navController.popBackStack() },
-                onEditPassword = { navController.navigate(Routes.RESET_PASSWORD) }
+                onEditPassword = { navController.navigate(Routes.RESET_PASSWORD) },
+                viewModel = userViewModel
             )
         }
 

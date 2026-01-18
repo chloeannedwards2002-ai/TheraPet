@@ -63,4 +63,10 @@ class UserRepository(
     ): UserRole? {
         return userDao.login(userid, password)?.role
     }
+
+
+    override suspend fun getUserById(userid: String): UserEntity? {
+        return userDao.getUserById(userid)
+    }
+
 }
