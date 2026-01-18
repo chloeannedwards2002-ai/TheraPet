@@ -1,11 +1,15 @@
 package com.example.therapet.app.ui.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -13,11 +17,13 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.therapet.R
 import androidx.compose.ui.res.stringResource
+import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButton
 
 
@@ -32,6 +38,7 @@ import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButt
 @Composable
 fun HomeNavigationDrawer(
     drawerState: DrawerState,
+    user: UserEntity?,
     onDestinationClicked: (String) -> Unit,
     content: @Composable () -> Unit
 ) {
@@ -42,11 +49,7 @@ fun HomeNavigationDrawer(
                 drawerContainerColor = MaterialTheme.colorScheme.background,
                 modifier = Modifier.testTag("nav_drawer")
             ) {
-                Text(
-                    text = stringResource(R.string.nav_drawer_menu),
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(16.dp)
-                )
+                DrawerHeader(user = user)
 
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -106,4 +109,31 @@ fun HomeNavigationDrawer(
         },
         content = content
     )
+}
+
+// drawer header
+@Composable
+fun DrawerHeader(
+    user: UserEntity?,
+    modifier: Modifier = Modifier
+){
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        ProfileAvatar(
+            modifier = Modifier.size(56.dp)
+        )
+
+        Spacer(modifier = Modifier.width(12.dp))
+
+        Column{
+            Text(
+                text = user?.let { "${it.firstname} ${it.surname}" } ?: "",
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
 }

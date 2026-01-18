@@ -3,6 +3,7 @@ package com.example.therapet.app.ui.screens.home
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -33,6 +34,7 @@ fun HomeRoute(
 ) {
     val role by userViewModel.loggedInRole.collectAsState(initial = null)
     val session by sessionManager.session.collectAsState()
+    val user by userViewModel.currentUser.collectAsState()
 
     val userId = session?.userid ?: return
 
@@ -43,12 +45,17 @@ fun HomeRoute(
         )
     )
 
+    LaunchedEffect(Unit) {
+        userViewModel.loadCurrentUser()
+    }
+
     val petColourIndex by petViewModel.selectedColourIndex.collectAsState()
 
     if (role != null) {
         Scaffold { innerPadding ->
             HomeScreen(
                 role = role!!,
+                user = user,
                 petColourIndex = petColourIndex,
                 modifier = Modifier.padding(innerPadding),
                 onLogout = onLogout,

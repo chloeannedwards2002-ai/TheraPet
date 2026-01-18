@@ -21,6 +21,7 @@ import com.example.therapet.app.ui.components.bars.MainTopBar
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.R
+import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.HomeNavigationDrawer
 import com.example.therapet.app.ui.components.bars.PetCareBar
@@ -50,13 +51,15 @@ fun HomeScreen(
     onNotifs:() -> Unit,
     onAppts:() -> Unit,
     onBookAppt: () -> Unit,
-    onProfile: () -> Unit
+    onProfile: () -> Unit,
+    user: UserEntity?
 ){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     HomeNavigationDrawer(
         drawerState = drawerState,
+        user = user,
         onDestinationClicked = { destination ->
             when (destination) {
                 "settings" -> onSettings()
@@ -131,7 +134,8 @@ fun HomeScreenPatientPreview() {
             onAppts = {},
             onBookAppt = {},
             onProfile = {},
-            petColourIndex = 5
+            petColourIndex = 5,
+            user = null
         )
     }
 }
@@ -148,7 +152,8 @@ fun HomeScreenTherapistPreview() {
             onAppts = {},
             onBookAppt = {},
             onProfile = {},
-            petColourIndex = 0
+            petColourIndex = 0,
+            user = null
         )
     }
 }
