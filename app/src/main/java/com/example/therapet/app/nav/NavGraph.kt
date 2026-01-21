@@ -10,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.session.SessionManager
-import com.example.therapet.app.ui.screens.settings.accountmanagement.ResetPasswordScreen
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
 import com.example.therapet.app.ui.screens.booking.BookAppointmentScreen
@@ -26,6 +25,7 @@ import com.example.therapet.app.ui.screens.login.LoginRoute
 import com.example.therapet.app.ui.screens.pet.CreatePetRoute
 import com.example.therapet.app.ui.screens.settings.accountmanagement.DeleteAccountConfirmRoute
 import com.example.therapet.app.ui.screens.settings.accountmanagement.profile.ProfileRoute
+import com.example.therapet.app.ui.screens.settings.accountmanagement.password.ResetPasswordRoute
 import com.example.therapet.app.ui.viewmodel.UserViewModel
 import com.example.therapet.app.ui.viewmodel.ViewModelFactory
 
@@ -165,10 +165,11 @@ fun NavGraph(
             )
         }
 
-        composable(Routes.RESET_PASSWORD) { // Composable for the Reset password screen
-            ResetPasswordScreen(
+        composable(Routes.RESET_PASSWORD) {
+            ResetPasswordRoute(
                 onBack = { navController.popBackStack() },
-                onResetPassword = { /* TODO: when reset password functionality is implemented !! */ }
+                onSuccess = { navController.popBackStack() },
+                viewModel = userViewModel
             )
         }
 

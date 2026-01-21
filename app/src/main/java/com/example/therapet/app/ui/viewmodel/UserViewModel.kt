@@ -40,6 +40,9 @@ class UserViewModel(
     private val _currentUser = MutableStateFlow<UserEntity?>(null)
     val currentUser: StateFlow<UserEntity?> = _currentUser
 
+    private val _resetPasswordResult = MutableStateFlow<Boolean?>(null)
+    val resetPasswordResult: StateFlow<Boolean?> = _resetPasswordResult
+
     // Authentication
 
     fun login(
@@ -121,6 +124,7 @@ class UserViewModel(
         }
     }
 
+    //Load current users details
     fun loadCurrentUser() {
         val session = sessionManager.session.value ?: return
         viewModelScope.launch {
@@ -128,4 +132,20 @@ class UserViewModel(
         }
     }
 
+    // Updates password
+    fun resetPassword(newPassword: String) {
+        val session = sessionManager.session.value ?: return
+
+        viewModelScope.launch {
+            val success = repository.updatePassword(
+                userid = session.userid,
+                newPassword = newPassword
+            )
+            _resetPasswordResult.value = success
+        }
+    }
+
+    fun clearResetPasswordResult() {
+        _resetPasswordResult.value = null
+    }
 }

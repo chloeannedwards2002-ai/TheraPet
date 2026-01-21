@@ -69,4 +69,15 @@ class UserRepository(
         return userDao.getUserById(userid)
     }
 
+    override suspend fun updatePassword(
+        userid: String,
+        newPassword: String
+    ): Boolean {
+        userDao.updatePassword(
+            userid = userid,
+            newPassword = newPassword
+        )
+        return true
+    }
+
 }

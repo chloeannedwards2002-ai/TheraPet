@@ -40,4 +40,11 @@ interface UserDao {
     //get user by id
     @Query("SELECT * FROM users WHERE userid = :userid LIMIT 1")
     suspend fun getUserById(userid: String): UserEntity?
+
+    //update password
+    @Query("UPDATE users SET password = :newPassword WHERE userid = :userid")
+    suspend fun updatePassword(
+        userid: String,
+        newPassword: String
+    )
 }

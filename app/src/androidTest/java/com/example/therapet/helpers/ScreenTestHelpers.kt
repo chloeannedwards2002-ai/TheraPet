@@ -19,7 +19,7 @@ import com.example.therapet.app.ui.screens.settings.HelpSupportScreen
 import com.example.therapet.app.ui.screens.settings.PrivacyPolicyScreen
 import com.example.therapet.app.ui.screens.settings.SettingsScreen
 import com.example.therapet.app.ui.screens.settings.accountmanagement.profile.ProfileScreen
-import com.example.therapet.app.ui.screens.settings.accountmanagement.ResetPasswordScreen
+import com.example.therapet.app.ui.screens.settings.accountmanagement.password.ResetPasswordScreen
 import com.example.therapet.app.ui.theme.TheraPetTheme
 
 /**
@@ -312,8 +312,9 @@ object ScreenTestHelpers {
         composeRule.setContent{
             TheraPetTheme{
                 ResetPasswordScreen(
-                    onBack ={},
-                    onResetPassword={}
+                    onBack = {},
+                    errorMessage = null,
+                    onResetPassword = { _, _ -> }
                 )
             }
         }

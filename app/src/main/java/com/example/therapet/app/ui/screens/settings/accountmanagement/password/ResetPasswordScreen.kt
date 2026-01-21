@@ -1,4 +1,4 @@
-package com.example.therapet.app.ui.screens.settings.accountmanagement
+package com.example.therapet.app.ui.screens.settings.accountmanagement.password
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -39,9 +39,10 @@ import com.example.therapet.app.ui.screens.register.PasswordInput
 
 @Composable
 fun ResetPasswordScreen(
+    onResetPassword:(String, String) -> Unit,
+    errorMessage: String? = null,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
-    onResetPassword: () -> Unit
 ){
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
@@ -106,7 +107,22 @@ fun ResetPasswordScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            ResetPasswordButton(onClick = onResetPassword)
+            if (errorMessage != null) {
+                Text(
+                    text = errorMessage,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .testTag("reset_password_error_text")
+                )
+            }
+
+            ResetPasswordButton(
+                onClick = {
+                    onResetPassword(password, confirmPassword)
+                }
+            )
         }
     }
 }
@@ -129,7 +145,8 @@ fun ResetPasswordPreview() {
     TheraPetTheme {
         ResetPasswordScreen(
             onBack = {},
-            onResetPassword = {}
+            errorMessage = null,
+            onResetPassword = { _, _ -> }
         )
     }
 }
