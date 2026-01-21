@@ -32,5 +32,8 @@ interface UserRepositoryContract {
     // get user without needing password
     suspend fun getUserById(userid: String): UserEntity?
 
-
+    suspend fun updatePassword(
+        userid: String,
+        newPassword: String
+    ): Boolean
 }

@@ -59,4 +59,13 @@ class FakeUserRepository : UserRepositoryContract {
             else -> throw IllegalArgumentException("Invalid user ID")
         }
     }
+
+    override suspend fun updatePassword(
+        userid: String,
+        newPassword: String
+    ): Boolean {
+        val user = users[userid] ?: return false
+        users[userid] = user.copy(password = newPassword)
+        return true
+    }
 }

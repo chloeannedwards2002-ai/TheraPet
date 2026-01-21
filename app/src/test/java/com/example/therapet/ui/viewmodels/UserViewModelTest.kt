@@ -15,6 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.Assert.assertNull
 import com.example.therapet.app.data.model.UserRole
+import junit.framework.TestCase.assertNotNull
 
 
 /**
@@ -234,6 +235,20 @@ class UserViewModelTest {
         assertNull(viewModel.currentUser.value)
     }
 
+    //16. Reset password
+    @Test
+    fun resetPassword_updates_password() = runTest {
+        val userId = "123456789012"
+
+        repository.register(userId, "Test", "Test", "Password_123")
+        sessionManager.login(userId, UserRole.PATIENT)
+
+        viewModel.resetPassword("newPassword_123")
+        advanceUntilIdle()
+
+        val updatedUser = repository.login(userId, "newPassword_123")
+        assertNotNull(updatedUser)
+    }
 }
 
 
