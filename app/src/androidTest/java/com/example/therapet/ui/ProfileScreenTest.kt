@@ -95,7 +95,7 @@ class ProfileScreenTest {
         ScreenTestHelpers.launchProfileScreen(composeRule)
 
         composeRule
-            .onNodeWithTag("edit_password_field")
+            .onNodeWithTag("reset_password_button")
             .assertIsDisplayed()
     }
 

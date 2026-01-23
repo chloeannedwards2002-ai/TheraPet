@@ -1,5 +1,11 @@
 package com.example.therapet.app.ui.screens.settings.accountmanagement.password
 
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -23,13 +29,14 @@ fun ResetPasswordRoute(
     viewModel: UserViewModel
 ) {
     var error by remember { mutableStateOf<String?>(null) }
+    var showSuccessDialog by remember { mutableStateOf(false) }
+
     val result by viewModel.resetPasswordResult.collectAsState()
 
     ResetPasswordScreen(
         onBack = onBack,
         errorMessage = error,
         onResetPassword = { password, confirm ->
-
             when {
                 password.isBlank() || confirm.isBlank() ->
                     error = "Please enter a new password"
@@ -45,14 +52,32 @@ fun ResetPasswordRoute(
         }
     )
 
+    if (showSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = {},
+            title = { Text("Success") },
+            text = { Text("Password reset successfully") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showSuccessDialog = false
+                        onSuccess()
+                    }
+                ) {
+                    Text("Ok")
+                }
+            }
+        )
+    }
+
     LaunchedEffect(result) {
         when (result) {
             true -> {
+                showSuccessDialog = true
                 viewModel.clearResetPasswordResult()
-                onSuccess()
             }
             false -> {
-                error = "Failed to reset password"
+                error = "Password reset failed"
                 viewModel.clearResetPasswordResult()
             }
             null -> Unit

@@ -39,6 +39,7 @@
     <string name="surname">Surname</string>
     <string name="patient_id">Patient ID</string>
     <string name="mobile">Mobile</string>
+    <string name="reset_password">Reset Password</string>
     <string name="password">Password</string>
 
     <!-- Create Pet Screen -->

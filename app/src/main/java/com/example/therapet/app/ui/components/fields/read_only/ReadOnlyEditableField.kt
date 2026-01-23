@@ -26,23 +26,24 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 @Composable
 fun ReadOnlyEditableField(
     value: String?,
-    modifier: Modifier = Modifier,
+    label: String,
     onEditClick: () -> Unit,
     editTestTag: String,
-    label: String
+    modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
-        label = { Text(label) },
         value = value.orEmpty(),
         onValueChange = {},
         modifier = modifier
-            .height(60.dp)
-            .fillMaxWidth(),
-        textStyle = MaterialTheme.typography.labelSmall,
+            .fillMaxWidth()
+            .height(56.dp),
         readOnly = true,
         singleLine = true,
+        label = { Text(label) },
+        textStyle = MaterialTheme.typography.labelSmall,
         trailingIcon = {
-            IconButton(onClick = onEditClick,
+            IconButton(
+                onClick = onEditClick,
                 modifier = Modifier.testTag(editTestTag)
             ) {
                 Icon(
