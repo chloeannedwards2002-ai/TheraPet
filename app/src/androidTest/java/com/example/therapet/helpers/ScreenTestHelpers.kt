@@ -2,7 +2,9 @@ package com.example.therapet.helpers
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
+import com.example.therapet.app.data.entity.AppointmentEntity
 import com.example.therapet.app.data.entity.UserEntity
+import com.example.therapet.app.data.model.AppointmentType
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
@@ -47,6 +49,20 @@ object ScreenTestHelpers {
         password = "Password_123",
         role = UserRole.THERAPIST
     )
+
+    // For appointments tests
+    private fun fakeAppointments(): List<AppointmentEntity> {
+        return listOf(
+            AppointmentEntity(
+                appointmentId = 1,
+                therapistUserId = "therapist1",
+                appointmentDateTime = 1_000_000L,
+                appointmentType = AppointmentType.SESSION,
+                patientUserId = null,
+                isBooked = false
+            )
+        )
+    }
 
     fun launchWelcomeScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
@@ -198,14 +214,35 @@ object ScreenTestHelpers {
         }
     }
 
-    fun launchAppointmentsScreen(
+    fun launchTherapistAppointmentsScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
         composeRule.setContent{
             TheraPetTheme{
                 AppointmentsScreen(
+                    role = UserRole.THERAPIST,
+                    appointments = fakeAppointments(),
                     onBack = {},
-                    onBookAppt = {}
+                    onAddAppointment = { _, _ -> },
+                    onUpdateAppointment = {},
+                    onDeleteAppointment = {}
+                )
+            }
+        }
+    }
+
+    fun launchPatientAppointmentsScreen(
+        composeRule: AndroidComposeTestRule<*, ComponentActivity>
+    ) {
+        composeRule.setContent {
+            TheraPetTheme {
+                AppointmentsScreen(
+                    role = UserRole.PATIENT,
+                    appointments = fakeAppointments(),
+                    onBack = {},
+                    onAddAppointment = { _, _ -> },
+                    onUpdateAppointment = {},
+                    onDeleteAppointment = {}
                 )
             }
         }

@@ -11,8 +11,7 @@ import androidx.navigation.compose.composable
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.session.SessionManager
 import com.example.therapet.app.ui.screens.WelcomeScreen
-import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
-import com.example.therapet.app.ui.screens.booking.BookAppointmentScreen
+import com.example.therapet.app.ui.screens.appts.AppointmentsRoute
 import com.example.therapet.app.ui.screens.booking.ChooseTherapistScreen
 import com.example.therapet.app.ui.screens.home.HomeRoute
 import com.example.therapet.app.ui.screens.pet.PetSettingsScreen
@@ -52,6 +51,8 @@ fun NavGraph(
             sessionManager
         )
     )
+
+    val role by userViewModel.loggedInRole.collectAsState(initial = null)
 
     NavHost(
         navController = navController,
@@ -136,11 +137,14 @@ fun NavGraph(
 
         }
 
-        composable(Routes.APPOINTMENTS) { // Composable for the Appointments screen
-            AppointmentsScreen(
-                onBack = { navController.popBackStack() },
-                onBookAppt = { navController.navigate(Routes.BOOK_APPOINTMENT) }
-            )
+        composable(Routes.APPOINTMENTS) {
+            if (role != null) {
+                AppointmentsRoute(
+                    role = role!!,
+                    sessionManager = sessionManager,
+                    onBack = { navController.popBackStack() }
+                )
+            }
         }
 
         composable(Routes.CHOOSE_THERAPIST) { // Composable for the Choose Therapist screen
@@ -150,11 +154,15 @@ fun NavGraph(
             )
         }
 
-        composable(Routes.BOOK_APPOINTMENT) { // Composable for the Book Appointments screen
-            BookAppointmentScreen(
+        composable(Routes.BOOK_APPOINTMENT) {
+
+            /*BookAppointmentRoute(
                 onBack = { navController.popBackStack() },
-                onBook = { /* TODO: when booking functionality is implemented !! */ }
-            )
+                onBooked = {
+                    navController.popBackStack()
+                },
+                sessionManager = sessionManager
+            )*/
         }
 
         composable(Routes.PROFILE) {

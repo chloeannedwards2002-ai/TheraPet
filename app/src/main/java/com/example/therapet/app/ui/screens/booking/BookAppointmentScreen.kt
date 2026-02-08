@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.therapet.ui.calendar.CustomCalendar
 import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import com.example.therapet.R
@@ -57,13 +56,6 @@ fun BookAppointmentScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-
-            CustomCalendar(
-                onDateSelected = { date ->
-                    // TODO: handle selected date
-                }
-            )
         }
     }
 }

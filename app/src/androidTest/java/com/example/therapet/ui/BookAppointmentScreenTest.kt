@@ -28,12 +28,4 @@ class BookAppointmentScreenTest {
             .assertIsDisplayed()
     }
 
-    @Test
-    fun custom_calendar_is_visible(){
-        ScreenTestHelpers.launchBookAppointmentsScreen(composeRule)
-
-        composeRule
-            .onNodeWithTag("custom_calendar")
-            .assertIsDisplayed()
-    }
 }

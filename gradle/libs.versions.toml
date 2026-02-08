@@ -20,6 +20,9 @@ ui = "1.10.0"
 ksp = "1.9.24-1.0.20"
 mediationTestSuite = "3.0.0"
 uiVersion = "1.10.1"
+uiTextVersion = "1.10.1"
+foundationLayoutVersion = "1.10.2"
+androidxUi = "1.10.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +48,9 @@ androidx-compose-foundation-layout = { group = "androidx.compose.foundation", na
 androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
 mediation-test-suite = { group = "com.google.android.ads", name = "mediation-test-suite", version.ref = "mediationTestSuite" }
 ui = { group = "androidx.compose.ui", name = "ui", version.ref = "uiVersion" }
+androidx-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiTextVersion" }
+androidx-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayoutVersion" }
+androidx-compose-ui-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "androidxUi" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

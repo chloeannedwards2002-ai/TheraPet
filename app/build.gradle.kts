@@ -53,6 +53,9 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.mediation.test.suite)
     implementation(libs.ui)
+    implementation(libs.androidx.ui.text)
+    implementation(libs.androidx.foundation.layout)
+    implementation(libs.androidx.compose.ui.ui)
     androidTestImplementation(libs.androidx.ui.test.junit4)
     // For navigation
     val nav_version = "2.9.6"
@@ -81,6 +84,15 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation("androidx.compose.material:material-icons-extended")
+
+
+    implementation("network.chaintech:kmp-date-time-picker:1.0.7")
+
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
     // Room
     implementation ("androidx.room:room-runtime:2.6.1")

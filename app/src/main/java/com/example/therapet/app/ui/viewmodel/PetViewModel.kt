@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
  * @date: 11/01/2026
  *
  * Pet view model
+ * With help from code: https://github.com/android/sunflower/tree/main/app/src/main/java/com/google/samples/apps/sunflower/viewmodels
  */
 
 class PetViewModel(
