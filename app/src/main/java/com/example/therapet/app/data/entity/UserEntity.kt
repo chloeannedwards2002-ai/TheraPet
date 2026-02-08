@@ -1,6 +1,7 @@
 package com.example.therapet.app.data.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.therapet.app.data.model.UserRole
 
@@ -11,8 +12,12 @@ import com.example.therapet.app.data.model.UserRole
  * The user database table
  */
 
-@Entity(tableName = "users")
-
+@Entity(
+    tableName = "users",
+    indices = [
+        Index(value = ["userid"], unique = true)
+    ]
+)
 data class UserEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,

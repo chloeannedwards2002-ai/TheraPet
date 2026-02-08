@@ -7,29 +7,37 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.therapet.app.data.local.dao.UserDao
 import com.example.therapet.app.data.entity.UserEntity
+import com.example.therapet.app.data.local.dao.AppointmentDao
+import com.example.therapet.app.data.entity.AppointmentEntity
 
 @Database(
-    entities = [UserEntity::class],
-    version = 1,
+    entities = [
+        UserEntity::class,
+        AppointmentEntity::class
+               ],
+    version = 2,
     exportSchema = false
 )
 
 @TypeConverters(Converters::class)
-abstract class AppDatabase : RoomDatabase(){
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
+    abstract fun appointmentDao(): AppointmentDao
 
     companion object {
         @Volatile
-        private var INSTANCE : AppDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
         fun getDatabase(context: Context): AppDatabase =
-            INSTANCE ?: synchronized(this){
+            INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "therapet_db"
-                ).build().also { INSTANCE = it }
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
             }
     }
 }

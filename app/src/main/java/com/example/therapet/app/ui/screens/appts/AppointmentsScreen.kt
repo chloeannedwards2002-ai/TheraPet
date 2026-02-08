@@ -1,22 +1,31 @@
 package com.example.therapet.app.ui.screens.appts
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.app.ui.components.bars.BasicTopBar
-import com.example.therapet.app.ui.theme.TheraPetTheme
 import com.example.therapet.R
+import com.example.therapet.app.data.entity.AppointmentEntity
+import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButton
+import androidx.compose.foundation.lazy.items
+import com.example.therapet.app.data.model.AppointmentType
+import com.example.therapet.app.ui.components.fields.appt.AddAppointmentDialog
+import com.example.therapet.app.ui.components.fields.appt.AppointmentCell
+import com.example.therapet.app.ui.components.fields.appt.EditAppointmentDialog
+
 
 /**
  * @author: Chloe Edwards
@@ -28,60 +37,93 @@ import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButt
 
 @Composable
 fun AppointmentsScreen(
-    modifier: Modifier = Modifier,
+    role: UserRole,
+    appointments: List<AppointmentEntity>,
     onBack: () -> Unit,
-    onBookAppt: () -> Unit
-){
+    onAddAppointment: (Long, AppointmentType) -> Unit,
+    onUpdateAppointment: (AppointmentEntity) -> Unit,
+    onDeleteAppointment: (AppointmentEntity) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var showAddAppointmentDialog by remember { mutableStateOf(false) }
+    var selectedAppointment by remember {
+        mutableStateOf<AppointmentEntity?>(null)
+    }
+
     Scaffold(
-        floatingActionButton = {
-            MyBookAppointmentsButton (
-                onClick = onBookAppt,
-                modifier = Modifier
+        topBar = {
+            BasicTopBar(
+                text = stringResource(R.string.appointments),
+                onBackClick = onBack
             )
         },
-    ){
-        innerPadding ->
-
-        BasicTopBar(
-            text = stringResource(R.string.appointments),
-            onBackClick = onBack,
-        )
-
-        Column(
-            modifier = modifier
-                .padding(horizontal = 20.dp)
-                .padding(innerPadding)
-                .fillMaxSize()
-                .testTag("appointments_screen"),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-
+        floatingActionButton = {
+            MyBookAppointmentsButton(
+                role = role,
+                onClick = { showAddAppointmentDialog = true }
+            )
         }
+    ) { innerPadding ->
+
+        LazyColumn(
+            modifier = modifier
+                .padding(innerPadding)
+                .padding(horizontal = 20.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(appointments, key = { it.appointmentId }) { appointment ->
+                AppointmentCell(
+                    appointment = appointment,
+                    onClick = { selectedAppointment = appointment },
+                    modifier = modifier.testTag("appointment_cell")
+                )
+            }
+        }
+
+        if (showAddAppointmentDialog) {
+            AddAppointmentDialog(
+                onDismiss = { showAddAppointmentDialog = false },
+                onConfirm = { millis, type ->
+                    onAddAppointment(millis, type)
+                    showAddAppointmentDialog = false
+                }
+            )
+        }
+
+        selectedAppointment?.let { appointment ->
+            EditAppointmentDialog(
+                appointment = appointment,
+                onDismiss = { selectedAppointment = null },
+                onUpdateTime = { updated ->
+                    onUpdateAppointment(updated)
+                    selectedAppointment = null
+                },
+                onDelete = {
+                    onDeleteAppointment(it)
+                    selectedAppointment = null
+                }
+            )
+        }
+
     }
 }
-
 @Composable
 fun MyBookAppointmentsButton(
+    role: UserRole,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
+    val text = when (role) {
+        UserRole.PATIENT -> "+ Book appointment"
+        UserRole.THERAPIST -> "+ Add appointment"
+    }
+
     CustomOutlinedButton(
         onClick = onClick,
-        text = stringResource(R.string.book_appointment_nav),
+        text = text,
         modifier = modifier
             .testTag("book_appointment_button")
             .height(60.dp)
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AppointmentsPreview() {
-    TheraPetTheme {
-        AppointmentsScreen(
-            onBack = {},
-            onBookAppt = {}
-        )
-    }
 }

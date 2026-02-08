@@ -2,9 +2,15 @@ package com.example.therapet.ui
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import com.example.therapet.helpers.ScreenTestHelpers
+import network.chaintech.kmp_date_time_picker.utils.DateTimePickerView
 import org.junit.Rule
 import org.junit.Test
 
@@ -16,15 +22,93 @@ import org.junit.Test
  */
 
 class AppointmentsScreenTest {
+
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
 
     @Test
-    fun book_appointment_button_is_visible(){
-        ScreenTestHelpers.launchAppointmentsScreen(composeRule)
+    fun therapist_add_appointment_button_is_visible() {
+        ScreenTestHelpers.launchTherapistAppointmentsScreen(composeRule)
 
         composeRule
             .onNodeWithTag("book_appointment_button")
             .assertIsDisplayed()
+            .assertTextEquals("+ Add appointment")
     }
+
+    @Test
+    fun patient_book_appointment_button_is_visible() {
+        ScreenTestHelpers.launchPatientAppointmentsScreen(composeRule)
+
+        composeRule
+            .onNodeWithTag("book_appointment_button")
+            .assertIsDisplayed()
+            .assertTextEquals("+ Book appointment")
+    }
+
+    @Test
+    fun clicking_appointment_opens_edit_dialog() {
+        ScreenTestHelpers.launchTherapistAppointmentsScreen(composeRule)
+
+        composeRule
+            .onNodeWithTag("appointment_cell")
+            .performClick()
+
+        composeRule
+            .onNodeWithText("Appointment")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun patient_cannot_open_date_picker() {
+        ScreenTestHelpers.launchPatientAppointmentsScreen(composeRule)
+
+        composeRule
+            .onNodeWithTag("book_appointment_button")
+            .performClick()
+
+        composeRule
+            .onNodeWithTag("date_time_picker")
+            .assertDoesNotExist()
+    }
+
+    @Test
+    fun edit_time_opens_date_picker() {
+        ScreenTestHelpers.launchTherapistAppointmentsScreen(composeRule)
+
+        composeRule
+            .onNodeWithTag("appointment_cell")
+            .performClick()
+
+        composeRule
+            .onNodeWithTag("edit_time_button")
+            .performClick()
+
+        composeRule
+            .onNodeWithTag("date_time_picker", useUnmergedTree = true)
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun date_picker_dismisses_when_done_clicked() {
+        ScreenTestHelpers.launchTherapistAppointmentsScreen(composeRule)
+
+        composeRule
+            .onNodeWithTag("appointment_cell")
+            .performClick()
+
+        composeRule
+            .onNodeWithTag("edit_time_button")
+            .performClick()
+
+        composeRule
+            .onNodeWithText("Done", useUnmergedTree = true)
+            .performClick()
+
+        composeRule
+            .onNodeWithTag("date_time_picker", useUnmergedTree = true)
+            .assertDoesNotExist()
+    }
+
+
 }

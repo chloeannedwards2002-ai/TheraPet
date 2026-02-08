@@ -5,8 +5,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.therapet.app.data.local.AppDatabase
-import com.example.therapet.app.data.repository.contracts.PetPreferencesRepositoryContract
+import com.example.therapet.app.data.repository.AppointmentRepository
 import com.example.therapet.app.data.repository.UserRepository
+import com.example.therapet.app.data.repository.contracts.AppointmentRepositoryContract
 import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
 import com.example.therapet.app.data.session.SessionManager
 
@@ -15,6 +16,8 @@ import com.example.therapet.app.data.session.SessionManager
  * @date: 06/01/2026
  *
  * Manually instructs android how to construct the ViewModels
+ *
+ * https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories
  */
 
 // Nesting
@@ -54,6 +57,29 @@ class ViewModelFactory {
                 @Suppress("UNCHECKED_CAST")
                 return PetViewModel(repository) as T
             }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
+    }
+
+    class AppointmentViewModelFactory(
+        private val context: Context,
+        private val sessionManager: SessionManager
+    ) : ViewModelProvider.Factory {
+
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            val db = AppDatabase.getDatabase(context)
+
+            val repository: AppointmentRepositoryContract =
+                AppointmentRepository(
+                    appointmentDao = db.appointmentDao(),
+                    userDao = db.userDao()
+                )
+
+            if (modelClass.isAssignableFrom(AppointmentViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return AppointmentViewModel(repository, sessionManager) as T
+            }
+
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }

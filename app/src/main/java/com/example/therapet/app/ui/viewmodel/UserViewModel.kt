@@ -18,6 +18,8 @@ import kotlinx.coroutines.runBlocking
  * User view model - holds the login & registration state
  * (Does NOT know about the fragments, talk to the database directly or show UI)
  * Login and register screens will be wired to the viewmodel (fragments are not needed as I am using compose not XML)
+ *
+ * With help from code: https://github.com/android/sunflower/tree/main/app/src/main/java/com/google/samples/apps/sunflower/viewmodels
  */
 
 class UserViewModel(

@@ -9,7 +9,7 @@ import com.example.therapet.app.data.entity.UserEntity
  * @author: Chloe Edwards
  * @date: 05/01/2026
  *
- * Data access object
+ * User data access object
  */
 
 @Dao
@@ -47,4 +47,8 @@ interface UserDao {
         userid: String,
         newPassword: String
     )
+
+    // get user by id
+    @Query("SELECT * FROM users WHERE userid = :id LIMIT 1")
+    suspend fun getUserByUserId(id: String): UserEntity
 }
