@@ -69,7 +69,6 @@ fun AppointmentCell(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-
             Text(
                 text = appointment.appointmentType.displayName(),
                 style = MaterialTheme.typography.titleMedium,
@@ -114,6 +113,7 @@ fun AppointmentCellAvailablePreview() {
         )
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

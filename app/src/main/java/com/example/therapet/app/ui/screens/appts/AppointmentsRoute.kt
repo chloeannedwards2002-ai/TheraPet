@@ -5,10 +5,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.therapet.app.data.model.AppointmentType
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.session.SessionManager
 import com.example.therapet.app.ui.viewmodel.AppointmentViewModel
+import com.example.therapet.app.ui.viewmodel.UserViewModel
 import com.example.therapet.app.ui.viewmodel.ViewModelFactory
 
 /**
@@ -26,29 +26,34 @@ fun AppointmentsRoute(
 ) {
     val context = LocalContext.current
 
-    val viewModel: AppointmentViewModel = viewModel(
+    val appointmentViewModel: AppointmentViewModel = viewModel(
         factory = ViewModelFactory.AppointmentViewModelFactory(
             context,
             sessionManager
         )
     )
 
-    val appointments by viewModel
+    val UserViewModel: UserViewModel = viewModel(
+        factory = ViewModelFactory.UserViewModelFactory(context, sessionManager)
+    )
+
+    val appointments by appointmentViewModel
         .getAppointmentsForTherapist()
         .collectAsState(initial = emptyList())
+
 
     AppointmentsScreen(
         role = role,
         appointments = appointments,
         onBack = onBack,
         onAddAppointment = { millis, type ->
-            viewModel.addAppointment(millis, type)
+            appointmentViewModel.addAppointment(millis, type)
         },
         onUpdateAppointment = { updated ->
-            viewModel.updateAppointment(updated)
+            appointmentViewModel.updateAppointment(updated)
         },
         onDeleteAppointment = { appointment ->
-            viewModel.deleteAppointment(appointment)
+            appointmentViewModel.deleteAppointment(appointment)
         }
     )
 }

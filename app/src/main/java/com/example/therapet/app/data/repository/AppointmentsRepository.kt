@@ -40,11 +40,26 @@ class AppointmentRepository(
     ): Flow<List<AppointmentEntity>> =
         appointmentDao.getAppointmentsForTherapist(therapistUserId)
 
+    override fun getAppointmentsOnDateWithTherapistId(
+        therapistUserId: String,
+        startMillis: Long,
+        endMillis: Long
+    ): Flow<List<AppointmentEntity>> =
+        appointmentDao.getAppointmentsOnDateWithTherapistId(
+            therapistUserId,
+            startMillis,
+            endMillis
+        )
+
     override suspend fun updateAppointment(appointment: AppointmentEntity) {
         appointmentDao.updateAppointment(appointment)
     }
 
     override suspend fun deleteAppointment(appointment: AppointmentEntity) {
         appointmentDao.deleteAppointment(appointment)
+    }
+
+    override fun getAppointmentsForPatient(patientUserId: String): Flow<List<AppointmentEntity>> {
+        return appointmentDao.getAppointmentsForPatient(patientUserId)
     }
 }

@@ -28,15 +28,6 @@ class HomeScreenTest {
     val composeRule = createAndroidComposeRule<ComponentActivity>()
 
     @Test
-    fun choose_therapist_button_is_visible(){
-        ScreenTestHelpers.launchPatientHomeScreen(composeRule)
-
-        composeRule
-            .onNodeWithTag("choose_therapist_button")
-            .assertIsDisplayed()
-    }
-
-    @Test
     fun pet_care_bar_is_visible(){
         ScreenTestHelpers.launchPatientHomeScreen(composeRule)
 

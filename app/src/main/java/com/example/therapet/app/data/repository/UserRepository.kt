@@ -80,4 +80,7 @@ class UserRepository(
         return true
     }
 
+    override suspend fun getTherapists(): List<UserEntity> {
+        return userDao.getUsersByRole(UserRole.THERAPIST)
+    }
 }

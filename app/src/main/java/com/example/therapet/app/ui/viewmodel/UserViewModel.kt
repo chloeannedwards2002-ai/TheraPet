@@ -3,11 +3,16 @@ package com.example.therapet.app.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.therapet.app.data.entity.UserEntity
+import com.example.therapet.app.data.model.AccountUIModel
 import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.data.model.toAccountUIModel
 import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
 import com.example.therapet.app.data.session.SessionManager
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -27,10 +32,11 @@ class UserViewModel(
     private val sessionManager: SessionManager
 ) : ViewModel() {
 
-
     private val _loginResult = MutableStateFlow<Boolean?>(null)
     val loginResult: StateFlow<Boolean?> = _loginResult
 
+    private val _therapists = MutableStateFlow<List<AccountUIModel>>(emptyList())
+    val therapists: StateFlow<List<AccountUIModel>> = _therapists
 
     private val _registerResult = MutableStateFlow<Boolean?>(null)
     val registerResult: StateFlow<Boolean?> = _registerResult
@@ -44,6 +50,7 @@ class UserViewModel(
 
     private val _resetPasswordResult = MutableStateFlow<Boolean?>(null)
     val resetPasswordResult: StateFlow<Boolean?> = _resetPasswordResult
+
 
     // Authentication
 
@@ -149,5 +156,22 @@ class UserViewModel(
 
     fun clearResetPasswordResult() {
         _resetPasswordResult.value = null
+    }
+
+    val currentAccount: StateFlow<AccountUIModel?> =
+        currentUser
+            .map { user -> user?.toAccountUIModel() }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = null
+            )
+
+    fun loadTherapists() {
+        viewModelScope.launch {
+            _therapists.value =
+                repository.getTherapists()
+                    .map { it.toAccountUIModel() }
+        }
     }
 }

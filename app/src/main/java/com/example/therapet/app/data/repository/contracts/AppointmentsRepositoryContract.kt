@@ -23,7 +23,16 @@ interface AppointmentRepositoryContract {
         appointmentType: AppointmentType
     )
 
+    fun getAppointmentsOnDateWithTherapistId(
+        therapistUserId: String,
+        startMillis: Long,
+        endMillis: Long
+    ): Flow<List<AppointmentEntity>>
+
     suspend fun updateAppointment(appointment: AppointmentEntity)
 
     suspend fun deleteAppointment(appointment: AppointmentEntity)
+
+    fun getAppointmentsForPatient(patientUserId: String): Flow<List<AppointmentEntity>>
+
 }
