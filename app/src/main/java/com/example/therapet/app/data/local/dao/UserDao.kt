@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.therapet.app.data.entity.UserEntity
+import com.example.therapet.app.data.model.UserRole
 
 /**
  * @author: Chloe Edwards
@@ -48,7 +49,10 @@ interface UserDao {
         newPassword: String
     )
 
-    // get user by id
-    @Query("SELECT * FROM users WHERE userid = :id LIMIT 1")
-    suspend fun getUserByUserId(id: String): UserEntity
+    // get user by role
+    @Query("""
+    SELECT * FROM users
+    WHERE role = :role
+""")
+    suspend fun getUsersByRole(role: UserRole): List<UserEntity>
 }

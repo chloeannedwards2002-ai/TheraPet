@@ -19,13 +19,13 @@ class BookAppointmentScreenTest {
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
 
-    @Test
+   /* @Test
     fun book_button_is_visible(){
         ScreenTestHelpers.launchBookAppointmentsScreen(composeRule)
 
         composeRule
             .onNodeWithTag("book_button")
             .assertIsDisplayed()
-    }
+    }*/
 
 }

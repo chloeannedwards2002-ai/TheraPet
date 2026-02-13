@@ -12,7 +12,8 @@ import kotlinx.coroutines.flow.StateFlow
  * Logging in stores the ID and happens AFTER actual login functionality is a success, logging out sets it to null
  */
 
-class SessionManager{
+class SessionManager {
+
     private val _session = MutableStateFlow<UserSession?>(null)
     val session: StateFlow<UserSession?> = _session
 
@@ -25,4 +26,8 @@ class SessionManager{
     }
 
     fun isLoggedIn(): Boolean = _session.value != null
+
+    fun getUserId(): String? = _session.value?.userid
+
+    fun getRole(): UserRole? = _session.value?.role
 }

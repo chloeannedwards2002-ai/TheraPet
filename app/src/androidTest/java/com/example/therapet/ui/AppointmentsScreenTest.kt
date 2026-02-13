@@ -2,15 +2,12 @@ package com.example.therapet.ui
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.example.therapet.helpers.ScreenTestHelpers
-import network.chaintech.kmp_date_time_picker.utils.DateTimePickerView
 import org.junit.Rule
 import org.junit.Test
 
@@ -37,13 +34,12 @@ class AppointmentsScreenTest {
     }
 
     @Test
-    fun patient_book_appointment_button_is_visible() {
+    fun patient_book_appointment_button_is_not_visible() {
         ScreenTestHelpers.launchPatientAppointmentsScreen(composeRule)
 
         composeRule
             .onNodeWithTag("book_appointment_button")
-            .assertIsDisplayed()
-            .assertTextEquals("+ Book appointment")
+            .assertDoesNotExist()
     }
 
     @Test
@@ -65,10 +61,6 @@ class AppointmentsScreenTest {
 
         composeRule
             .onNodeWithTag("book_appointment_button")
-            .performClick()
-
-        composeRule
-            .onNodeWithTag("date_time_picker")
             .assertDoesNotExist()
     }
 

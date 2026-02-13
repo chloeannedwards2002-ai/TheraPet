@@ -57,4 +57,27 @@ class FakeAppointmentRepository : AppointmentRepositoryContract {
                 it.appointmentId == appointment.appointmentId
             }
     }
+
+    override fun getAppointmentsOnDateWithTherapistId(
+        therapistUserId: String,
+        startMillis: Long,
+        endMillis: Long
+    ): Flow<List<AppointmentEntity>> {
+        return appointments.map { list ->
+            list.filter { appt ->
+                appt.therapistUserId == therapistUserId &&
+                        appt.appointmentDateTime in startMillis..endMillis
+            }
+        }
+    }
+
+    override fun getAppointmentsForPatient(
+        patientUserId: String
+    ): Flow<List<AppointmentEntity>> {
+        return appointments.map { list ->
+            list.filter { appt ->
+                appt.patientUserId == patientUserId
+            }
+        }
+    }
 }

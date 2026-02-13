@@ -46,9 +46,7 @@ fun AppointmentsScreen(
     modifier: Modifier = Modifier
 ) {
     var showAddAppointmentDialog by remember { mutableStateOf(false) }
-    var selectedAppointment by remember {
-        mutableStateOf<AppointmentEntity?>(null)
-    }
+    var selectedAppointment by remember { mutableStateOf<AppointmentEntity?>(null) }
 
     Scaffold(
         topBar = {
@@ -58,10 +56,12 @@ fun AppointmentsScreen(
             )
         },
         floatingActionButton = {
-            MyBookAppointmentsButton(
-                role = role,
-                onClick = { showAddAppointmentDialog = true }
-            )
+            if (role == UserRole.THERAPIST) {
+                MyBookAppointmentsButton(
+                    role = role,
+                    onClick = { showAddAppointmentDialog = true }
+                )
+            }
         }
     ) { innerPadding ->
 
@@ -114,14 +114,9 @@ fun MyBookAppointmentsButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val text = when (role) {
-        UserRole.PATIENT -> "+ Book appointment"
-        UserRole.THERAPIST -> "+ Add appointment"
-    }
-
     CustomOutlinedButton(
         onClick = onClick,
-        text = text,
+        text = "+ Add appointment",
         modifier = modifier
             .testTag("book_appointment_button")
             .height(60.dp)

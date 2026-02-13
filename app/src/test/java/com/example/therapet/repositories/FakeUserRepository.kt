@@ -68,4 +68,8 @@ class FakeUserRepository : UserRepositoryContract {
         users[userid] = user.copy(password = newPassword)
         return true
     }
+
+    override suspend fun getTherapists(): List<UserEntity> {
+        return users.values.filter { it.role == UserRole.THERAPIST }
+    }
 }

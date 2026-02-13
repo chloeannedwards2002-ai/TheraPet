@@ -21,7 +21,7 @@
 
     <!-- Book Appointment Screen -->
     <string name="choose_date_and_time">Choose date and time</string>
-    <string name="book">Book</string>
+    <string name="book_appointment">Book Appointment</string>
 
     <!-- Book Appointment Screen -->
     <string name="choose_therapist">Choose Therapist</string>

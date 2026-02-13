@@ -9,7 +9,7 @@ import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
 import com.example.therapet.app.ui.screens.booking.BookAppointmentScreen
-import com.example.therapet.app.ui.screens.booking.ChooseTherapistScreen
+import com.example.therapet.app.ui.screens.booking.BookingStep
 import com.example.therapet.app.ui.screens.home.HomeScreen
 import com.example.therapet.app.ui.screens.login.LoginScreen
 import com.example.therapet.app.ui.screens.pet.CreatePetScreen
@@ -250,26 +250,19 @@ object ScreenTestHelpers {
 
     fun launchBookAppointmentsScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
-    )
-    {
-        composeRule.setContent{
-            TheraPetTheme{
+    ) {
+        composeRule.setContent {
+            TheraPetTheme {
                 BookAppointmentScreen(
-                    onBack ={},
-                    onBook ={}
-                )
-            }
-        }
-    }
-
-    fun launchChooseTherapistScreen(
-        composeRule: AndroidComposeTestRule<*, ComponentActivity>
-    ){
-        composeRule.setContent{
-            TheraPetTheme{
-                ChooseTherapistScreen(
-                    onBack = {},
-                    onContinue = {}
+                    step = BookingStep.CHOOSE_THERAPIST,
+                    therapists = emptyList(),
+                    selectedTherapistId = null,
+                    selectedYearMonth = null,
+                    appointments = emptyList(),
+                    onTherapistSelected = {},
+                    onMonthSelected = {},
+                    onAppointmentClick = {},
+                    onBack = {}
                 )
             }
         }

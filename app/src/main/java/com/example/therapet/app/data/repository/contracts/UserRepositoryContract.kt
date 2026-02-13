@@ -36,4 +36,6 @@ interface UserRepositoryContract {
         userid: String,
         newPassword: String
     ): Boolean
+
+    suspend fun getTherapists(): List<UserEntity>
 }

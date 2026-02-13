@@ -78,7 +78,7 @@ fun HomeScreen(
                         onClick = onBookAppt,
                         modifier = Modifier
                             .padding(16.dp),
-                        testTag = "choose_therapist_button"
+                        testTag = "book_appointment_button"
                     )
                 }
             },
