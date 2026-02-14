@@ -4,7 +4,7 @@
 |------|-------------|--------|------|
 | FM-1 | <s>The TheraPet system must allow users to create a new account using a valid ID and unique password</s> | Must | F |
 | FM-2 | <s>The TheraPet system must allow users to log in and out an active session, with the logging out process taking no more than 3 seconds</s> | Must | F |
-| FM-3 | The TheraPet system must allow users to change, reset and update their password ensuring secure authentication for each process | Must | F |
+| FM-3 | <s>The TheraPet system must allow users to change, reset and update their password ensuring secure authentication for each process</s> | Must | F |
 | FM-4 | <s>The TheraPet system must allow users to request deletion of their account, and their user data must be removed within 30 days of the request</s> | Must | F |
 | FM-5 | The TheraPet system must allow users to view and search available therapist appointments with their therapists, with results returned within at least 2 seconds | Must | F |
 | FM-6 | The TheraPet system must allow users to book available appointments, and a confirmation notification must be sent within 3 seconds | Must | F |
@@ -30,8 +30,8 @@
 |      | 
 | NFM-1 | *!*The TheraPet system must comply with GDPR, CCPA and LGPD compliance where applicable | Must | NF |
 | NFM-2 | <s>The TheraPet system must follow privacy-by-design principles</s> | Must | NF |
-| NFM-3 | The TheraPet system must follow secure coding practices which includes protection against SQL-injection, and using password hashing | Must | NF |
-| NFM-4 | All user, therapist and appointment data must be stored securely using encryption at rest and in transit (TLS 1.2), and passwords must be hashed using PBKDF2 | Must | NF |
+| NFM-3 | <s>The TheraPet system must follow secure coding practices which includes protection against SQL-injection, and using password hashing</s> | Must | NF |
+| NFM-4 | SOMEWHAT DONE ! All user, therapist and appointment data must be stored securely using encryption at rest and in transit (TLS 1.2), and passwords must be hashed using PBKDF2 | Must | NF |
 | NFM-5 | <s>The UI must meet at least all WGAC 2.1 AA contrast ratios: >= 3:1 for large text and >= 4.5:1 for smaller text</s> | Must | NF |
 | NFM-6 | <s>The tap targets on UI buttons must have a minimum spacing of 8dp away from adjacent UI elements</s> | Must | NF |
 | NFM-7 | <s>Navigation through the TheraPet system must be consistent across all screens, and allow users to find core features within 3 taps of opening any page</s> | Must | NF |
