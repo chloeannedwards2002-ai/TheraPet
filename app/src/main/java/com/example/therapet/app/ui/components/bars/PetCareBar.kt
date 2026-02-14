@@ -15,18 +15,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.app.ui.components.buttons.home.CircularButton
-import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.filled.Fastfood
 import androidx.compose.material.icons.filled.LocalDrink
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.testTag
 
 /**
@@ -38,10 +33,12 @@ import androidx.compose.ui.platform.testTag
  */
 
 @Composable
-fun PetCareBar() {
-    var foodLevel by remember { mutableStateOf(0.2f)}
-    var waterLevel by remember { mutableStateOf(0.2f)}
-
+fun PetCareBar(
+    foodLevel: Float,
+    waterLevel: Float,
+    onFoodIncrease: () -> Unit,
+    onWaterIncrease:() -> Unit
+) {
     val animatedFood by animateFloatAsState(foodLevel, animationSpec = tween(400))
     val animatedWater by animateFloatAsState(waterLevel, animationSpec = tween(400))
 
@@ -72,15 +69,15 @@ fun PetCareBar() {
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    FoodCircularButton(onClick = {
-                        foodLevel = (foodLevel + 0.05f).coerceAtMost(1f)
-                    },
-                        modifier = Modifier.testTag("food_button"))
-                    WaterCircularButton(onClick = {
-                        waterLevel = (waterLevel + 0.05f).coerceAtMost(1f)
-                    },
+                    FoodCircularButton(
+                        onClick = onFoodIncrease,
+                        modifier = Modifier.testTag("food_button")
+                    )
+
+                    WaterCircularButton(onClick = onWaterIncrease,
                         modifier = Modifier.testTag("water_button")
                     )
+
                     SleepCircularButton(onClick = { /* TODO sleep */ },
                         modifier = Modifier.testTag("sleep_button"))
                 }
@@ -105,7 +102,7 @@ fun PetCareBar() {
             ) {
                 
                 //Food need bar
-                NeedBar(
+                PetNeedBar(
                     modifier = Modifier
                         .fillMaxHeight(0.8f),
                     width = 18.dp,
@@ -114,7 +111,7 @@ fun PetCareBar() {
                 )
 
                 //Water need bar
-                NeedBar(
+                PetNeedBar(
                     modifier = Modifier
                         .fillMaxHeight(0.8f),
                     width = 18.dp,
@@ -135,7 +132,7 @@ fun PetCareBar() {
         ) {
 
             // Sleep need bar
-            NeedBar(
+            PetNeedBar(
                 modifier = Modifier
                     .fillMaxHeight(0.8f)
                     .padding(top = 12.dp),
@@ -181,7 +178,7 @@ fun SleepCircularButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun PetCareBarPreview() {
     TheraPetTheme {
@@ -192,4 +189,4 @@ fun PetCareBarPreview() {
             PetCareBar()
         }
     }
-}
+}*/

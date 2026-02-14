@@ -19,12 +19,19 @@ import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
 
 @Composable
-fun NeedBar(
+fun PetNeedBar(
     modifier: Modifier = Modifier,
     width: Dp = 16.dp,
     fillFraction: Float = 0.5f,
     testTag: String
 ) {
+
+    var barColour = when {
+        fillFraction >= 0.75f -> Color(0xFF4CAF50)
+        fillFraction >= 0.3f -> Color(0xFFFFA500)
+        else -> Color(0xFFF44336)
+    }
+
     Box(
         modifier = modifier
             .width(width)
@@ -37,7 +44,7 @@ fun NeedBar(
                 .fillMaxWidth()
                 .fillMaxHeight(fillFraction)
                 .align(Alignment.BottomCenter)
-                .background(Color.Red, RoundedCornerShape(4.dp))
+                .background(barColour, RoundedCornerShape(4.dp))
                 .testTag(testTag)
                 .semantics {
                     //FOR TESTING

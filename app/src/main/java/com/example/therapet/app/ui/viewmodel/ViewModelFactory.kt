@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.therapet.app.data.local.AppDatabase
 import com.example.therapet.app.data.repository.AppointmentRepository
+import com.example.therapet.app.data.repository.PetCareStateRepository
 import com.example.therapet.app.data.repository.UserRepository
 import com.example.therapet.app.data.repository.contracts.AppointmentRepositoryContract
 import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
@@ -80,6 +81,17 @@ class ViewModelFactory {
                 return AppointmentViewModel(repository, sessionManager) as T
             }
 
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
+    }
+
+    class PetCareViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(PetCareViewModel::class.java)) {
+                val repository = PetCareStateRepository.getInstance(context)
+                @Suppress("UNCHECKED_CAST")
+                return PetCareViewModel(repository) as T
+            }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }

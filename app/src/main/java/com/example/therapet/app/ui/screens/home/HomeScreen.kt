@@ -44,8 +44,8 @@ import com.example.therapet.app.ui.theme.PetColours
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    role: UserRole, // used to adjust what is shown on the screen
-    petColourIndex: Int, // used to determine colour of pet
+    role: UserRole,
+    petColourIndex: Int,
     modifier: Modifier = Modifier,
     onLogout: () -> Unit,
     onSettings: () -> Unit,
@@ -53,7 +53,11 @@ fun HomeScreen(
     onAppts:() -> Unit,
     onBookAppt: () -> Unit,
     onProfile: () -> Unit,
-    user: UserEntity?
+    user: UserEntity?,
+    onFoodIncrease: () -> Unit = {},
+    onWaterIncrease: () -> Unit = {},
+    foodLevel: Float = 0.2f,
+    waterLevel: Float = 0.2f
 ){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -94,9 +98,15 @@ fun HomeScreen(
                 )
             },
             bottomBar = {
-                if (role == UserRole.PATIENT) {
-                    PetCareBar()
+                if(role == UserRole.PATIENT){
+                    PetCareBar(
+                        foodLevel = foodLevel,
+                        waterLevel = waterLevel,
+                        onFoodIncrease = onFoodIncrease,
+                        onWaterIncrease = onWaterIncrease
+                    )
                 }
+
             }
         ) { innerPadding ->
 
