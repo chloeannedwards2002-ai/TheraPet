@@ -8,8 +8,6 @@ import com.example.therapet.app.data.model.AppointmentType
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
-import com.example.therapet.app.ui.screens.booking.BookAppointmentScreen
-import com.example.therapet.app.ui.screens.booking.BookingStep
 import com.example.therapet.app.ui.screens.home.HomeScreen
 import com.example.therapet.app.ui.screens.login.LoginScreen
 import com.example.therapet.app.ui.screens.pet.CreatePetScreen
@@ -33,8 +31,8 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 
 object ScreenTestHelpers {
 
-    // fake users for testing
-    private val testPatientUser = UserEntity(
+    //fake users for testing
+    val testPatientUser: UserEntity = createTestUser(
         userid = "123456789123",
         firstname = "Bob",
         surname = "Bobbington",
@@ -42,7 +40,7 @@ object ScreenTestHelpers {
         role = UserRole.PATIENT
     )
 
-    private val testTherapistUser = UserEntity(
+    val testTherapistUser: UserEntity = createTestUser(
         userid = "1231231231231234",
         firstname = "Jane",
         surname = "Doe",
@@ -243,26 +241,6 @@ object ScreenTestHelpers {
                     onAddAppointment = { _, _ -> },
                     onUpdateAppointment = {},
                     onDeleteAppointment = {}
-                )
-            }
-        }
-    }
-
-    fun launchBookAppointmentsScreen(
-        composeRule: AndroidComposeTestRule<*, ComponentActivity>
-    ) {
-        composeRule.setContent {
-            TheraPetTheme {
-                BookAppointmentScreen(
-                    step = BookingStep.CHOOSE_THERAPIST,
-                    therapists = emptyList(),
-                    selectedTherapistId = null,
-                    selectedYearMonth = null,
-                    appointments = emptyList(),
-                    onTherapistSelected = {},
-                    onMonthSelected = {},
-                    onAppointmentClick = {},
-                    onBack = {}
                 )
             }
         }

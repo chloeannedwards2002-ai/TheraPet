@@ -4,6 +4,8 @@ import com.example.therapet.app.data.local.dao.UserDao
 import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
+import com.example.therapet.app.data.util.crypto.PasswordHasher
+import com.example.therapet.app.data.util.crypto.PasswordHasher.toHex
 
 class UserRepository(
     private val userDao: UserDao
@@ -17,13 +19,16 @@ class UserRepository(
         password: String
     ){
         val role = determineUserRole(userid)
+        val salt = PasswordHasher.generateSalt()
+        val hash = PasswordHasher.hash(password, salt)
 
         userDao.insertUser(
             UserEntity(
                 userid = userid,
                 firstname = firstname,
                 surname = surname,
-                password = password,
+                passwordHash = hash.toHex(),
+                salt = salt.toHex(),
                 role = role
             )
         )
@@ -34,7 +39,17 @@ class UserRepository(
         userid: String,
         password: String
     ): UserEntity? {
-        return userDao.login(userid, password)
+
+        val user = userDao.getUserById(userid) ?: return null
+
+        val saltBytes = PasswordHasher.hexToBytes(user.salt)
+        val hashBytes = PasswordHasher.hexToBytes(user.passwordHash)
+
+        return if (PasswordHasher.verify(password, saltBytes, hashBytes)) {
+            user
+        } else {
+            null
+        }
     }
 
     // check user exists
@@ -56,26 +71,18 @@ class UserRepository(
         }
     }
 
-    //retrieves the user role
-    override suspend fun getUserRole(
-        userid: String,
-        password: String
-    ): UserRole? {
-        return userDao.login(userid, password)?.role
-    }
-
-
     override suspend fun getUserById(userid: String): UserEntity? {
         return userDao.getUserById(userid)
     }
 
-    override suspend fun updatePassword(
-        userid: String,
-        newPassword: String
-    ): Boolean {
+    override suspend fun updatePassword(userid: String, newPassword: String): Boolean {
+        val salt = PasswordHasher.generateSalt()
+        val hash = PasswordHasher.hash(newPassword, salt)
+
         userDao.updatePassword(
             userid = userid,
-            newPassword = newPassword
+            newPasswordHash = hash.toHex(),
+            newSalt = salt.toHex()
         )
         return true
     }

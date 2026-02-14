@@ -22,11 +22,6 @@ interface UserRepositoryContract {
 
     suspend fun userExists(userid: String): Boolean
 
-    suspend fun getUserRole(
-        userid: String,
-        password: String
-    ): UserRole?
-
     suspend fun deleteUser(userid: String)
 
     // get user without needing password

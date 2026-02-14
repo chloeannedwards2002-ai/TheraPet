@@ -7,6 +7,8 @@ import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.local.AppDatabase
 import com.example.therapet.app.data.local.dao.UserDao
 import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.data.util.crypto.PasswordHasher
+import com.example.therapet.app.data.util.crypto.PasswordHasher.toHex
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertNotNull
@@ -29,6 +31,9 @@ class UserDaoTest {
 
     private lateinit var database: AppDatabase
     private lateinit var dao: UserDao
+    val password = "Password_123"
+    val salt = PasswordHasher.generateSalt()
+    val hash = PasswordHasher.hash(password, salt)
 
 
     //Setting up the in-memory room database
@@ -54,8 +59,8 @@ class UserDaoTest {
                 userid = "MNU82910CWLP",
                 firstname = "Bill",
                 surname = "Billington",
-                password = "_Password_123",
-                // user role is determined by id length in real app
+                passwordHash = hash.toHex(),
+                salt = salt.toHex(),
                 role = UserRole.PATIENT
             )
         )
@@ -64,17 +69,29 @@ class UserDaoTest {
 
     @Test
     fun login_returns_correct_user_when_details_match() = runBlocking {
+        val password = "_Password_123"
+        val salt = PasswordHasher.generateSalt()
+        val hash = PasswordHasher.hash(password, salt)
+
         dao.insertUser(
             UserEntity(
                 userid = "MNU82910CWLP",
                 firstname = "Bill",
                 surname = "Billington",
-                password = "_Password_123",
+                passwordHash = hash.toHex(),
+                salt = salt.toHex(),
                 role = UserRole.PATIENT
             )
         )
 
-        val user  =dao.login("MNU82910CWLP", "_Password_123")
+        val user = dao.getUserById("MNU82910CWLP")
         assertNotNull(user)
+
+        val isValid = PasswordHasher.verify(
+            password,
+            PasswordHasher.hexToBytes(user!!.salt),
+            PasswordHasher.hexToBytes(user.passwordHash)
+        )
+        assertTrue(isValid)
     }
 }

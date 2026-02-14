@@ -6,7 +6,7 @@ import com.example.therapet.app.data.entity.AppointmentEntity
 import com.example.therapet.app.data.model.AppointmentType
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.repository.contracts.AppointmentRepositoryContract
-import com.example.therapet.app.data.session.SessionManager
+import com.example.therapet.app.data.session.SessionManagerContract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
@@ -17,7 +17,7 @@ import com.example.therapet.app.data.util.toMillisRange
 
 class AppointmentViewModel(
     private val repository: AppointmentRepositoryContract,
-    private val sessionManager: SessionManager,
+    private val sessionManager: SessionManagerContract,
     private val _selectedDateMillis: MutableStateFlow<Long?> = MutableStateFlow<Long?>(null)
 ) : ViewModel() {
 

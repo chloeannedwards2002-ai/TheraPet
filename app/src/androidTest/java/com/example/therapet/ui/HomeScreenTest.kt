@@ -8,11 +8,11 @@ import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.HomeNavigationDrawer
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import com.example.therapet.helpers.ScreenTestHelpers
+import com.example.therapet.helpers.createTestUser
 import org.junit.Rule
 import org.junit.Test
 
@@ -179,7 +179,7 @@ class HomeScreenTest {
     // Testing the name not just the full name text
     @Test
     fun drawer_header_shows_full_avatar_and_full_name() {
-        val fakeUser = UserEntity(
+        val fakeUser = createTestUser(
             userid = "123456789012",
             firstname = "Jane",
             surname = "Doe",
