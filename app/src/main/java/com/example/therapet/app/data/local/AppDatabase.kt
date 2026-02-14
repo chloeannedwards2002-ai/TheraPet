@@ -15,7 +15,7 @@ import com.example.therapet.app.data.entity.AppointmentEntity
         UserEntity::class,
         AppointmentEntity::class
                ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 

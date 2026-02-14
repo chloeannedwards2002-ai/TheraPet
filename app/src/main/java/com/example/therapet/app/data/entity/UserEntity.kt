@@ -24,6 +24,7 @@ data class UserEntity(
     val userid: String,
     val firstname: String,
     val surname: String,
-    val password: String,
+    val passwordHash: String,
+    val salt: String,
     val role: UserRole
 )

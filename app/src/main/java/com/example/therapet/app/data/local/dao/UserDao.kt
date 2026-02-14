@@ -20,17 +20,6 @@ interface UserDao {
     @Insert
     suspend fun insertUser(user: UserEntity)
 
-    //Login query
-    @Query("""
-        SELECT * FROM users
-        WHERE userid = :userid
-        AND password = :password
-    """)
-    suspend fun login(
-        userid: String,
-        password: String
-    ): UserEntity?
-
     // Check user exists query
     @Query("SELECT EXISTS(SELECT 1 FROM users WHERE userid = :userid)")
     suspend fun userExists(userid: String): Boolean
@@ -43,10 +32,16 @@ interface UserDao {
     suspend fun getUserById(userid: String): UserEntity?
 
     //update password
-    @Query("UPDATE users SET password = :newPassword WHERE userid = :userid")
+    @Query("""
+    UPDATE users 
+    SET passwordHash = :newPasswordHash,
+        salt = :newSalt
+    WHERE userid = :userid
+""")
     suspend fun updatePassword(
         userid: String,
-        newPassword: String
+        newPasswordHash: String,
+        newSalt: String
     )
 
     // get user by role

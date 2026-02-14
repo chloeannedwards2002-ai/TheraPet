@@ -3,6 +3,8 @@ package com.example.therapet.repositories
 import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
+import com.example.therapet.app.data.util.crypto.PasswordHasher
+import com.example.therapet.app.data.util.crypto.PasswordHasher.toHex
 
 /**
  * @author: Chloe Edwards
@@ -22,26 +24,29 @@ class FakeUserRepository : UserRepositoryContract {
         password: String
     ) {
         val role = determineUserRole(userid)
+        val salt = PasswordHasher.generateSalt()
+        val hash = PasswordHasher.hash(password, salt)
+
         users[userid] = UserEntity(
             userid = userid,
             firstname = firstname,
             surname = surname,
-            password = password,
+            passwordHash = hash.toHex(),
+            salt = salt.toHex(),
             role = role
         )
     }
 
     override suspend fun login(userid: String, password: String): UserEntity? {
-        val user = users[userid]
-        return if (user != null && user.password == password) user else null
+        val user = users[userid] ?: return null
+        val saltBytes = PasswordHasher.hexToBytes(user.salt)
+        val hashBytes = PasswordHasher.hexToBytes(user.passwordHash)
+
+        return if (PasswordHasher.verify(password, saltBytes, hashBytes)) user else null
     }
 
     override suspend fun userExists(userid: String): Boolean {
         return users.containsKey(userid)
-    }
-
-    override suspend fun getUserRole(userid: String, password: String): UserRole? {
-        return login(userid, password)?.role
     }
 
     override suspend fun getUserById(userid: String): UserEntity? {
@@ -60,12 +65,11 @@ class FakeUserRepository : UserRepositoryContract {
         }
     }
 
-    override suspend fun updatePassword(
-        userid: String,
-        newPassword: String
-    ): Boolean {
+    override suspend fun updatePassword(userid: String, newPassword: String): Boolean {
         val user = users[userid] ?: return false
-        users[userid] = user.copy(password = newPassword)
+        val salt = PasswordHasher.generateSalt()
+        val hash = PasswordHasher.hash(newPassword, salt)
+        users[userid] = user.copy(passwordHash = hash.toHex(), salt = salt.toHex())
         return true
     }
 
