@@ -3,6 +3,7 @@ package com.example.therapet.app.ui.screens.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -77,8 +78,8 @@ fun HomeScreen(
                     CircularButton(
                         onClick = onBookAppt,
                         modifier = Modifier
-                            .padding(16.dp),
-                        testTag = "book_appointment_button"
+                            .padding(16.dp)
+                            .testTag("book_appointment_button")
                     )
                 }
             },
@@ -114,7 +115,9 @@ fun HomeScreen(
                         bodyColour = PetColours.getOrNull(petColourIndex),
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
-                            .offset(y = 30.dp)
+                           .offset(y = -50.dp)
+                            .weight(0.25f)
+                            .aspectRatio(1f)
                     )
                 }
             }
