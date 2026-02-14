@@ -3,6 +3,8 @@ package com.example.therapet.ui
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.ui.semantics.SemanticsProperties.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -204,5 +206,61 @@ class HomeScreenTest {
 
         composeRule.onNodeWithTag("full_name")
             .assertTextEquals("Jane Doe")
+    }
+
+    @Test
+    fun food_button_increases_food_bar() {
+        ScreenTestHelpers.launchPatientHomeScreen(composeRule)
+
+        // Get initial value
+        val before = composeRule
+            .onNodeWithTag("food_need_bar")
+            .fetchSemanticsNode()
+            .config
+            .getOrNull(ProgressBarRangeInfo)
+            ?.current ?: 0f
+
+        // Click food button
+        composeRule
+            .onNodeWithTag("food_button")
+            .performClick()
+
+        composeRule.waitForIdle()
+
+        val after = composeRule
+            .onNodeWithTag("food_need_bar")
+            .fetchSemanticsNode()
+            .config
+            .getOrNull(ProgressBarRangeInfo)
+            ?.current ?: 0f
+
+        assert(after > before)
+    }
+
+    @Test
+    fun water_button_increases_water_bar() {
+        ScreenTestHelpers.launchPatientHomeScreen(composeRule)
+
+        val before = composeRule
+            .onNodeWithTag("water_need_bar")
+            .fetchSemanticsNode()
+            .config
+            .getOrNull(ProgressBarRangeInfo)
+            ?.current ?: 0f
+
+        composeRule
+            .onNodeWithTag("water_button")
+            .performClick()
+
+        composeRule.waitForIdle()
+
+        val after = composeRule
+            .onNodeWithTag("water_need_bar")
+            .fetchSemanticsNode()
+            .config
+            .getOrNull(ProgressBarRangeInfo)
+            ?.current ?: 0f
+
+        assert(after > before)
     }
 }

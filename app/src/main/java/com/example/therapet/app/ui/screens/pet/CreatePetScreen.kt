@@ -9,10 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,15 +27,11 @@ import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.components.CircularCarousel
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.therapet.R
 import com.example.therapet.app.ui.components.buttons.general.CustomElevatedButton
 import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
 import com.example.therapet.app.ui.components.pet.PetPenguin
 import com.example.therapet.app.ui.theme.PetColours
-import com.example.therapet.app.ui.viewmodel.PetViewModel
-
-
 
 /**
  * @author: Chloe Edwards
@@ -67,7 +63,7 @@ fun CreatePetScreen(
             modifier = Modifier.testTag("create_pet_top_bar")
         )
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Column(
             modifier = Modifier
@@ -81,9 +77,10 @@ fun CreatePetScreen(
                     .align(Alignment.CenterHorizontally)
                     .offset(y = 50.dp)
                     .testTag("pet_penguin")
+                    .size(400.dp)
             )
 
-            Spacer(modifier = Modifier.height(130.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             Text(
                 text = stringResource(R.string.choose_colour),

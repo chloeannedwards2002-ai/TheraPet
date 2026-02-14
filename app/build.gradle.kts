@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.foundation.layout)
     implementation(libs.androidx.compose.ui.ui)
     implementation(libs.play.services.cast.framework)
+    implementation(libs.androidx.compose.animation.core)
     androidTestImplementation(libs.androidx.ui.test.junit4)
     // For navigation
     val nav_version = "2.9.6"
