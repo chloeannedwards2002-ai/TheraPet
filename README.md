@@ -12,7 +12,7 @@
 | FM-8 | The TheraPet system must send a notification of an appointment update within 5 seconds of the user booking, cancelling or rescheduling an appointment | Must | F |
 | FM-9 | The TheraPet system must allow therapists to view patient details such as name, ID and last time logged in | Must | F |
 | FM-10 | The TheraPet system must allow therapists to add or remove a patient from their observation list, with changes applies within 3 seconds | Must | F |
-| FM-11 | The TheraPet system must allow therapists to create, delete and mark available appointment slots, with results being visible to patients within 5 seconds | Must | F |
+| FM-11 | <s>The TheraPet system must allow therapists to create, delete and mark available appointment slots, with results being visible to patients within 5 seconds</s> | Must | F |
 | FM-12 | The TheraPet system must store the time and date of each user login within DataStore, and expose the data to the patient’s therapist dashboard | Must | F |
 | FM-13 | <s>The TheraPet system must allow users to create and name their virtual pet when creating a new account</s> | Must | F |
 | FM-14 | <s>The TheraPet system must allow the user to always view their virtual pet on the main screen when returning to it</s> | Must | F |
