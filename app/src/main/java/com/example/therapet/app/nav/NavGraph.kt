@@ -22,9 +22,11 @@ import com.example.therapet.app.ui.screens.settings.PrivacyPolicyScreen
 import com.example.therapet.app.ui.screens.settings.SettingsScreen
 import com.example.therapet.app.ui.screens.login.LoginRoute
 import com.example.therapet.app.ui.screens.pet.CreatePetRoute
+import com.example.therapet.app.ui.screens.pet.PetSettingsRoute
 import com.example.therapet.app.ui.screens.settings.accountmanagement.DeleteAccountConfirmRoute
 import com.example.therapet.app.ui.screens.settings.accountmanagement.profile.ProfileRoute
 import com.example.therapet.app.ui.screens.settings.accountmanagement.password.ResetPasswordRoute
+import com.example.therapet.app.ui.viewmodel.PetCareViewModel
 import com.example.therapet.app.ui.viewmodel.UserViewModel
 import com.example.therapet.app.ui.viewmodel.ViewModelFactory
 
@@ -50,6 +52,12 @@ fun NavGraph(
         factory = ViewModelFactory.UserViewModelFactory(
             context = context,
             sessionManager
+        )
+    )
+
+    val petCareViewModel: PetCareViewModel = viewModel(
+        factory = ViewModelFactory.PetCareViewModelFactory(
+            context = context
         )
     )
 
@@ -117,7 +125,8 @@ fun NavGraph(
                 onAppts = { navController.navigate(Routes.PATIENT_APPOINTMENTS) },
                 onBookAppt = { navController.navigate(Routes.PATIENT_APPOINTMENTS) },
                 sessionManager = sessionManager,
-                userViewModel = userViewModel
+                userViewModel = userViewModel,
+                petCareViewModel = petCareViewModel
             )
         }
 
@@ -171,8 +180,12 @@ fun NavGraph(
             )
         }
 
-        composable(Routes.PET_SETTINGS) { // Composable for the Pet settings screen
-            PetSettingsScreen(onBack = { navController.popBackStack() })
+        composable(Routes.PET_SETTINGS) {
+            PetSettingsRoute(
+                onBack = { navController.popBackStack() },
+                sessionManager = sessionManager,
+                petCareViewModel = petCareViewModel
+            )
         }
 
         composable(Routes.PRIVACY_POLICY) { // Composable for the Privacy policy screen

@@ -76,4 +76,7 @@ class PetCareViewModelTest {
         assertTrue(viewModel.water.value < initialWater)
         assertTrue(viewModel.food.value < initialFood)
     }
+
+    // ADD hibernation tests aswell
+
 }*/

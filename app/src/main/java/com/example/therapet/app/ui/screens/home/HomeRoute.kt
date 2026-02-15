@@ -33,18 +33,20 @@ fun HomeRoute(
     onBookAppt: () -> Unit,
     onProfile: () -> Unit,
     userViewModel: UserViewModel,
-    sessionManager: SessionManager
+    sessionManager: SessionManager,
+    petCareViewModel: PetCareViewModel
 ) {
     val role by userViewModel.loggedInRole.collectAsState(initial = null)
     val session by sessionManager.session.collectAsState()
     val user by userViewModel.currentUser.collectAsState()
 
     // Wait until role and session are loaded
-    if (role == null || session == null) return
+    if (role == null || session == null) {
+        return
+    }
 
     val userId = session!!.userid
 
-    // Pet preferences ViewModel
     val petViewModel: PetViewModel = viewModel(
         factory = ViewModelFactory.PetViewModelFactory(
             context = LocalContext.current,
@@ -52,16 +54,16 @@ fun HomeRoute(
         )
     )
 
-     // Pet care ViewModel
-    val petCareViewModel: PetCareViewModel = viewModel(
-        factory = ViewModelFactory.PetCareViewModelFactory(
-            context = LocalContext.current
-        )
-    )
-
     val petColourIndex by petViewModel.selectedColourIndex.collectAsState()
     val foodLevel by petCareViewModel.food.collectAsState()
     val waterLevel by petCareViewModel.water.collectAsState()
+
+    val sleepLevel by petCareViewModel.sleep.collectAsState()
+    val isSleeping by petCareViewModel.isSleeping.collectAsState()
+
+    val isHibernating by petCareViewModel.isHibernating.collectAsState()
+
+    val startSleep = { petCareViewModel.startSleep() }
 
     val increaseFood = { petCareViewModel.increaseFood() }
     val increaseWater = { petCareViewModel.increaseWater() }
@@ -72,10 +74,15 @@ fun HomeRoute(
         bottomBar = {
             if (role == UserRole.PATIENT) {
                 PetCareBar(
+                    modifier = Modifier,
                     foodLevel = foodLevel,
                     waterLevel = waterLevel,
+                    sleepLevel = sleepLevel,
+                    isSleeping = isSleeping,
                     onFoodIncrease = increaseFood,
-                    onWaterIncrease = increaseWater
+                    onWaterIncrease = increaseWater,
+                    onSleepClick = startSleep,
+                    isHibernating = isHibernating
                 )
             }
         }
@@ -87,14 +94,18 @@ fun HomeRoute(
             modifier = Modifier.padding(innerPadding),
             foodLevel = foodLevel,
             waterLevel = waterLevel,
+            sleepLevel = sleepLevel,
+            isSleeping = isSleeping,
             onFoodIncrease = increaseFood,
             onWaterIncrease = increaseWater,
+            onSleepClick = startSleep,
             onLogout = onLogout,
             onSettings = onSettings,
             onNotifs = onNotifs,
             onAppts = onAppts,
             onBookAppt = onBookAppt,
-            onProfile = onProfile
+            onProfile = onProfile,
+            isHibernating = isHibernating
         )
     }
 }

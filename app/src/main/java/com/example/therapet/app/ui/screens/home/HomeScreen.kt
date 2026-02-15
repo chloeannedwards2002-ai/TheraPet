@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.therapet.app.ui.components.bars.MainTopBar
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.example.therapet.R
 import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
@@ -57,7 +58,11 @@ fun HomeScreen(
     onFoodIncrease: () -> Unit = {},
     onWaterIncrease: () -> Unit = {},
     foodLevel: Float = 0.2f,
-    waterLevel: Float = 0.2f
+    waterLevel: Float = 0.2f,
+    sleepLevel: Float = 1f,
+    isSleeping: Boolean = false,
+    onSleepClick: () -> Unit = {},
+    isHibernating: Boolean = false
 ){
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -77,13 +82,15 @@ fun HomeScreen(
     ) {
 
         Scaffold(
+            modifier = Modifier.fillMaxSize(),
             floatingActionButton = {
                 if(role == UserRole.PATIENT){ 
                     CircularButton(
                         onClick = onBookAppt,
                         modifier = Modifier
                             .padding(16.dp)
-                            .testTag("book_appointment_button")
+                            .testTag("book_appointment_button"),
+                        enabled = true
                     )
                 }
             },
@@ -100,13 +107,17 @@ fun HomeScreen(
             bottomBar = {
                 if(role == UserRole.PATIENT){
                     PetCareBar(
+                        modifier = Modifier.zIndex(0f),
                         foodLevel = foodLevel,
                         waterLevel = waterLevel,
+                        sleepLevel = sleepLevel,
+                        isSleeping = isSleeping,
                         onFoodIncrease = onFoodIncrease,
-                        onWaterIncrease = onWaterIncrease
+                        onWaterIncrease = onWaterIncrease,
+                        onSleepClick = onSleepClick,
+                        isHibernating = isHibernating
                     )
                 }
-
             }
         ) { innerPadding ->
 

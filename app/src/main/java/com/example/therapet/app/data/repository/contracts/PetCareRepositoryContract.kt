@@ -12,7 +12,13 @@ import kotlinx.coroutines.flow.Flow
 interface PetCareRepositoryContract {
     val waterLevel: Flow<Float>
     val foodLevel: Flow<Float>
+    val sleepLevel: Flow<Float>
+
+    val hibernationEnabled: Flow<Boolean>
 
     suspend fun saveWaterLevel(value: Float)
     suspend fun saveFoodLevel(value: Float)
+    suspend fun saveSleepLevel(value: Float)
+
+    suspend fun saveHibernationEnabled(value: Boolean)
 }
