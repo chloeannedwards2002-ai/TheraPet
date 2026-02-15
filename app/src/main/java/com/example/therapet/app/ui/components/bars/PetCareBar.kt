@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -34,16 +35,22 @@ import androidx.compose.ui.platform.testTag
 
 @Composable
 fun PetCareBar(
+    modifier: Modifier = Modifier,
     foodLevel: Float,
     waterLevel: Float,
+    sleepLevel: Float,
+    isSleeping: Boolean,
     onFoodIncrease: () -> Unit,
-    onWaterIncrease:() -> Unit
+    onWaterIncrease: () -> Unit,
+    onSleepClick: () -> Unit,
+    isHibernating: Boolean,
 ) {
     val animatedFood by animateFloatAsState(foodLevel, animationSpec = tween(400))
     val animatedWater by animateFloatAsState(waterLevel, animationSpec = tween(400))
+    val animatedSleep by animateFloatAsState(sleepLevel, animationSpec = tween(400))
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .fillMaxHeight(0.25f)
             .testTag("pet_care_bar")
@@ -71,15 +78,21 @@ fun PetCareBar(
                 ) {
                     FoodCircularButton(
                         onClick = onFoodIncrease,
+                        enabled = !isSleeping && !isHibernating,
                         modifier = Modifier.testTag("food_button")
                     )
 
-                    WaterCircularButton(onClick = onWaterIncrease,
+                    WaterCircularButton(
+                        onClick = onWaterIncrease,
+                        enabled = !isSleeping && !isHibernating,
                         modifier = Modifier.testTag("water_button")
                     )
 
-                    SleepCircularButton(onClick = { /* TODO sleep */ },
-                        modifier = Modifier.testTag("sleep_button"))
+                    SleepCircularButton(
+                        onClick = onSleepClick,
+                        enabled = !isSleeping && !isHibernating,
+                        modifier = Modifier.testTag("sleep_button")
+                    )
                 }
             }
         }
@@ -137,7 +150,7 @@ fun PetCareBar(
                     .fillMaxHeight(0.8f)
                     .padding(top = 12.dp),
                 width = 18.dp,
-                fillFraction = 0.85f,
+                fillFraction = animatedSleep,
                 testTag = "sleep_need_bar"
             )
         }
@@ -149,32 +162,35 @@ fun PetCareBar(
  */
 
 @Composable
-fun FoodCircularButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun FoodCircularButton(onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true,) {
     CircularButton(
         onClick = onClick,
         modifier = modifier,
         iconVector = Icons.Filled.Fastfood,
-        contentDescription = "Food"
+        contentDescription = "Food",
+        enabled = enabled,
     )
 }
 
 @Composable
-fun WaterCircularButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun WaterCircularButton(onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
     CircularButton(
         onClick = onClick,
         modifier = modifier,
         iconVector = Icons.Filled.LocalDrink,
-        contentDescription = "Water"
+        contentDescription = "Water",
+        enabled = enabled,
     )
 }
 
 @Composable
-fun SleepCircularButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun SleepCircularButton(onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
     CircularButton(
         onClick = onClick,
         modifier = modifier,
         iconVector = Icons.Filled.Bedtime,
-        contentDescription = "Sleep"
+        contentDescription = "Sleep",
+        enabled = enabled,
     )
 }
 

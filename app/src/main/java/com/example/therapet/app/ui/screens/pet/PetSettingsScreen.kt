@@ -35,12 +35,13 @@ import com.example.therapet.R
 
 @Composable
 fun PetSettingsScreen(
+    hibernationEnabled: Boolean,
+    onHibernationChanged: (Boolean) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ){
     var remindersEnabled by remember { mutableStateOf(false) }
     var petSoundsEnabled by remember { mutableStateOf(false) }
-    var hibernationEnabled by remember { mutableStateOf(false) }
 
     Scaffold(
 
@@ -85,7 +86,7 @@ fun PetSettingsScreen(
             ToggleButton(
                 label = stringResource(R.string.pet_sounds),
                 checked = petSoundsEnabled,
-                onCheckedChange = { remindersEnabled = it },
+                onCheckedChange = { petSoundsEnabled = it },
                 modifier = Modifier.testTag("pet_sounds_toggle")
             )
 
@@ -103,7 +104,7 @@ fun PetSettingsScreen(
             ToggleButton(
                 label = stringResource(R.string.hibernation),
                 checked = hibernationEnabled,
-                onCheckedChange = { remindersEnabled = it },
+                onCheckedChange = onHibernationChanged,
                 modifier = Modifier.testTag("hibernation_toggle")
             )
 
@@ -124,6 +125,8 @@ fun PetSettingsScreen(
 fun PetSettingsPreview() {
     TheraPetTheme {
         PetSettingsScreen(
+            hibernationEnabled = false,
+            onHibernationChanged = {},
             onBack = {}
         )
     }

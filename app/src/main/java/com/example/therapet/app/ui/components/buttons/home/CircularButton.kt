@@ -29,7 +29,8 @@ fun CircularButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     iconVector: ImageVector = Icons.Default.Add,
-    contentDescription: String? = null
+    contentDescription: String? = null,
+    enabled: Boolean
 ) {
     Surface(
         modifier = modifier.size(70.dp),
@@ -53,6 +54,6 @@ fun CircularButton(
 @Composable
 fun CircularButtonPreview() {
     TheraPetTheme {
-        CircularButton(onClick = {})
+        CircularButton(onClick = {}, enabled = true)
     }
 }

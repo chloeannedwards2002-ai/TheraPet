@@ -3,6 +3,7 @@ package com.example.therapet.app.data.repository
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
+import com.example.therapet.app.data.datastore.PetCareKeys
 import com.example.therapet.app.data.datastore.petCareDataStore
 import com.example.therapet.app.data.repository.contracts.PetCareRepositoryContract
 import kotlinx.coroutines.flow.map
@@ -21,29 +22,45 @@ class PetCareStateRepository private constructor(
                 INSTANCE ?: PetCareStateRepository(context).also { INSTANCE = it }
             }
         }
-
-        // Keys
-        private val WATER_LEVEL_KEY = floatPreferencesKey("water_level")
-        private val FOOD_LEVEL_KEY = floatPreferencesKey("food_level")
     }
 
     override val waterLevel = dataStore.data.map { prefs ->
-        prefs[WATER_LEVEL_KEY] ?: 1f
+        prefs[PetCareKeys.WATER] ?: 1f
     }
 
     override val foodLevel = dataStore.data.map { prefs ->
-        prefs[FOOD_LEVEL_KEY] ?: 1f
+        prefs[PetCareKeys.FOOD] ?: 1f
+    }
+
+    override val hibernationEnabled = dataStore.data.map { prefs ->
+        prefs[PetCareKeys.HIBERNATION] ?: false
     }
 
     override suspend fun saveWaterLevel(value: Float) {
         dataStore.edit { prefs ->
-            prefs[WATER_LEVEL_KEY] = value
+            prefs[PetCareKeys.WATER] = value
         }
     }
 
     override suspend fun saveFoodLevel(value: Float) {
         dataStore.edit { prefs ->
-            prefs[FOOD_LEVEL_KEY] = value
+            prefs[PetCareKeys.FOOD] = value
+        }
+    }
+
+    override val sleepLevel = dataStore.data.map { prefs ->
+        prefs[PetCareKeys.SLEEP] ?: 1f
+    }
+
+    override suspend fun saveSleepLevel(value: Float) {
+        dataStore.edit { prefs ->
+            prefs[PetCareKeys.SLEEP] = value
+        }
+    }
+
+    override suspend fun saveHibernationEnabled(value: Boolean) {
+        dataStore.edit { prefs ->
+            prefs[PetCareKeys.HIBERNATION] = value
         }
     }
 }
