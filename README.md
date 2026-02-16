@@ -6,19 +6,19 @@
 | FM-2 | <s>The TheraPet system must allow users to log in and out an active session, with the logging out process taking no more than 3 seconds</s> | Must | F |
 | FM-3 | <s>The TheraPet system must allow users to change, reset and update their password ensuring secure authentication for each process</s> | Must | F |
 | FM-4 | <s>The TheraPet system must allow users to request deletion of their account, and their user data must be removed within 30 days of the request</s> | Must | F |
-| FM-5 | The TheraPet system must allow users to view and search available therapist appointments with their therapists, with results returned within at least 2 seconds | Must | F |
-| FM-6 | The TheraPet system must allow users to book available appointments, and a confirmation notification must be sent within 3 seconds | Must | F |
+| FM-5 | <s>The TheraPet system must allow users to view and search available therapist appointments with their therapists, with results returned within at least 2 seconds </s> | Must | F |
+| FM-6 | <s>The TheraPet system must allow users to book available appointments,</s> and a confirmation notification must be sent within 3 seconds | Must | F |
 | FM-7 | The TheraPet system must allow users to cancel or reschedule booked appointments at least 24 hours before the booked time | Must | F |
 | FM-8 | The TheraPet system must send a notification of an appointment update within 5 seconds of the user booking, cancelling or rescheduling an appointment | Must | F |
-| FM-9 | The TheraPet system must allow therapists to view patient details such as name, ID and last time logged in | Must | F |
+| FM-9 | <s>The TheraPet system must allow therapists to view patient details such as name, ID </s> and last time logged in | Must | F |
 | FM-10 | The TheraPet system must allow therapists to add or remove a patient from their observation list, with changes applies within 3 seconds | Must | F |
 | FM-11 | <s>The TheraPet system must allow therapists to create, delete and mark available appointment slots, with results being visible to patients within 5 seconds</s> | Must | F |
 | FM-12 | The TheraPet system must store the time and date of each user login within DataStore, and expose the data to the patient’s therapist dashboard | Must | F |
 | FM-13 | <s>The TheraPet system must allow users to create and name their virtual pet when creating a new account</s> | Must | F |
 | FM-14 | <s>The TheraPet system must allow the user to always view their virtual pet on the main screen when returning to it</s> | Must | F |
-| FM-15 | The TheraPet system must allow users to interact with their virtual pet by giving them the option to care for 3 needs – feeding, watering and sleeping, with the state changes of the pet being applied immediately and persisting across sessions | Must | F |
+| FM-15 | <s>The TheraPet system must allow users to interact with their virtual pet by giving them the option to care for 3 needs – feeding, watering and sleeping, with the state changes of the pet being applied immediately and persisting across sessions</s> | Must | F |
 | FM-16 | <s>Database operations (Create, Read, Update, delete locally) must complete within 300ms</s> *TEST* | Must | F |
-| FM-17 | The TheraPet system must allow the user to put their pet in “hibernation” mode by sending them to sleep, which will stop all pet notifications and needs form decreasing | Must | F |
+| FM-17 | <s>The TheraPet system must allow the user to put their pet in “hibernation” mode by sending them to sleep,</s> which will stop all pet notifications and<s> needs form decreasing</s> | Must | F |
 | FS-1 | The virtual pet should present visible changes such as sadness or tiredness if any of the 3 needs are neglected for 24 hours or more when the pet is not in hibernation | Should | F |
 | FS-2 | The virtual pet should present a reminder to the user if they haven’t booked a therapy session in 20 days or more | Should | F |
 | FS-3 | To heed to an offline first approach, the TheraPet system should allow the user to manage their appointments offline, then syncing when connection is restored | Should | F |
