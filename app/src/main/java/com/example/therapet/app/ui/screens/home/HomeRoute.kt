@@ -3,19 +3,23 @@ package com.example.therapet.app.ui.screens.home
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.therapet.app.data.model.AccountUIModel
 import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.data.repository.WatchlistRepository
 import com.example.therapet.app.data.session.SessionManager
 import com.example.therapet.app.ui.components.bars.PetCareBar
+import com.example.therapet.app.ui.viewmodel.AppointmentViewModel
 import com.example.therapet.app.ui.viewmodel.PetViewModel
 import com.example.therapet.app.ui.viewmodel.PetCareViewModel
 import com.example.therapet.app.ui.viewmodel.UserViewModel
 import com.example.therapet.app.ui.viewmodel.ViewModelFactory
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 /**
  * @author: Chloe Edwards
@@ -34,55 +38,44 @@ fun HomeRoute(
     onProfile: () -> Unit,
     userViewModel: UserViewModel,
     sessionManager: SessionManager,
-    petCareViewModel: PetCareViewModel
+    petCareViewModel: PetCareViewModel,
+    watchlistRepository: WatchlistRepository
 ) {
     val role by userViewModel.loggedInRole.collectAsState(initial = null)
     val session by sessionManager.session.collectAsState()
     val user by userViewModel.currentUser.collectAsState()
 
-    // Wait until role and session are loaded
-    if (role == null || session == null) {
-        return
-    }
-
+    if (role == null || session == null) return
     val userId = session!!.userid
 
-    val petViewModel: PetViewModel = viewModel(
-        factory = ViewModelFactory.PetViewModelFactory(
+    val appointmentViewModel: AppointmentViewModel = viewModel(
+        factory = ViewModelFactory.AppointmentViewModelFactory(
             context = LocalContext.current,
-            userId = userId
+            sessionManager = sessionManager,
+            watchlistRepository = watchlistRepository
         )
     )
 
-    val petColourIndex by petViewModel.selectedColourIndex.collectAsState()
-    val foodLevel by petCareViewModel.food.collectAsState()
-    val waterLevel by petCareViewModel.water.collectAsState()
+    val watchlistFlow: Flow<List<AccountUIModel>> =
+        if (role == UserRole.THERAPIST) watchlistRepository.getWatchlistForTherapist(userId)
+        else emptyFlow()
 
-    val sleepLevel by petCareViewModel.sleep.collectAsState()
-    val isSleeping by petCareViewModel.isSleeping.collectAsState()
+    val watchlist by watchlistFlow.collectAsState(initial = emptyList<AccountUIModel>())
 
-    val isHibernating by petCareViewModel.isHibernating.collectAsState()
 
-    val startSleep = { petCareViewModel.startSleep() }
-
-    val increaseFood = { petCareViewModel.increaseFood() }
-    val increaseWater = { petCareViewModel.increaseWater() }
-
-    LaunchedEffect(Unit) { userViewModel.loadCurrentUser() }
 
     Scaffold(
         bottomBar = {
             if (role == UserRole.PATIENT) {
                 PetCareBar(
-                    modifier = Modifier,
-                    foodLevel = foodLevel,
-                    waterLevel = waterLevel,
-                    sleepLevel = sleepLevel,
-                    isSleeping = isSleeping,
-                    onFoodIncrease = increaseFood,
-                    onWaterIncrease = increaseWater,
-                    onSleepClick = startSleep,
-                    isHibernating = isHibernating
+                    foodLevel = petCareViewModel.food.collectAsState().value,
+                    waterLevel = petCareViewModel.water.collectAsState().value,
+                    sleepLevel = petCareViewModel.sleep.collectAsState().value,
+                    isSleeping = petCareViewModel.isSleeping.collectAsState().value,
+                    onFoodIncrease = { petCareViewModel.increaseFood() },
+                    onWaterIncrease = { petCareViewModel.increaseWater() },
+                    onSleepClick = { petCareViewModel.startSleep() },
+                    isHibernating = petCareViewModel.isHibernating.collectAsState().value
                 )
             }
         }
@@ -90,22 +83,17 @@ fun HomeRoute(
         HomeScreen(
             role = role!!,
             user = user,
-            petColourIndex = petColourIndex,
+            petColourIndex = viewModel<PetViewModel>(factory = ViewModelFactory.PetViewModelFactory(LocalContext.current, userId))
+                .selectedColourIndex.collectAsState().value,
             modifier = Modifier.padding(innerPadding),
-            foodLevel = foodLevel,
-            waterLevel = waterLevel,
-            sleepLevel = sleepLevel,
-            isSleeping = isSleeping,
-            onFoodIncrease = increaseFood,
-            onWaterIncrease = increaseWater,
-            onSleepClick = startSleep,
             onLogout = onLogout,
             onSettings = onSettings,
             onNotifs = onNotifs,
             onAppts = onAppts,
             onBookAppt = onBookAppt,
             onProfile = onProfile,
-            isHibernating = isHibernating
+            watchlist = watchlist
         )
     }
 }
+

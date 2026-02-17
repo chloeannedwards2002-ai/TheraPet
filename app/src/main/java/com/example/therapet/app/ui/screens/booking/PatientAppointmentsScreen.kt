@@ -31,8 +31,9 @@ import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.R
 import com.example.therapet.app.data.entity.AppointmentEntity
 import com.example.therapet.app.data.model.AccountUIModel
+import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
-import com.example.therapet.app.ui.components.fields.account.AccountCell
+import com.example.therapet.app.ui.components.fields.account.MinimizedAccountCell
 import com.example.therapet.app.ui.components.fields.appt.AppointmentCell
 import com.example.therapet.app.ui.components.fields.appt.MonthPicker
 import java.time.YearMonth
@@ -49,11 +50,13 @@ import java.time.YearMonth
 private val therapistsForPreview = listOf(
     AccountUIModel(
         userid = "12345678910defgt",
-        fullName = "Bob Bobbington"
+        fullName = "Bob Bobbington",
+        role = UserRole.PATIENT
     ),
     AccountUIModel(
         userid = "Ghtu745S6gTdHw24",
-        fullName = "Jane Doe"
+        fullName = "Jane Doe",
+        role = UserRole.PATIENT
     )
 )
 
@@ -73,6 +76,8 @@ fun PatientAppointmentsScreen(
 ) {
     var showMonthPicker by remember { mutableStateOf(false) }
     var selectedMonth by remember { mutableStateOf(YearMonth.now()) }
+
+    var currentStep by remember { mutableStateOf(BookingStep.PATIENT_APPOINTMENTS) }
 
     Scaffold(
         topBar = {
@@ -133,7 +138,7 @@ fun PatientAppointmentsScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     items(therapists) { therapist ->
-                        AccountCell(
+                        MinimizedAccountCell(
                             account = therapist,
                             modifier = Modifier.fillMaxWidth(0.92f),
                             onClick = { onTherapistSelected(therapist) }

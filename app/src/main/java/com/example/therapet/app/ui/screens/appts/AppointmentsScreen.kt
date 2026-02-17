@@ -21,6 +21,7 @@ import com.example.therapet.app.data.entity.AppointmentEntity
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButton
 import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.LaunchedEffect
 import com.example.therapet.app.data.model.AppointmentType
 import com.example.therapet.app.ui.components.fields.appt.AddAppointmentDialog
 import com.example.therapet.app.ui.components.fields.appt.AppointmentCell
@@ -43,7 +44,8 @@ fun AppointmentsScreen(
     onAddAppointment: (Long, AppointmentType) -> Unit,
     onUpdateAppointment: (AppointmentEntity) -> Unit,
     onDeleteAppointment: (AppointmentEntity) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    getPatientName: (String?) -> String?,
 ) {
     var showAddAppointmentDialog by remember { mutableStateOf(false) }
     var selectedAppointment by remember { mutableStateOf<AppointmentEntity?>(null) }
@@ -102,10 +104,10 @@ fun AppointmentsScreen(
                 onDelete = {
                     onDeleteAppointment(it)
                     selectedAppointment = null
-                }
+                },
+                getPatientName = getPatientName,
             )
         }
-
     }
 }
 @Composable

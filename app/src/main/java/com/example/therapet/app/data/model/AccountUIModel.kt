@@ -12,13 +12,13 @@ import com.example.therapet.app.data.entity.UserEntity
 data class AccountUIModel(
     val userid: String,
     val fullName: String,
-    val profileImage: String? = null
+    val role: UserRole,
 )
 
 fun UserEntity.toAccountUIModel(): AccountUIModel {
     return AccountUIModel(
         userid = userid,
         fullName = "$firstname $surname",
-        profileImage= null
+        role = role,
     )
 }

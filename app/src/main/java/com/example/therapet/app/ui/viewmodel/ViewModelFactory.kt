@@ -8,9 +8,11 @@ import com.example.therapet.app.data.local.AppDatabase
 import com.example.therapet.app.data.repository.AppointmentRepository
 import com.example.therapet.app.data.repository.PetCareStateRepository
 import com.example.therapet.app.data.repository.UserRepository
+import com.example.therapet.app.data.repository.WatchlistRepository
 import com.example.therapet.app.data.repository.contracts.AppointmentRepositoryContract
 import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
 import com.example.therapet.app.data.session.SessionManager
+import com.example.therapet.app.data.session.SessionManagerContract
 
 /**
  * @author: Chloe Edwards
@@ -21,7 +23,7 @@ import com.example.therapet.app.data.session.SessionManager
  * https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories
  */
 
-// Nesting
+// Nesting ViewModelFactories
 class ViewModelFactory {
 
     class UserViewModelFactory(
@@ -64,7 +66,8 @@ class ViewModelFactory {
 
     class AppointmentViewModelFactory(
         private val context: Context,
-        private val sessionManager: SessionManager
+        private val sessionManager: SessionManagerContract,
+        private val watchlistRepository: WatchlistRepository
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -78,7 +81,11 @@ class ViewModelFactory {
 
             if (modelClass.isAssignableFrom(AppointmentViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return AppointmentViewModel(repository, sessionManager) as T
+                return AppointmentViewModel(
+                    repository = repository,
+                    sessionManager = sessionManager, // Pass sessionManager
+                    watchlistRepository = watchlistRepository // Pass WatchlistRepository
+                ) as T
             }
 
             throw IllegalArgumentException("Unknown ViewModel class")
@@ -96,4 +103,26 @@ class ViewModelFactory {
         }
     }
 
+    class WatchlistViewModelFactory(
+        private val context: Context,
+        private val sessionManager: SessionManager
+    ) : ViewModelProvider.Factory {
+
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            val db = AppDatabase.getDatabase(context)
+            val repository = WatchlistRepository(
+                watchlistDao = db.watchlistDao(),
+                userDao = db.userDao()
+            )
+
+            if (modelClass.isAssignableFrom(WatchlistViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return WatchlistViewModel(repository, sessionManager) as T
+            }
+
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
+    }
 }
+
+

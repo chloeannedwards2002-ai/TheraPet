@@ -1,6 +1,7 @@
 package com.example.therapet.app.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -10,10 +11,16 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -24,10 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.therapet.R
 import com.example.therapet.app.data.entity.UserEntity
+import com.example.therapet.app.data.model.AccountUIModel
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.HomeNavigationDrawer
 import com.example.therapet.app.ui.components.bars.PetCareBar
 import com.example.therapet.app.ui.components.buttons.home.CircularButton
+import com.example.therapet.app.ui.components.fields.account.AccountDetailsDialog
+import com.example.therapet.app.ui.components.fields.account.MinimizedAccountCell
 import com.example.therapet.app.ui.components.pet.PetPenguin
 import com.example.therapet.app.ui.theme.TheraPetTheme
 import kotlinx.coroutines.launch
@@ -50,22 +60,18 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     onLogout: () -> Unit,
     onSettings: () -> Unit,
-    onNotifs:() -> Unit,
-    onAppts:() -> Unit,
+    onNotifs: () -> Unit,
+    onAppts: () -> Unit,
     onBookAppt: () -> Unit,
     onProfile: () -> Unit,
     user: UserEntity?,
-    onFoodIncrease: () -> Unit = {},
-    onWaterIncrease: () -> Unit = {},
-    foodLevel: Float = 0.2f,
-    waterLevel: Float = 0.2f,
-    sleepLevel: Float = 1f,
-    isSleeping: Boolean = false,
-    onSleepClick: () -> Unit = {},
-    isHibernating: Boolean = false
-){
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    watchlist: List<AccountUIModel> = emptyList()
+) {
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
+    //Not ideal to ahve state in the screen but easiest way
+    var selectedAccount by remember { mutableStateOf<AccountUIModel?>(null) }
 
     HomeNavigationDrawer(
         drawerState = drawerState,
@@ -80,65 +86,70 @@ fun HomeScreen(
             }
         }
     ) {
-
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            floatingActionButton = {
-                if(role == UserRole.PATIENT){ 
-                    CircularButton(
-                        onClick = onBookAppt,
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .testTag("book_appointment_button"),
-                        enabled = true
-                    )
-                }
-            },
-
             topBar = {
                 MainTopBar(
                     text = stringResource(R.string.app_name),
-                    onMenuClick = {
-                        scope.launch { drawerState.open() }
-                    },
+                    onMenuClick = { scope.launch { drawerState.open() } },
                     onApptsClick = onAppts
                 )
             },
-            bottomBar = {
-                if(role == UserRole.PATIENT){
-                    PetCareBar(
-                        modifier = Modifier.zIndex(0f),
-                        foodLevel = foodLevel,
-                        waterLevel = waterLevel,
-                        sleepLevel = sleepLevel,
-                        isSleeping = isSleeping,
-                        onFoodIncrease = onFoodIncrease,
-                        onWaterIncrease = onWaterIncrease,
-                        onSleepClick = onSleepClick,
-                        isHibernating = isHibernating
+            floatingActionButton = {
+                if (role == UserRole.PATIENT) {
+                    CircularButton(
+                        onClick = onBookAppt,
+                        modifier = Modifier.padding(16.dp),
+                        enabled = true
                     )
                 }
             }
         ) { innerPadding ->
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
 
-            if(role == UserRole.PATIENT) {
-                Column(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                        .testTag("home_screen"),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Spacer(modifier = Modifier.height(150.dp))
+                if (role == UserRole.PATIENT) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Spacer(modifier = Modifier.height(150.dp))
+                        PetPenguin(
+                            bodyColour = PetColours.getOrNull(petColourIndex),
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .offset(y = -50.dp)
+                                .weight(0.25f)
+                                .aspectRatio(1f)
+                        )
+                    }
+                }
 
-                    PetPenguin(
-                        bodyColour = PetColours.getOrNull(petColourIndex),
+                if (role == UserRole.THERAPIST) {
+                    Column(
                         modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                           .offset(y = -50.dp)
-                            .weight(0.25f)
-                            .aspectRatio(1f)
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) {
+                        Text(
+                            text = "Watchlist",
+                            style = MaterialTheme.typography.labelMedium
+                        )
+
+                        watchlist.forEach { account ->
+                            MinimizedAccountCell(
+                                account = account,
+                                onClick = { selectedAccount = account }
+                            )
+                        }
+                    }
+
+                    AccountDetailsDialog(
+                        account = selectedAccount,
+                        onDismiss = { selectedAccount = null }
                     )
                 }
             }

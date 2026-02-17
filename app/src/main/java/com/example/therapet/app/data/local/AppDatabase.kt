@@ -9,13 +9,16 @@ import com.example.therapet.app.data.local.dao.UserDao
 import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.local.dao.AppointmentDao
 import com.example.therapet.app.data.entity.AppointmentEntity
+import com.example.therapet.app.data.local.dao.WatchlistDao
+import com.example.therapet.app.data.entity.WatchlistEntity
 
 @Database(
     entities = [
         UserEntity::class,
-        AppointmentEntity::class
+        AppointmentEntity::class,
+        WatchlistEntity::class
                ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 
@@ -24,6 +27,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun appointmentDao(): AppointmentDao
+    abstract fun watchlistDao(): WatchlistDao
 
     companion object {
         @Volatile

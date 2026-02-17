@@ -3,9 +3,11 @@ package com.example.therapet.app.data.repository
 import com.example.therapet.app.data.local.dao.UserDao
 import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.data.model.toAccountUIModel
 import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
 import com.example.therapet.app.data.util.crypto.PasswordHasher
 import com.example.therapet.app.data.util.crypto.PasswordHasher.toHex
+import com.example.therapet.app.data.model.AccountUIModel
 
 class UserRepository(
     private val userDao: UserDao
@@ -89,5 +91,11 @@ class UserRepository(
 
     override suspend fun getTherapists(): List<UserEntity> {
         return userDao.getUsersByRole(UserRole.THERAPIST)
+    }
+
+
+    override suspend fun getUserAccountById(userid: String): Pair<AccountUIModel, UserRole>? {
+        val user = userDao.getUserById(userid) ?: return null
+        return user.toAccountUIModel() to user.role
     }
 }
