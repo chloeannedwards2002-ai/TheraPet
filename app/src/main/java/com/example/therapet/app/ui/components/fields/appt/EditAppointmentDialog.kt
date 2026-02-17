@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -51,7 +52,8 @@ fun EditAppointmentDialog(
     appointment: AppointmentEntity,
     onDismiss: () -> Unit,
     onUpdateTime: (AppointmentEntity) -> Unit,
-    onDelete: (AppointmentEntity) -> Unit
+    onDelete: (AppointmentEntity) -> Unit,
+    getPatientName: (String) -> String?
 ) {
     var showDatePicker by remember { mutableStateOf(false) }
 
@@ -62,19 +64,20 @@ fun EditAppointmentDialog(
                 .toLocalDateTime(TimeZone.currentSystemDefault())
         )
     }
+    val patientName = appointment.patientUserId?.let { getPatientName(it) } ?: ""
 
-    //Not ideal - repeating data that doesnt need to be repeated - will be updated eventually
     Dialog(onDismissRequest = onDismiss) {
         Card(
             shape = RoundedCornerShape(16.dp),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -104,7 +107,10 @@ fun EditAppointmentDialog(
                 )
 
                 Text(
-                    text = if (appointment.isBooked) "Booked" else "Available",
+                    text = if (appointment.isBooked)
+                        "Booked by: $patientName"
+                    else
+                        "Available",
                     style = MaterialTheme.typography.labelSmall,
                     color = if (appointment.isBooked)
                         MaterialTheme.colorScheme.error
@@ -113,7 +119,6 @@ fun EditAppointmentDialog(
                 )
 
                 Spacer(Modifier.height(8.dp))
-
 
                 Button(
                     modifier = Modifier
@@ -137,7 +142,6 @@ fun EditAppointmentDialog(
             }
         }
     }
-
 
     if (showDatePicker) {
         Dialog(onDismissRequest = { showDatePicker = false }) {
@@ -182,6 +186,7 @@ fun EditAppointmentDialog(
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun EditAppointmentDialogPreview() {
@@ -192,12 +197,13 @@ fun EditAppointmentDialogPreview() {
                 therapistUserId = "therapist-123",
                 appointmentDateTime = 1_700_000_000_000L,
                 appointmentType = AppointmentType.FOLLOW_UP,
-                patientUserId = null,
-                isBooked = false
+                patientUserId = "patient-123",
+                isBooked = true
             ),
             onDismiss = {},
             onUpdateTime = {},
-            onDelete = {}
+            onDelete = {},
+            getPatientName = { "John Smith" },
         )
     }
 }

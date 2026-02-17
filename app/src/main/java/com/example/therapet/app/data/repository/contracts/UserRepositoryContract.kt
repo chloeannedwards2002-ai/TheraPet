@@ -1,6 +1,7 @@
 package com.example.therapet.app.data.repository.contracts
 
 import com.example.therapet.app.data.entity.UserEntity
+import com.example.therapet.app.data.model.AccountUIModel
 import com.example.therapet.app.data.model.UserRole
 
 /**
@@ -33,4 +34,7 @@ interface UserRepositoryContract {
     ): Boolean
 
     suspend fun getTherapists(): List<UserEntity>
+
+    //Used for user detail cards
+    suspend fun getUserAccountById(userid: String): Pair<AccountUIModel, UserRole>?
 }

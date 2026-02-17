@@ -3,12 +3,12 @@ package com.example.therapet.app.ui.components.fields.account
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -23,60 +23,89 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.app.data.model.AccountUIModel
+import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.ui.theme.TheraPetTheme
 
 /**
  * @Author: Chloe Edwards
- * @Date: 08/02/2026
+ * @Date: 15/02/2026
  *
- * Account cell (reusable)
+ * Detailed Account cell (reusable)
  */
 
 @Composable
-fun AccountCell(
+fun DetailedAccountCell(
     account: AccountUIModel,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth(0.92f)
-            .padding(vertical = 8.dp)
+            .padding(vertical = 12.dp)
             .clickable { onClick() },
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
+        shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 24.dp, horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            // Profile Image
             Box(
                 modifier = Modifier
-                    .size(48.dp)
+                    .size(96.dp)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                    .background(MaterialTheme.colorScheme.primaryContainer),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = Icons.Default.Person,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = Color.White,
+                    modifier = Modifier.size(48.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             Text(
                 text = account.fullName,
                 style = MaterialTheme.typography.labelMedium
             )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = account.userid,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun DetailedAccountCellPreview() {
+
+    val sampleAccount = AccountUIModel(
+        userid = "123123123123",
+        fullName = "Jane Doe",
+        role = UserRole.PATIENT
+    )
+
+    TheraPetTheme {
+        DetailedAccountCell(
+            account = sampleAccount
+        )
+    }
+}
+

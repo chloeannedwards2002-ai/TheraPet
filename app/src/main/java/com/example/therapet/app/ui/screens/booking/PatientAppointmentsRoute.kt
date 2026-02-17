@@ -10,6 +10,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.therapet.app.data.local.AppDatabase
+import com.example.therapet.app.data.repository.WatchlistRepository
 import com.example.therapet.app.data.session.SessionManager
 import com.example.therapet.app.ui.viewmodel.AppointmentViewModel
 import com.example.therapet.app.ui.viewmodel.UserViewModel
@@ -46,10 +48,16 @@ fun PatientAppointmentsRoute(
         )
     )
 
+    val watchlistRepository = WatchlistRepository(
+        watchlistDao = AppDatabase.getDatabase(context).watchlistDao(),
+        userDao = AppDatabase.getDatabase(context).userDao()
+    )
+
     val appointmentViewModel: AppointmentViewModel = viewModel(
         factory = ViewModelFactory.AppointmentViewModelFactory(
             context,
-            sessionManager
+            sessionManager,
+            watchlistRepository
         )
     )
 
@@ -103,6 +111,9 @@ fun PatientAppointmentsRoute(
                 onBack()
             }
         },
-        onBook = {}
+        onBook = {
+            step = BookingStep.CHOOSE_THERAPIST
+        }
+
     )
 }

@@ -8,11 +8,9 @@ import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.model.toAccountUIModel
 import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
 import com.example.therapet.app.data.session.SessionManager
+import com.example.therapet.app.data.session.SessionManagerContract
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -51,6 +49,8 @@ class UserViewModel(
     private val _resetPasswordResult = MutableStateFlow<Boolean?>(null)
     val resetPasswordResult: StateFlow<Boolean?> = _resetPasswordResult
 
+    private val _selectedUser = MutableStateFlow<Pair<AccountUIModel, UserRole>?>(null)
+    val selectedUser: StateFlow<Pair<AccountUIModel, UserRole>?> = _selectedUser
 
     // Authentication
 
@@ -157,15 +157,6 @@ class UserViewModel(
     fun clearResetPasswordResult() {
         _resetPasswordResult.value = null
     }
-
-    val currentAccount: StateFlow<AccountUIModel?> =
-        currentUser
-            .map { user -> user?.toAccountUIModel() }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = null
-            )
 
     fun loadTherapists() {
         viewModelScope.launch {

@@ -63,4 +63,10 @@ class AppointmentRepository(
     override fun getAppointmentsForPatient(patientUserId: String): Flow<List<AppointmentEntity>> {
         return appointmentDao.getAppointmentsForPatient(patientUserId)
     }
+
+    override suspend fun getPatientName(patientUserId: String?): String? {
+        if(patientUserId == null) return null
+        val patient = userDao.getUserById(patientUserId)
+        return patient?.let { "${it.firstname} ${it.surname}"}
+    }
 }

@@ -30,12 +30,12 @@ class PetCareViewModel(
 
     private var persistCounter = 0
     val food: StateFlow<Float> = repository.foodLevel
-        .stateIn(viewModelScope, SharingStarted.Eagerly, 1f)
+        .stateIn(viewModelScope, SharingStarted.Eagerly, 0.5f)
     val water: StateFlow<Float> = repository.waterLevel
-        .stateIn(viewModelScope, SharingStarted.Eagerly, 1f)
+        .stateIn(viewModelScope, SharingStarted.Eagerly, 0.5f)
 
     val sleep: StateFlow<Float> = repository.sleepLevel
-        .stateIn(viewModelScope, SharingStarted.Eagerly, 1f)
+        .stateIn(viewModelScope, SharingStarted.Eagerly, 0f)
 
     private val _isSleeping = MutableStateFlow(false)
 

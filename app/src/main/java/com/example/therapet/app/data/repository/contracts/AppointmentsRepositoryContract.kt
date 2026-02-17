@@ -35,4 +35,5 @@ interface AppointmentRepositoryContract {
 
     fun getAppointmentsForPatient(patientUserId: String): Flow<List<AppointmentEntity>>
 
+    suspend fun getPatientName(patientUserId: String?): String?
 }

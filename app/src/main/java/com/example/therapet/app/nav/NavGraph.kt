@@ -8,13 +8,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.therapet.app.data.local.AppDatabase
 import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.data.repository.WatchlistRepository
 import com.example.therapet.app.data.session.SessionManager
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsRoute
 import com.example.therapet.app.ui.screens.booking.PatientAppointmentsRoute
 import com.example.therapet.app.ui.screens.home.HomeRoute
-import com.example.therapet.app.ui.screens.pet.PetSettingsScreen
 import com.example.therapet.app.ui.screens.register.RegisterRoute
 import com.example.therapet.app.ui.screens.settings.accountmanagement.DeleteAccountScreen
 import com.example.therapet.app.ui.screens.settings.HelpSupportScreen
@@ -29,6 +30,7 @@ import com.example.therapet.app.ui.screens.settings.accountmanagement.password.R
 import com.example.therapet.app.ui.viewmodel.PetCareViewModel
 import com.example.therapet.app.ui.viewmodel.UserViewModel
 import com.example.therapet.app.ui.viewmodel.ViewModelFactory
+import com.example.therapet.app.ui.viewmodel.WatchlistViewModel
 
 
 /**
@@ -53,6 +55,11 @@ fun NavGraph(
             context = context,
             sessionManager
         )
+    )
+
+    val watchlistRepository = WatchlistRepository(
+        watchlistDao = AppDatabase.getDatabase(LocalContext.current).watchlistDao(),
+        userDao = AppDatabase.getDatabase(LocalContext.current).userDao()
     )
 
     val petCareViewModel: PetCareViewModel = viewModel(
@@ -122,11 +129,18 @@ fun NavGraph(
                 onProfile = { navController.navigate(Routes.PROFILE) },
                 onSettings = { navController.navigate(Routes.SETTINGS) },
                 onNotifs = { /* TODO */ },
-                onAppts = { navController.navigate(Routes.PATIENT_APPOINTMENTS) },
+                onAppts = {
+                    when (role) {
+                        UserRole.PATIENT -> navController.navigate(Routes.PATIENT_APPOINTMENTS)
+                        UserRole.THERAPIST -> navController.navigate(Routes.APPOINTMENTS)
+                        else -> {}
+                    }
+                },
                 onBookAppt = { navController.navigate(Routes.PATIENT_APPOINTMENTS) },
                 sessionManager = sessionManager,
                 userViewModel = userViewModel,
-                petCareViewModel = petCareViewModel
+                petCareViewModel = petCareViewModel,
+                watchlistRepository = watchlistRepository
             )
         }
 
