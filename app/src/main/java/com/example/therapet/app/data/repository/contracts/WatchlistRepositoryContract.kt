@@ -11,7 +11,12 @@ import kotlinx.coroutines.flow.Flow
  */
 interface WatchlistRepositoryContract {
 
-    suspend fun addPatientToWatchlist(therapistId: String, patientId: String)
+    suspend fun addPatientToWatchlist(
+        therapistId: String,
+        patientId: String
+    )
 
-    fun getWatchlistForTherapist(therapistId: String): Flow<List<AccountUIModel>>
+    fun getWatchlistForTherapist(
+        therapistId: String
+    ): Flow<List<AccountUIModel>>
 }

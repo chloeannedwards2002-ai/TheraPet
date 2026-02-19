@@ -18,21 +18,23 @@ class WatchlistRepository(
         watchlistDao.addToWatchlist(WatchlistEntity(therapistId, patientId))
     }
 
-    override fun getWatchlistForTherapist(therapistId: String): Flow<List<AccountUIModel>> =
-        watchlistDao.getWatchlistPatientIds(therapistId).flatMapLatest { patientIds ->
-
-            flow {
-                val accounts = patientIds.mapNotNull { id ->
-                    val user = userDao.getUserById(id)
-                    user?.let {
-                        AccountUIModel(
-                            userid = it.userid,
-                            fullName = "${it.firstname} ${it.surname}",
-                            role = it.role
-                        )
+    override fun getWatchlistForTherapist(
+        therapistId: String
+    ): Flow<List<AccountUIModel>> =
+        watchlistDao.getWatchlistPatientIds(therapistId)
+            .flatMapLatest { patientIds ->
+                flow {
+                    val accounts = patientIds.mapNotNull { id ->
+                        val user = userDao.getUserById(id)
+                        user?.let {
+                            AccountUIModel(
+                                userid = it.userid,
+                                fullName = "${it.firstname} ${it.surname}",
+                                role = it.role
+                            )
+                        }
                     }
+                    emit(accounts)
                 }
-                emit(accounts)
             }
-        }
 }

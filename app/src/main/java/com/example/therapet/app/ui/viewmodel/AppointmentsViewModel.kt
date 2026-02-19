@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.therapet.app.data.entity.AppointmentEntity
 import com.example.therapet.app.data.model.AppointmentType
 import com.example.therapet.app.data.model.UserRole
-import com.example.therapet.app.data.repository.WatchlistRepository
 import com.example.therapet.app.data.repository.contracts.AppointmentRepositoryContract
+import com.example.therapet.app.data.repository.contracts.WatchlistRepositoryContract
 import com.example.therapet.app.data.session.SessionManagerContract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,9 +20,9 @@ class AppointmentViewModel(
     private val repository: AppointmentRepositoryContract,
     private val sessionManager: SessionManagerContract,
     private val _selectedDateMillis: MutableStateFlow<Long?> = MutableStateFlow<Long?>(null),
-    private val watchlistRepository: WatchlistRepository,
+    private val watchlistRepository: WatchlistRepositoryContract,
 
-) : ViewModel() {
+    ) : ViewModel() {
 
     // Used by the therapist to create an appointment
     fun addAppointment(

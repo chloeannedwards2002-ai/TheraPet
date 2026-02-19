@@ -2,6 +2,8 @@ package com.example.therapet.repositories
 
 import com.example.therapet.app.data.entity.UserEntity
 import com.example.therapet.app.data.model.UserRole
+import com.example.therapet.app.data.model.AccountUIModel
+import com.example.therapet.app.data.model.toAccountUIModel
 import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
 import com.example.therapet.app.data.util.crypto.PasswordHasher
 import com.example.therapet.app.data.util.crypto.PasswordHasher.toHex
@@ -55,6 +57,14 @@ class FakeUserRepository : UserRepositoryContract {
 
     override suspend fun deleteUser(userid: String) {
         users.remove(userid)
+    }
+
+    override suspend fun getUserAccountById(
+        userid: String
+    ): Pair<AccountUIModel, UserRole>? {
+
+        val user = users[userid] ?: return null
+        return user.toAccountUIModel() to user.role
     }
 
     private fun determineUserRole(userid: String): UserRole {

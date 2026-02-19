@@ -80,4 +80,9 @@ class FakeAppointmentRepository : AppointmentRepositoryContract {
             }
         }
     }
+
+    override suspend fun getPatientName(patientUserId: String?): String? {
+        if (patientUserId == null) return null
+        return "Fake Patient"
+    }
 }
