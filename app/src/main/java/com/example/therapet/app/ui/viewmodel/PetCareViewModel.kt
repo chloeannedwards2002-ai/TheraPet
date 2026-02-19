@@ -33,7 +33,6 @@ class PetCareViewModel(
         .stateIn(viewModelScope, SharingStarted.Eagerly, 0.5f)
     val water: StateFlow<Float> = repository.waterLevel
         .stateIn(viewModelScope, SharingStarted.Eagerly, 0.5f)
-
     val sleep: StateFlow<Float> = repository.sleepLevel
         .stateIn(viewModelScope, SharingStarted.Eagerly, 0f)
 
