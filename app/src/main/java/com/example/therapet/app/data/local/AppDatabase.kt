@@ -11,6 +11,8 @@ import com.example.therapet.app.data.local.dao.AppointmentDao
 import com.example.therapet.app.data.entity.AppointmentEntity
 import com.example.therapet.app.data.local.dao.WatchlistDao
 import com.example.therapet.app.data.entity.WatchlistEntity
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 
 @Database(
     entities = [
@@ -35,13 +37,25 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): AppDatabase =
             INSTANCE ?: synchronized(this) {
-                INSTANCE ?: Room.databaseBuilder(
+
+                SQLiteDatabase.loadLibs(context)
+
+                val passphrase: ByteArray =
+                    SQLiteDatabase.getBytes("therapet-secure-key".toCharArray())
+
+                val factory = SupportFactory(passphrase)
+
+                val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "therapet_db"
                 )
+                    .openHelperFactory(factory)
                     .fallbackToDestructiveMigration()
                     .build()
+
+                INSTANCE = instance
+                instance
             }
     }
 }
