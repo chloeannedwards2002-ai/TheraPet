@@ -97,7 +97,11 @@ fun PatientAppointmentsRoute(
             step = BookingStep.BOOK_APPOINTMENT
         },
         onAppointmentClick = { appointment ->
-            appointmentViewModel.bookAppointment(appointment)
+            if (appointment.isBooked) {
+                appointmentViewModel.cancelAppointment(appointment)
+            } else {
+                appointmentViewModel.bookAppointment(appointment)
+            }
         },
         onMonthSelected = { yearMonth ->
             selectedYear = yearMonth.year
