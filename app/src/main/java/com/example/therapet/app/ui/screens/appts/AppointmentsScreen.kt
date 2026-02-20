@@ -21,12 +21,10 @@ import com.example.therapet.app.data.entity.AppointmentEntity
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButton
 import androidx.compose.foundation.lazy.items
-import androidx.compose.runtime.LaunchedEffect
 import com.example.therapet.app.data.model.AppointmentType
 import com.example.therapet.app.ui.components.fields.appt.AddAppointmentDialog
 import com.example.therapet.app.ui.components.fields.appt.AppointmentCell
 import com.example.therapet.app.ui.components.fields.appt.EditAppointmentDialog
-
 
 /**
  * @author: Chloe Edwards
@@ -34,7 +32,6 @@ import com.example.therapet.app.ui.components.fields.appt.EditAppointmentDialog
  *
  * Appointments screen UI
  */
-
 
 @Composable
 fun AppointmentsScreen(
@@ -95,6 +92,7 @@ fun AppointmentsScreen(
 
         selectedAppointment?.let { appointment ->
             EditAppointmentDialog(
+                role = role,
                 appointment = appointment,
                 onDismiss = { selectedAppointment = null },
                 onUpdateTime = { updated ->
@@ -105,7 +103,16 @@ fun AppointmentsScreen(
                     onDeleteAppointment(it)
                     selectedAppointment = null
                 },
-                getPatientName = getPatientName,
+                onCancelBooking = {
+                    onUpdateAppointment(
+                        it.copy(
+                            isBooked = false,
+                            patientUserId = null
+                        )
+                    )
+                    selectedAppointment = null
+                },
+                getPatientName = { id -> id?.let { getPatientName(it) } ?: "" }
             )
         }
     }

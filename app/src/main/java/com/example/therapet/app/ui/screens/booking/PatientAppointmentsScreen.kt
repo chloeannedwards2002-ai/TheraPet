@@ -35,6 +35,7 @@ import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
 import com.example.therapet.app.ui.components.fields.account.MinimizedAccountCell
 import com.example.therapet.app.ui.components.fields.appt.AppointmentCell
+import com.example.therapet.app.ui.components.fields.appt.EditAppointmentDialog
 import com.example.therapet.app.ui.components.fields.appt.MonthPicker
 import java.time.YearMonth
 
@@ -79,6 +80,8 @@ fun PatientAppointmentsScreen(
 
     var currentStep by remember { mutableStateOf(BookingStep.PATIENT_APPOINTMENTS) }
 
+    var selectedAppointment by remember { mutableStateOf<AppointmentEntity?>(null) }
+
     Scaffold(
         topBar = {
             BasicTopBar(
@@ -94,7 +97,8 @@ fun PatientAppointmentsScreen(
         },
 
         floatingActionButton = {
-            BookButton(onClick = onBook)
+            BookButton(
+                onClick = onBook,)
         }
     ) { innerPadding ->
 
@@ -123,10 +127,21 @@ fun PatientAppointmentsScreen(
                     items(patientAppointments, key = { it.appointmentId }) { appointment ->
                         AppointmentCell(
                             appointment = appointment,
-                            onClick = { //TODO: Show details
-                                 }
+                            onClick = { selectedAppointment = appointment }
                         )
                     }
+                }
+
+                selectedAppointment?.let { appointment ->
+                    EditAppointmentDialog(
+                        role = UserRole.PATIENT,
+                        appointment = appointment,
+                        onDismiss = { selectedAppointment = null },
+                        onUpdateTime = {},
+                        onDelete = {},
+                        onCancelBooking = { onAppointmentClick(it) },
+                        getPatientName = { "" }
+                    )
                 }
             }
 
@@ -211,11 +226,13 @@ fun BookButton(modifier: Modifier = Modifier, onClick: () -> Unit){
         text = "Book Appointment",
         modifier = modifier
             .fillMaxWidth(0.5F)
-            .testTag("book_button")
+            .testTag("book_button"),
     )
 }
 
-/*@RequiresApi(Build.VERSION_CODES.O)
+/* BROKEN PREVIEWS
+
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun BookAppointmentChooseTherapistPreview() {

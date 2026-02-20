@@ -110,5 +110,22 @@ class AppointmentViewModel(
         return repository.getPatientName(patientUserId)
     }
 
+    fun cancelAppointment(appointment: AppointmentEntity) {
+        val currentUserId = sessionManager.getUserId()
+        val currentRole = sessionManager.getRole()
+
+        if (currentUserId == null || currentRole != UserRole.PATIENT) return
+        if (appointment.patientUserId != currentUserId) return
+
+        viewModelScope.launch {
+            repository.updateAppointment(
+                appointment.copy(
+                    isBooked = false,
+                    patientUserId = null
+                )
+            )
+        }
+    }
+
 
 }

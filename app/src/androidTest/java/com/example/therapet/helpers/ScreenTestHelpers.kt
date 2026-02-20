@@ -183,6 +183,8 @@ object ScreenTestHelpers {
         composeRule.setContent{
             TheraPetTheme{
                 PetSettingsScreen(
+                    hibernationEnabled = false,
+                    onHibernationChanged = {},
                     onBack = {}
                 )
             }
@@ -223,7 +225,8 @@ object ScreenTestHelpers {
                     onBack = {},
                     onAddAppointment = { _, _ -> },
                     onUpdateAppointment = {},
-                    onDeleteAppointment = {}
+                    onDeleteAppointment = {},
+                    getPatientName = { "Test Patient" }
                 )
             }
         }
@@ -240,7 +243,8 @@ object ScreenTestHelpers {
                     onBack = {},
                     onAddAppointment = { _, _ -> },
                     onUpdateAppointment = {},
-                    onDeleteAppointment = {}
+                    onDeleteAppointment = {},
+                    getPatientName = { "Test Patient" }
                 )
             }
         }

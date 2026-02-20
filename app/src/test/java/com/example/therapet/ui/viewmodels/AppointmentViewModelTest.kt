@@ -226,4 +226,100 @@ class AppointmentViewModelTest {
         assertTrue(updated.first().isBooked)
         assertEquals(patientId, updated.first().patientUserId)
     }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun cancelAppointment_setsIsBookedFalse_andClearsPatientId() = runTest {
+        val therapistId = "therapist1"
+        val patientId = "patient123"
+
+        val repository = FakeAppointmentRepository()
+        val sessionManager = FakeSessionManager(
+            initialUserId = patientId,
+            initialRole = UserRole.PATIENT
+        )
+        val watchlistRepository = FakeWatchlistRepository()
+
+        val viewModel = AppointmentViewModel(
+            repository = repository,
+            sessionManager = sessionManager,
+            watchlistRepository = watchlistRepository
+        )
+
+        // Create appointment
+        repository.createAppointment(
+            therapistUserId = therapistId,
+            dateTimeMillis = 1000L,
+            appointmentType = AppointmentType.SESSION
+        )
+
+        // Book it first
+        val appointment = repository
+            .getAppointmentsForTherapist(therapistId)
+            .first()
+            .first()
+
+        viewModel.bookAppointment(appointment)
+        advanceUntilIdle()
+
+        // Now cancel it
+        viewModel.cancelAppointment(appointment)
+        advanceUntilIdle()
+
+        val updated = repository
+            .getAppointmentsForTherapist(therapistId)
+            .first()
+            .first()
+
+        assertTrue(!updated.isBooked)
+        assertEquals(null, updated.patientUserId)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun cancelAppointment_removesFromPatientAppointments() = runTest {
+        val therapistId = "therapist1"
+        val patientId = "patient123"
+
+        val repository = FakeAppointmentRepository()
+        val sessionManager = FakeSessionManager(
+            initialUserId = patientId,
+            initialRole = UserRole.PATIENT
+        )
+        val watchlistRepository = FakeWatchlistRepository()
+
+        val viewModel = AppointmentViewModel(
+            repository = repository,
+            sessionManager = sessionManager,
+            watchlistRepository = watchlistRepository
+        )
+
+        repository.createAppointment(
+            therapistUserId = therapistId,
+            dateTimeMillis = 1000L,
+            appointmentType = AppointmentType.SESSION
+        )
+
+        val appointment = repository
+            .getAppointmentsForTherapist(therapistId)
+            .first()
+            .first()
+
+        viewModel.bookAppointment(appointment)
+        advanceUntilIdle()
+
+        // Confirm it exists for patient
+        assertEquals(1, viewModel.getAppointmentsForPatient().first().size)
+
+        // Cancel it
+        viewModel.cancelAppointment(appointment)
+        advanceUntilIdle()
+
+        val patientAppointments = viewModel.getAppointmentsForPatient().first()
+
+        assertTrue(patientAppointments.isEmpty())
+    }
+
+
+
 }
