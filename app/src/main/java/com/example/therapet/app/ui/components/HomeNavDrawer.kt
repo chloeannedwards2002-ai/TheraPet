@@ -95,7 +95,7 @@ fun HomeNavigationDrawer(
                     onClick = { onDestinationClicked("settings") }
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.height(20.dp))
 
                 CustomOutlinedButton(
                     modifier = Modifier
