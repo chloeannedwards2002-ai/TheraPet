@@ -23,7 +23,4 @@ class FakeWatchlistRepository : WatchlistRepositoryContract {
         return watchlistFlow
     }
 
-    fun emitWatchlist(list: List<AccountUIModel>) {
-        watchlistFlow.value = list
-    }
 }

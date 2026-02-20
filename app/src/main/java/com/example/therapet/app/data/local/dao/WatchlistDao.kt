@@ -22,4 +22,7 @@ interface WatchlistDao {
 
     @Query("SELECT patientUserId FROM watchlist_entries WHERE therapistUserId = :therapistId")
     fun getWatchlistPatientIds(therapistId: String): Flow<List<String>>
+
+    @Query("DELETE FROM watchlist_entries WHERE therapistUserId = :therapistId AND patientUserId = :patientId")
+    suspend fun deletePatientFromWatchlist(therapistId: String, patientId: String)
 }

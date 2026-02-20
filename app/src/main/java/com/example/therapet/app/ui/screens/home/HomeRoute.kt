@@ -2,9 +2,15 @@ package com.example.therapet.app.ui.screens.home
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -18,6 +24,7 @@ import com.example.therapet.app.ui.viewmodel.PetViewModel
 import com.example.therapet.app.ui.viewmodel.PetCareViewModel
 import com.example.therapet.app.ui.viewmodel.UserViewModel
 import com.example.therapet.app.ui.viewmodel.ViewModelFactory
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -60,11 +67,27 @@ fun HomeRoute(
         if (role == UserRole.THERAPIST) watchlistRepository.getWatchlistForTherapist(userId)
         else emptyFlow()
 
+    val coroutineScope = rememberCoroutineScope()
+
     val watchlist by watchlistFlow.collectAsState(initial = emptyList<AccountUIModel>())
 
+    var selectedAccount by remember { mutableStateOf<AccountUIModel?>(null) }
 
+    val snackbarHostState = remember { androidx.compose.material3.SnackbarHostState() }
+
+    fun removePatient(account: AccountUIModel) {
+        coroutineScope.launch {
+            watchlistRepository.removePatientFromWatchlist(userId, account.userid)
+            selectedAccount = null
+
+            snackbarHostState.showSnackbar(
+                message = "${account.fullName} removed from watchlist"
+            )
+        }
+    }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
             if (role == UserRole.PATIENT) {
                 PetCareBar(
@@ -83,8 +106,9 @@ fun HomeRoute(
         HomeScreen(
             role = role!!,
             user = user,
-            petColourIndex = viewModel<PetViewModel>(factory = ViewModelFactory.PetViewModelFactory(LocalContext.current, userId))
-                .selectedColourIndex.collectAsState().value,
+            petColourIndex = viewModel<PetViewModel>(
+                factory = ViewModelFactory.PetViewModelFactory(LocalContext.current, userId)
+            ).selectedColourIndex.collectAsState().value,
             modifier = Modifier.padding(innerPadding),
             onLogout = onLogout,
             onSettings = onSettings,
@@ -92,7 +116,10 @@ fun HomeRoute(
             onAppts = onAppts,
             onBookAppt = onBookAppt,
             onProfile = onProfile,
-            watchlist = watchlist
+            watchlist = watchlist,
+            selectedAccount = selectedAccount,
+            onAccountRemove = { removePatient(it)},
+            onAccountSelected = { selectedAccount = it }
         )
     }
 }

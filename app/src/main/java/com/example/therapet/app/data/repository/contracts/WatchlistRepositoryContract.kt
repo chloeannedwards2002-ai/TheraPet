@@ -19,4 +19,9 @@ interface WatchlistRepositoryContract {
     fun getWatchlistForTherapist(
         therapistId: String
     ): Flow<List<AccountUIModel>>
+
+    suspend fun removePatientFromWatchlist(
+        therapistId: String,
+        patientId: String
+    )
 }

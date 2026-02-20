@@ -38,4 +38,8 @@ class WatchlistRepository(
                     emit(accounts)
                 }
             }
+
+    override suspend fun removePatientFromWatchlist(therapistId: String, patientId: String) {
+        watchlistDao.deletePatientFromWatchlist(therapistId, patientId)
+    }
 }
