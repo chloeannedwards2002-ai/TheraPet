@@ -34,6 +34,7 @@ import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
 import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
 import com.example.therapet.app.ui.components.fields.input.CustomPasswordTextField
+import com.example.therapet.app.ui.components.fields.read_only.PrivacyPolicyDialog
 
 /**
  * @author: Chloe Edwards
@@ -69,6 +70,8 @@ fun RegisterScreen(
         password = password,
         confirmPassword = confirmPassword
     )
+
+    var showPrivacyPolicyDialog by remember { mutableStateOf(false) }
 
     Scaffold(
 
@@ -150,9 +153,19 @@ fun RegisterScreen(
 
             RegisterButton(
                 onClick = {
-                    onRegister(userId, firstName, surname, password)
+                    showPrivacyPolicyDialog = true
                 },
                 enabled = canRegister
+            )
+        }
+
+        if (showPrivacyPolicyDialog) {
+            PrivacyPolicyDialog(
+                onDismiss = { showPrivacyPolicyDialog = false },
+                onAccepted = {
+                    showPrivacyPolicyDialog = false
+                    onRegister(userId, firstName, surname, password)
+                }
             )
         }
     }

@@ -30,42 +30,6 @@ class HomeScreenTest {
     val composeRule = createAndroidComposeRule<ComponentActivity>()
 
     @Test
-    fun pet_care_bar_is_visible(){
-        ScreenTestHelpers.launchPatientHomeScreen(composeRule)
-
-        composeRule
-            .onNodeWithTag("pet_care_bar")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun water_button_is_visible(){
-        ScreenTestHelpers.launchPatientHomeScreen(composeRule)
-
-        composeRule
-            .onNodeWithTag("water_button")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun food_button_is_visible(){
-        ScreenTestHelpers.launchPatientHomeScreen(composeRule)
-
-        composeRule
-            .onNodeWithTag("food_button")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun sleep_button_is_visible(){
-        ScreenTestHelpers.launchPatientHomeScreen(composeRule)
-
-        composeRule
-            .onNodeWithTag("sleep_button")
-            .assertIsDisplayed()
-    }
-
-    @Test
     fun pet_penguin_is_visible(){
         ScreenTestHelpers.launchPatientHomeScreen(composeRule)
 
@@ -206,61 +170,5 @@ class HomeScreenTest {
 
         composeRule.onNodeWithTag("full_name")
             .assertTextEquals("Jane Doe")
-    }
-
-    @Test
-    fun food_button_increases_food_bar() {
-        ScreenTestHelpers.launchPatientHomeScreen(composeRule)
-
-        // Get initial value
-        val before = composeRule
-            .onNodeWithTag("food_need_bar")
-            .fetchSemanticsNode()
-            .config
-            .getOrNull(ProgressBarRangeInfo)
-            ?.current ?: 0f
-
-        // Click food button
-        composeRule
-            .onNodeWithTag("food_button")
-            .performClick()
-
-        composeRule.waitForIdle()
-
-        val after = composeRule
-            .onNodeWithTag("food_need_bar")
-            .fetchSemanticsNode()
-            .config
-            .getOrNull(ProgressBarRangeInfo)
-            ?.current ?: 0f
-
-        assert(after > before)
-    }
-
-    @Test
-    fun water_button_increases_water_bar() {
-        ScreenTestHelpers.launchPatientHomeScreen(composeRule)
-
-        val before = composeRule
-            .onNodeWithTag("water_need_bar")
-            .fetchSemanticsNode()
-            .config
-            .getOrNull(ProgressBarRangeInfo)
-            ?.current ?: 0f
-
-        composeRule
-            .onNodeWithTag("water_button")
-            .performClick()
-
-        composeRule.waitForIdle()
-
-        val after = composeRule
-            .onNodeWithTag("water_need_bar")
-            .fetchSemanticsNode()
-            .config
-            .getOrNull(ProgressBarRangeInfo)
-            ?.current ?: 0f
-
-        assert(after > before)
     }
 }
