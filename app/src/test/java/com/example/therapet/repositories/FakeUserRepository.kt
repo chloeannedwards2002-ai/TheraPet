@@ -35,7 +35,8 @@ class FakeUserRepository : UserRepositoryContract {
             surname = surname,
             passwordHash = hash.toHex(),
             salt = salt.toHex(),
-            role = role
+            role = role,
+            lastLoginMillis = System.currentTimeMillis()
         )
     }
 
@@ -44,7 +45,16 @@ class FakeUserRepository : UserRepositoryContract {
         val saltBytes = PasswordHasher.hexToBytes(user.salt)
         val hashBytes = PasswordHasher.hexToBytes(user.passwordHash)
 
-        return if (PasswordHasher.verify(password, saltBytes, hashBytes)) user else null
+        return if (PasswordHasher.verify(password, saltBytes, hashBytes)) {
+
+            val updatedUser = user.copy(
+                lastLoginMillis = System.currentTimeMillis()
+            )
+
+            users[userid] = updatedUser
+            updatedUser
+
+        } else null
     }
 
     override suspend fun userExists(userid: String): Boolean {
@@ -85,5 +95,13 @@ class FakeUserRepository : UserRepositoryContract {
 
     override suspend fun getTherapists(): List<UserEntity> {
         return users.values.filter { it.role == UserRole.THERAPIST }
+    }
+
+    override suspend fun updateLastLogin(userid: String) {
+        val user = users[userid] ?: return
+
+        users[userid] = user.copy(
+            lastLoginMillis = System.currentTimeMillis()
+        )
     }
 }

@@ -37,4 +37,6 @@ interface UserRepositoryContract {
 
     //Used for user detail cards
     suspend fun getUserAccountById(userid: String): Pair<AccountUIModel, UserRole>?
+
+    suspend fun updateLastLogin(userid: String)
 }

@@ -18,7 +18,7 @@ import com.example.therapet.app.data.entity.WatchlistEntity
         AppointmentEntity::class,
         WatchlistEntity::class
                ],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 

@@ -52,12 +52,14 @@ private val therapistsForPreview = listOf(
     AccountUIModel(
         userid = "12345678910defgt",
         fullName = "Bob Bobbington",
-        role = UserRole.PATIENT
+        role = UserRole.PATIENT,
+        lastLoginMillis = 1_800_000_000_000L
     ),
     AccountUIModel(
         userid = "Ghtu745S6gTdHw24",
         fullName = "Jane Doe",
-        role = UserRole.PATIENT
+        role = UserRole.PATIENT,
+        lastLoginMillis = 1_800_000_000_000L
     )
 )
 

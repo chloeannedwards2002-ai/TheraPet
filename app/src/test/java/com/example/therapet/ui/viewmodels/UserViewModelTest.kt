@@ -249,6 +249,31 @@ class UserViewModelTest {
         val updatedUser = repository.login(userId, "newPassword_123")
         assertNotNull(updatedUser)
     }
+
+    @Test
+    fun login_updates_lastLoginMillis() = runTest {
+        val userId = "123456789012"
+        val password = "Password_123"
+
+        viewModel.register(userId, "Jane", "Doe", password)
+        advanceUntilIdle()
+
+        val firstLoginTime = repository.getUserById(userId)?.lastLoginMillis
+        assertNotNull(firstLoginTime)
+
+        kotlinx.coroutines.delay(10)
+
+        // Login again
+        viewModel.login(userId, password)
+        advanceUntilIdle()
+
+        val secondLoginTime = repository.getUserById(userId)?.lastLoginMillis
+        assertNotNull(secondLoginTime)
+
+        assertTrue(secondLoginTime!! >= firstLoginTime!!)
+    }
+
+
 }
 
 

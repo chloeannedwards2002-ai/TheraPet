@@ -58,7 +58,7 @@ fun DetailedAccountCell(
                 .padding(vertical = 24.dp, horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Profile Image
+
             Box(
                 modifier = Modifier
                     .size(96.dp)
@@ -88,6 +88,37 @@ fun DetailedAccountCell(
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text(
+                text = if (account.lastLoginMillis != null)
+                    "Last active: ${formatLastActive(account.lastLoginMillis)}"
+                else
+                    "Never logged in",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+private fun formatLastActive(timestamp: Long) : String{
+    val now = System.currentTimeMillis()
+    val diff = now - timestamp
+
+    val minutes = diff / (1000 * 60)
+    val hours = diff / (1000 * 60 * 60)
+    val days = diff / (1000 * 60 * 60 * 24)
+
+    return when {
+        minutes < 1 -> "Just now"
+        minutes < 60 -> "$minutes minutes ago"
+        hours < 24 -> "$hours hours ago"
+        days < 7 -> "$days days ago"
+        else -> {
+            val date = java.text.SimpleDateFormat("dd MMM yyyy")
+            date.format(java.util.Date(timestamp))
         }
     }
 }
@@ -99,7 +130,8 @@ fun DetailedAccountCellPreview() {
     val sampleAccount = AccountUIModel(
         userid = "123123123123",
         fullName = "Jane Doe",
-        role = UserRole.PATIENT
+        role = UserRole.PATIENT,
+        lastLoginMillis = 1_800_000_000_000L
     )
 
     TheraPetTheme {
