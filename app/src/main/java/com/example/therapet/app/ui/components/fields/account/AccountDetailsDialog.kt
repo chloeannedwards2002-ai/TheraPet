@@ -20,7 +20,8 @@ import com.example.therapet.app.data.model.AccountUIModel
 @Composable
 fun AccountDetailsDialog(
     account: AccountUIModel?,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onRemoveClick: (() -> Unit)? = null
 ) {
     if (account == null) return
 
@@ -33,6 +34,7 @@ fun AccountDetailsDialog(
             DetailedAccountCell(
                 account = account,
                 modifier = Modifier.padding(16.dp),
+                onRemoveClick = onRemoveClick
             )
         }
     }

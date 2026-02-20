@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -41,6 +42,7 @@ fun DetailedAccountCell(
     account: AccountUIModel,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
+    onRemoveClick: (() -> Unit)? = null
 ) {
     Card(
         modifier = modifier
@@ -88,6 +90,19 @@ fun DetailedAccountCell(
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+
+            onRemoveClick?.let {
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(
+                    onClick = it,
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(
+                        text = "Remove from Watchlist",
+                        style = MaterialTheme.typography.labelMedium)
+                }
+            }
 
             Spacer(modifier = Modifier.weight(1f))
 

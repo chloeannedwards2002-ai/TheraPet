@@ -65,7 +65,10 @@ fun HomeScreen(
     onBookAppt: () -> Unit,
     onProfile: () -> Unit,
     user: UserEntity?,
-    watchlist: List<AccountUIModel> = emptyList()
+    watchlist: List<AccountUIModel> = emptyList(),
+    selectedAccount: AccountUIModel? = null,
+    onAccountRemove: (AccountUIModel) -> Unit = {},
+    onAccountSelected: (AccountUIModel) -> Unit = {}
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -147,9 +150,11 @@ fun HomeScreen(
                         }
                     }
 
+
                     AccountDetailsDialog(
                         account = selectedAccount,
-                        onDismiss = { selectedAccount = null }
+                        onDismiss = { selectedAccount = null },
+                        onRemoveClick = { selectedAccount?.let(onAccountRemove) }
                     )
                 }
             }
