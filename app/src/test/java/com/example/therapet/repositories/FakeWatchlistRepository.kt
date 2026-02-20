@@ -1,4 +1,5 @@
 import com.example.therapet.app.data.model.AccountUIModel
+import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.repository.contracts.WatchlistRepositoryContract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -6,15 +7,25 @@ import kotlinx.coroutines.flow.flowOf
 
 class FakeWatchlistRepository : WatchlistRepositoryContract {
 
-    val addedPairs = mutableListOf<Pair<String, String>>()
-
-    private val watchlistFlow = MutableStateFlow<List<AccountUIModel>>(emptyList())
+    private val watchlistFlow =
+        MutableStateFlow<List<AccountUIModel>>(emptyList())
 
     override suspend fun addPatientToWatchlist(
         therapistId: String,
         patientId: String
     ) {
-        addedPairs.add(therapistId to patientId)
+        val updated = watchlistFlow.value.toMutableList()
+
+        updated.add(
+            AccountUIModel(
+                userid = patientId,
+                fullName = "Test Patient",
+                role = UserRole.THERAPIST,
+                lastLoginMillis = null
+            )
+        )
+
+        watchlistFlow.value = updated
     }
 
     override fun getWatchlistForTherapist(
@@ -23,4 +34,11 @@ class FakeWatchlistRepository : WatchlistRepositoryContract {
         return watchlistFlow
     }
 
+    override suspend fun removePatientFromWatchlist(
+        therapistId: String,
+        patientId: String
+    ) {
+        watchlistFlow.value =
+            watchlistFlow.value.filterNot { it.userid == patientId }
+    }
 }
