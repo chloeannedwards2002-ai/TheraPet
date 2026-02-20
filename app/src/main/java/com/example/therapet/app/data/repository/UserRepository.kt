@@ -48,7 +48,8 @@ class UserRepository(
         val hashBytes = PasswordHasher.hexToBytes(user.passwordHash)
 
         return if (PasswordHasher.verify(password, saltBytes, hashBytes)) {
-            user
+            userDao.updateLastLogin(userid, System.currentTimeMillis())
+            user.copy(lastLoginMillis = System.currentTimeMillis())
         } else {
             null
         }
@@ -97,5 +98,12 @@ class UserRepository(
     override suspend fun getUserAccountById(userid: String): Pair<AccountUIModel, UserRole>? {
         val user = userDao.getUserById(userid) ?: return null
         return user.toAccountUIModel() to user.role
+    }
+
+    override suspend fun updateLastLogin(userid: String) {
+        userDao.updateLastLogin(
+            userid = userid,
+            timestamp = System.currentTimeMillis()
+        )
     }
 }

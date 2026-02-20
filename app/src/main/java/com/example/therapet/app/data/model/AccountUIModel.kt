@@ -13,6 +13,7 @@ data class AccountUIModel(
     val userid: String,
     val fullName: String,
     val role: UserRole,
+    val lastLoginMillis: Long?
 )
 
 fun UserEntity.toAccountUIModel(): AccountUIModel {
@@ -20,5 +21,6 @@ fun UserEntity.toAccountUIModel(): AccountUIModel {
         userid = userid,
         fullName = "$firstname $surname",
         role = role,
+        lastLoginMillis = this.lastLoginMillis
     )
 }

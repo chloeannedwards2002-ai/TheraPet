@@ -50,4 +50,14 @@ interface UserDao {
     WHERE role = :role
 """)
     suspend fun getUsersByRole(role: UserRole): List<UserEntity>
+
+    @Query("""
+    UPDATE users
+    SET lastLoginMillis = :timestamp
+    WHERE userid = :userid
+""")
+    suspend fun updateLastLogin(
+        userid: String,
+        timestamp: Long
+    )
 }

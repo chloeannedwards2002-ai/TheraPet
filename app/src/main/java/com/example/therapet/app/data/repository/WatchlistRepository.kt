@@ -30,7 +30,8 @@ class WatchlistRepository(
                             AccountUIModel(
                                 userid = it.userid,
                                 fullName = "${it.firstname} ${it.surname}",
-                                role = it.role
+                                role = it.role,
+                                lastLoginMillis = it.lastLoginMillis
                             )
                         }
                     }
