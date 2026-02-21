@@ -99,9 +99,13 @@ fun PatientAppointmentsScreen(
         },
 
         floatingActionButton = {
-            BookButton(
-                onClick = onBook,)
+            if (step == BookingStep.PATIENT_APPOINTMENTS) {
+                BookButton(
+                    onClick = onBook
+                )
+            }
         }
+
     ) { innerPadding ->
 
         MonthPicker(

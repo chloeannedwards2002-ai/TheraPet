@@ -18,7 +18,7 @@ import org.junit.Test
  * Appointments screen test
  */
 
-class AppointmentsScreenTest {
+class TherapistAppointmentsScreenTest {
 
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()

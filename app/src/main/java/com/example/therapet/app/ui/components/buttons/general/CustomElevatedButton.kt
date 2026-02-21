@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.therapet.app.data.util.sounds.SoundManager
 import com.example.therapet.app.ui.theme.Blue2
 import com.example.therapet.app.ui.theme.Grey
 import com.example.therapet.app.ui.theme.TheraPetTheme
@@ -22,11 +23,15 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 fun CustomElevatedButton(
     modifier: Modifier = Modifier,
     text: String,
-    onClick: () -> Unit)
+    onClick: () -> Unit
+
+)
 {
-    ElevatedButton(onClick = { onClick() },
+    ElevatedButton(
+        onClick = {
+            onClick()
+            SoundManager.playSound("click")},
         colors = ButtonDefaults.elevatedButtonColors(
-            // Overriding colours
             containerColor = Blue2,
             contentColor = Grey
         ), modifier = modifier

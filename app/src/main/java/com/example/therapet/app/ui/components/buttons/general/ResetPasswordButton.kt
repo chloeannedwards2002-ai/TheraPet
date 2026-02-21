@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.example.therapet.app.data.util.sounds.SoundManager
 
 @Composable
 fun ResetPasswordButton(
@@ -18,7 +19,8 @@ fun ResetPasswordButton(
     modifier: Modifier = Modifier
 ) {
     OutlinedButton(
-        onClick = onClick,
+        onClick = {onClick()
+            SoundManager.playSound("click")},
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)

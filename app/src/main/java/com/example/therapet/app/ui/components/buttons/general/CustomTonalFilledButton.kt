@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.therapet.app.data.util.sounds.SoundManager
 import com.example.therapet.app.ui.theme.TheraPetTheme
 
 /**
@@ -26,7 +27,8 @@ fun CustomTonalFilledButton(
     contentColor: Color = MaterialTheme.colorScheme.onPrimary
 ){
     FilledTonalButton(
-        onClick = onClick,
+        onClick = {onClick()
+            SoundManager.playSound("click")},
         modifier = modifier,
         colors = ButtonDefaults.filledTonalButtonColors(
             containerColor = containerColor,

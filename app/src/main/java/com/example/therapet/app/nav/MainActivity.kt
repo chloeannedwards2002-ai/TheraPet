@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
+import com.example.therapet.R
+import com.example.therapet.app.data.util.sounds.SoundManager
 import com.example.therapet.app.ui.theme.TheraPetTheme
 
 /**
@@ -17,6 +19,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Loading all sounds
+        SoundManager.loadSound(this, "click", R.raw.click)
 
         setContent {
             TheraPetTheme {
