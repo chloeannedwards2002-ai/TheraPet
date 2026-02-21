@@ -17,17 +17,25 @@ import com.example.therapet.app.ui.viewmodel.ViewModelFactory
  * @date: 15/02/2026
  *
  * Pet settings screen route
+ *
+ * Observes current sessio to get user ID
  */
 
 @Composable
 fun PetSettingsRoute(
-    sessionManager: SessionManager,
-    petCareViewModel: PetCareViewModel,
-    onBack: () -> Unit
+    sessionManager: SessionManager, // Session manager
+    petCareViewModel: PetCareViewModel, // Managing the pet's care settings
+    onBack: () -> Unit // Callback when user clicks back
 ) {
+    /**
+     * Observe current session
+     */
     val sessionState by sessionManager.session.collectAsState()
     val currentSession = sessionState ?: return
 
+    /**
+     * Observe whether hibernation mode is enabled
+     */
     val isHibernating by petCareViewModel.isHibernating.collectAsState()
 
     Scaffold { innerPadding ->

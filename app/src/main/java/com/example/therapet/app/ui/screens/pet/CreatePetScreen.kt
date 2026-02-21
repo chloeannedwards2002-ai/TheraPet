@@ -42,9 +42,9 @@ import com.example.therapet.app.ui.theme.PetColours
 
 @Composable
 fun CreatePetScreen(
-    selectedColourIndex: Int,
-    onColourSelected: (Int) -> Unit,
-    onCreatePet: () -> Unit,
+    selectedColourIndex: Int, // Index of currently selected colour
+    onColourSelected: (Int) -> Unit, // Callback invoked when a new colour is selected
+    onCreatePet: () -> Unit, // Callback invoked when user confirms pet creation
     modifier: Modifier = Modifier
 ) {
     var petName by remember { mutableStateOf("") }
@@ -136,6 +136,10 @@ fun CreatePetScreen(
         }
     }
 }
+
+/**
+ * Input fields and buttons for create pet screen
+ */
 
 // Top bar
 @Composable

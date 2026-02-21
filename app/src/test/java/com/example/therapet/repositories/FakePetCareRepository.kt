@@ -6,6 +6,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+/**
+ * @author: Chloe Edwards
+ * @date: 02/02/2026
+ *
+ * A fake pet care repository for tests
+ */
 
 class FakePetCareRepository : PetCareRepositoryContract {
 

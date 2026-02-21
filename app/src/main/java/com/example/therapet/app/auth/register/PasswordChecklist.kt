@@ -13,6 +13,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.height
 
+/**
+ * This composable holds the password checklist that is used in the registration screen
+ * Passwords are actively checked against this checklist
+ */
+
 @Composable
 fun PasswordChecklist(
     requirements: List<PasswordRequirement>,

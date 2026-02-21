@@ -10,6 +10,13 @@ import com.example.therapet.app.data.model.UserRole
  */
 
 data class UserSession(
+    /**
+     * The unique ID of the logged-in user
+     */
     val userid: String,
+
+    /**
+     * The role of the logged-in user
+     */
     val role: UserRole
 )

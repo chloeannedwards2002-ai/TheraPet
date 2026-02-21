@@ -21,9 +21,12 @@ import org.junit.runner.RunWith
  * @author: Chloe Edwards
  * @date: 08/01/2026
  *
- * User Dao Tests
- * 1. Insert user details then check that user exists in the database
- * 2. Login and ensure the details match those in the database
+ * UserDaoTest
+ *
+ * These tests verify that the UserDao functions correctly.
+ *
+ * An in-memory Room database is used to isolate these tests from real data
+ * Test users are inserted to satisfy the foreign key constraints
  */
 
 @RunWith(AndroidJUnit4::class)
@@ -36,7 +39,11 @@ class UserDaoTest {
     val hash = PasswordHasher.hash(password, salt)
 
 
-    //Setting up the in-memory room database
+    /**
+     * Setup runs before each test:
+     * Creates a new in-memory Room database
+     * Gets the UserDao from the database
+     */
     @Before
     fun setup(){
         database = Room.inMemoryDatabaseBuilder(
@@ -47,11 +54,18 @@ class UserDaoTest {
         dao = database.userDao()
     }
 
+    /**
+     * Teardown runs after each test
+     * This closes the database to free the resources
+     */
     @After
     fun shutdown(){
         database.close()
     }
 
+    /**
+     * Inserting a user and verifying its existance in the database
+     */
     @Test
     fun insert_details_check_user_exists() = runBlocking {
         dao.insertUser(
@@ -67,6 +81,9 @@ class UserDaoTest {
         assertTrue(dao.userExists("MNU82910CWLP"))
     }
 
+    /**
+     * Logging in and verifying the password hash matches the stored hash
+     */
     @Test
     fun login_returns_correct_user_when_details_match() = runBlocking {
         val password = "_Password_123"

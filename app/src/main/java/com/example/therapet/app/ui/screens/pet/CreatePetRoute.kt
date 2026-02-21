@@ -23,8 +23,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun CreatePetRoute(
-    sessionManager: SessionManager,
-    onCreatePet: () -> Unit
+    sessionManager: SessionManager, // Session manager
+    onCreatePet: () -> Unit // Callback involved when pet creation is confirmed
 ) {
     val sessionState by sessionManager.session.collectAsState()
     val currentSession = sessionState ?: return
@@ -36,10 +36,16 @@ fun CreatePetRoute(
         )
     )
 
+    /**
+     * Observe selected oet colour
+     */
     val selectedColourIndex by petViewModel.selectedColourIndex.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
 
+    /**
+     * Show create pet screen, passing in colour selection
+     */
     Scaffold { innerPadding ->
         CreatePetScreen(
             selectedColourIndex = selectedColourIndex,

@@ -9,6 +9,12 @@ import com.example.therapet.app.data.repository.contracts.PetPreferencesReposito
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+
+/**
+ * Implementation of PetPreferencesRepositoryContract
+ *
+ * Manages persistent pet preferences by using DataStore
+ */
 class PetPreferencesRepository private constructor(
     private val dataStore: DataStore<Preferences>
 ) : PetPreferencesRepositoryContract {
@@ -27,8 +33,16 @@ class PetPreferencesRepository private constructor(
         }
     }
 
+    /**
+     * Current selected pet colour index
+     */
     override val petColourIndex: Flow<Int> = dataStore.data.map { prefs -> prefs[PetPreferencesKeys.PET_COLOUR_INDEX] ?: 0 }
 
+    /**
+     * Saves new pet colour index to the DataStore
+     *
+     * @param index the selected colour index
+     */
     override suspend fun savePetColour(index: Int) {
         dataStore.edit { prefs ->
             prefs[PetPreferencesKeys.PET_COLOUR_INDEX] = index

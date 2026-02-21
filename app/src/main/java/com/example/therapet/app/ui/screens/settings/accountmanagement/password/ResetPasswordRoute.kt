@@ -19,7 +19,9 @@ import com.example.therapet.app.ui.viewmodel.UserViewModel
  * @author: Chloe Edwards
  * @date: 21/01/2026
  *
- * Reset password Route UI
+ * Reset password Route
+ *
+ * Handles logic for resetting a users password
  */
 
 @Composable
@@ -33,6 +35,9 @@ fun ResetPasswordRoute(
 
     val result by viewModel.resetPasswordResult.collectAsState()
 
+    /**
+     * Load reset password UI
+     */
     ResetPasswordScreen(
         onBack = onBack,
         errorMessage = error,
@@ -51,7 +56,9 @@ fun ResetPasswordRoute(
             }
         }
     )
-
+    /**
+     * Success dialog
+     */
     if (showSuccessDialog) {
         AlertDialog(
             onDismissRequest = {},
@@ -70,6 +77,9 @@ fun ResetPasswordRoute(
         )
     }
 
+    /**
+     * Observe result from viewmodel
+     */
     LaunchedEffect(result) {
         when (result) {
             true -> {

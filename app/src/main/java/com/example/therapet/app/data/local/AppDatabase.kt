@@ -14,6 +14,11 @@ import com.example.therapet.app.data.entity.WatchlistEntity
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 
+/**
+ * The main room database for the TheraPet application
+ *
+ * Defines all the entities and provides access to the DAO interfaces
+ */
 @Database(
     entities = [
         UserEntity::class,
@@ -27,6 +32,9 @@ import net.sqlcipher.database.SupportFactory
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
+    /**
+     * Provides access to the DAOs
+     */
     abstract fun userDao(): UserDao
     abstract fun appointmentDao(): AppointmentDao
     abstract fun watchlistDao(): WatchlistDao
@@ -35,6 +43,9 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
+        /**
+         * Returns the database instance and creates it if it doesnt already exist
+         */
         fun getDatabase(context: Context): AppDatabase =
             INSTANCE ?: synchronized(this) {
 
@@ -50,6 +61,9 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "therapet_db"
                 )
+                    /**
+                     * Enables encryption
+                     */
                     .openHelperFactory(factory)
                     .fallbackToDestructiveMigration()
                     .build()

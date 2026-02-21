@@ -14,24 +14,50 @@ import com.example.therapet.app.data.model.UserRole
  */
 
 @Dao
-
 interface UserDao {
 
+    /**
+     * Inserts a new user record in the database
+     *
+     * @param user The user to be stored
+     */
     @Insert
     suspend fun insertUser(user: UserEntity)
 
-    // Check user exists query
+    /**
+     * Checks whether a user with the given ID is in the database
+     *
+     * @param userid The unique ID of the user
+     * @return True if the user exists, false otherwise
+     */
     @Query("SELECT EXISTS(SELECT 1 FROM users WHERE userid = :userid)")
     suspend fun userExists(userid: String): Boolean
 
+    /**
+     * Deletes a user from the database by the unique ID
+     *
+     * @param userid The unique ID of the user to delete
+     * @return The number of rows affected
+     */
     @Query("DELETE FROM users WHERE userid = :userid")
     suspend fun deleteUserById(userid: String): Int
 
-    //get user by id
+    /**
+     * Retrieves a user from the database by the unique ID
+     *
+     * @param userid The unique ID of the user
+     * @return The matching entity or null if not found
+     */
     @Query("SELECT * FROM users WHERE userid = :userid LIMIT 1")
     suspend fun getUserById(userid: String): UserEntity?
 
-    //update password
+    /**
+     *Updates a user's password creds
+     *
+     * @param userid The unique ID of the user
+     * @param newPasswordHash generated password hash
+     * @param  newSalt the new generated salt used for hashing
+     */
     @Query("""
     UPDATE users 
     SET passwordHash = :newPasswordHash,
@@ -44,13 +70,24 @@ interface UserDao {
         newSalt: String
     )
 
-    // get user by role
+    /**
+     * Retrieves all users with a specific role
+     *
+     * @param role   the users role to filter by
+     * @return A list of user objects matching the specific role
+     */
     @Query("""
     SELECT * FROM users
     WHERE role = :role
 """)
     suspend fun getUsersByRole(role: UserRole): List<UserEntity>
 
+    /**
+     * Updates the last login timestamp for a user
+     *
+     * @param userid The unique ID of the user
+     * @param timestamp the login time in milliseconds
+     */
     @Query("""
     UPDATE users
     SET lastLoginMillis = :timestamp

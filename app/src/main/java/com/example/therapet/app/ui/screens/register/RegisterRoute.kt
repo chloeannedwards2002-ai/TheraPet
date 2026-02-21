@@ -35,6 +35,9 @@ fun RegisterRoute(
     viewModel: UserViewModel
     )
  {
+     /**
+      * Observe logged in role, snacklbar host state and observe the result of reg attempts
+      */
     val loggedInRole by viewModel.loggedInRole.collectAsState(initial = null)
     val snackbarHostState = remember { SnackbarHostState() }
     val registerResult by viewModel.registerResult.collectAsState(initial = null)
@@ -56,6 +59,9 @@ fun RegisterRoute(
         )
     }
 
+     /**
+      * React to registration results
+      */
     LaunchedEffect(registerResult) {
         if (registerResult == true && loggedInRole != null) {
             onRegisterSuccess(loggedInRole!!)

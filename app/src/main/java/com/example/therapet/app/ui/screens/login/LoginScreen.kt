@@ -37,14 +37,16 @@ import com.example.therapet.app.ui.components.fields.input.CustomPasswordTextFie
  * @date: 24/12/2025
  *
  * Login screen UI
+ *
+ * Handles navigation by enabling login button only when all inputs are valid
  */
 
 @Composable
 fun LoginScreen(
-    onLogin: (userId: String, password: String) -> Unit,
-    onRegisterNav: () -> Unit,
-    onBack: () -> Unit,
-    errorMessage: String?,
+    onLogin: (userId: String, password: String) -> Unit, // Callback invoked when login button is clicked
+    onRegisterNav: () -> Unit, // Callback to navigate to reg screen
+    onBack: () -> Unit, // Callback for back navigation
+    errorMessage: String?, // Optional error message to display
     modifier: Modifier = Modifier
 ) {
     var userId by remember { mutableStateOf("") }
@@ -60,6 +62,9 @@ fun LoginScreen(
 
     ) { innerPadding ->
 
+        /**
+         * Top bar with back navigation
+         */
         BasicTopBar(
             text = "",
             onBackClick = onBack,
@@ -94,6 +99,9 @@ fun LoginScreen(
                 value = password,
                 onValueChange = { password = it }
             )
+            /**
+             * Show error message if login failed
+             */
             if (errorMessage != null) {
                 Text(
                     text = errorMessage,
@@ -105,11 +113,16 @@ fun LoginScreen(
                         .testTag("login_error_text")
                 )
             }
-
+            /**
+             * Remember password checkbox
+             */
             RememberPasswordCheckBox(
                 modifier = Modifier.align(Alignment.Start)
             )
 
+            /**
+             * Login button
+             */
             LoginButton(
                 onClick = {
                     onLogin(userId, password)
@@ -130,15 +143,17 @@ fun LoginScreen(
                 onClick = onRegisterNav
             )
 
-            // TODO: Uncomment when forgot password screen is created
+            /**
+             * Navigate to forgot password - out of scope
+             */
             ForgotPasswordButton(
                 onClick = { /*navController.navigate("forgot_password")*/ })
         }
     }
 }
 
-/*
-    All input fields and buttons for this screen
+/**
+ * Input fields and buttons for login screen
  */
 
 // User ID input

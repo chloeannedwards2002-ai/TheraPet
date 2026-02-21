@@ -16,13 +16,15 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
  */
 
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Loading all sounds
         SoundManager.loadSound(this, "click", R.raw.click)
 
+        /**
+         * Set the compose content with the app theme and nav graph
+         */
         setContent {
             TheraPetTheme {
                 val navController = rememberNavController()

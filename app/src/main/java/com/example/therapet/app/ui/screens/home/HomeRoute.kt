@@ -33,25 +33,34 @@ import kotlinx.coroutines.flow.emptyFlow
  * @date: 13/01/2026
  *
  * Retrieves the ViewModel and connects it to HomeScreen
+ *
+ * Handles user role detection, session and user state, watchlist for therapists
+ * PetCareBar for patients and removing patients from therapist watchlists
  */
 
 @Composable
 fun HomeRoute(
-    onLogout: () -> Unit,
-    onSettings: () -> Unit,
-    onNotifs: () -> Unit,
-    onAppts: () -> Unit,
-    onBookAppt: () -> Unit,
-    onProfile: () -> Unit,
-    userViewModel: UserViewModel,
-    sessionManager: SessionManager,
-    petCareViewModel: PetCareViewModel,
-    watchlistRepository: WatchlistRepository
+    onLogout: () -> Unit, // Callback when user logs out
+    onSettings: () -> Unit, // Callback when user navigates to settings
+    onNotifs: () -> Unit, // Callback when user navigates to notifications
+    onAppts: () -> Unit, // Callback when user navigates to appointments
+    onBookAppt: () -> Unit, // Callback when user navigations to book appointments
+    onProfile: () -> Unit, // Callback when user navigates to profile
+    userViewModel: UserViewModel, // User view model instance
+    sessionManager: SessionManager, // session manager isntance
+    petCareViewModel: PetCareViewModel, // Pet care view model instance
+    watchlistRepository: WatchlistRepository // Watch list repo instance
 ) {
+    /**
+     * Collect user role and session state
+     */
     val role by userViewModel.loggedInRole.collectAsState(initial = null)
     val session by sessionManager.session.collectAsState()
     val user by userViewModel.currentUser.collectAsState()
 
+    /**
+     * Return early if role or session is null
+     */
     if (role == null || session == null) return
     val userId = session!!.userid
 
@@ -75,6 +84,9 @@ fun HomeRoute(
 
     val snackbarHostState = remember { androidx.compose.material3.SnackbarHostState() }
 
+    /**
+     * Removes a patient from the therapist's watchlist and shows snackbar confirming removal
+     */
     fun removePatient(account: AccountUIModel) {
         coroutineScope.launch {
             watchlistRepository.removePatientFromWatchlist(userId, account.userid)
@@ -86,6 +98,9 @@ fun HomeRoute(
         }
     }
 
+    /**
+     * Show pet care bar for patients
+     */
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
@@ -103,6 +118,9 @@ fun HomeRoute(
             }
         }
     ) { innerPadding ->
+        /**
+         * Pass all relevant state and callbacks to HomeScreen UI
+         */
         HomeScreen(
             role = role!!,
             user = user,

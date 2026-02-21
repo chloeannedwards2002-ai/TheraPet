@@ -41,6 +41,8 @@ import com.example.therapet.app.ui.components.fields.read_only.PrivacyPolicyDial
  * @date: 24/12/2025
  *
  * Registration screen UI
+ * 
+ * Handles input for User Id, first and surname and password
  */
 
 @Composable
@@ -171,8 +173,8 @@ fun RegisterScreen(
     }
 }
 
-/*
-    Input field composables
+/**
+ * Input field composables
  */
 
 // User ID input text field

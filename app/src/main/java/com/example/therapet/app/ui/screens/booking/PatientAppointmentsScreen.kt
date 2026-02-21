@@ -46,36 +46,26 @@ import java.time.YearMonth
  * updated: 08/02/2026
  *
  * Choose therapist & Appointment booking screen UI
+ *
+ * Handles three steps:
+ * 1. Viewing existing appointments (PATIENT_APPOINTMENTS)
+ * 2. Choosing a therapist to book with (CHOOSE_THERAPIST)
+ * 3. Booking an appointment with selected therapist (BOOK_APPOINTMENT)
  */
-
-private val therapistsForPreview = listOf(
-    AccountUIModel(
-        userid = "12345678910defgt",
-        fullName = "Bob Bobbington",
-        role = UserRole.PATIENT,
-        lastLoginMillis = 1_800_000_000_000L
-    ),
-    AccountUIModel(
-        userid = "Ghtu745S6gTdHw24",
-        fullName = "Jane Doe",
-        role = UserRole.PATIENT,
-        lastLoginMillis = 1_800_000_000_000L
-    )
-)
 
 @Composable
 fun PatientAppointmentsScreen(
-    step: BookingStep,
-    therapists: List<AccountUIModel>,
+    step: BookingStep, // Current booking flow step
+    therapists: List<AccountUIModel>, // List of therapists
     selectedTherapistId: String?,
-    selectedYearMonth: YearMonth?,
-    appointments: List<AppointmentEntity>,
-    patientAppointments: List<AppointmentEntity> = emptyList(),
-    onTherapistSelected: (AccountUIModel) -> Unit,
-    onMonthSelected: (YearMonth) -> Unit,
-    onAppointmentClick: (AppointmentEntity) -> Unit,
-    onBack: () -> Unit,
-    onBook: () -> Unit
+    selectedYearMonth: YearMonth?, // Selected month and year
+    appointments: List<AppointmentEntity>, // Appointments list
+    patientAppointments: List<AppointmentEntity> = emptyList(), // Booked appointments
+    onTherapistSelected: (AccountUIModel) -> Unit, // Callback when therapist is choosing
+    onMonthSelected: (YearMonth) -> Unit, // Callback when month is selected
+    onAppointmentClick: (AppointmentEntity) -> Unit, // Callback when appointment is selected
+    onBack: () -> Unit, // Navigate back
+    onBook: () -> Unit // Callback to start booking flow
 ) {
     var showMonthPicker by remember { mutableStateOf(false) }
     var selectedMonth by remember { mutableStateOf(YearMonth.now()) }
@@ -87,6 +77,9 @@ fun PatientAppointmentsScreen(
     Scaffold(
         topBar = {
             BasicTopBar(
+                /**
+                 * Top bar dynamically shows title based on current step
+                 */
                 text = when (step) {
                     BookingStep.PATIENT_APPOINTMENTS -> "Appointments"
                     BookingStep.CHOOSE_THERAPIST ->
@@ -98,6 +91,9 @@ fun PatientAppointmentsScreen(
             )
         },
 
+        /**
+         * Floating action button triggers booking step on appts step
+         */
         floatingActionButton = {
             if (step == BookingStep.PATIENT_APPOINTMENTS) {
                 BookButton(
@@ -107,7 +103,9 @@ fun PatientAppointmentsScreen(
         }
 
     ) { innerPadding ->
-
+        /**
+         * Month picker for filtering appointments by month and year
+         */
         MonthPicker(
             visible = showMonthPicker,
             currentMonth = selectedYearMonth?.monthValue?.minus(1)
@@ -121,6 +119,9 @@ fun PatientAppointmentsScreen(
             cancelClicked = { showMonthPicker = false }
         )
 
+        /**
+         * Render different UI depending on the current step
+         */
         when (step) {
             BookingStep.PATIENT_APPOINTMENTS -> {
                 LazyColumn(
@@ -138,6 +139,9 @@ fun PatientAppointmentsScreen(
                     }
                 }
 
+                /**
+                 * Edit or cancel a selected appointment
+                 */
                 selectedAppointment?.let { appointment ->
                     EditAppointmentDialog(
                         role = UserRole.PATIENT,
@@ -151,6 +155,9 @@ fun PatientAppointmentsScreen(
                 }
             }
 
+            /**
+             * Show available therapists
+             */
             BookingStep.CHOOSE_THERAPIST -> {
                 LazyColumn(
                     modifier = Modifier
@@ -168,6 +175,9 @@ fun PatientAppointmentsScreen(
                 }
             }
 
+            /**
+             * Booking step
+             */
             BookingStep.BOOK_APPOINTMENT -> {
                 Column(
                     modifier = Modifier
@@ -198,6 +208,9 @@ fun PatientAppointmentsScreen(
                             )
                         }
                     } else {
+                        /**
+                         * List available appointments
+                         */
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),
                             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -225,6 +238,9 @@ fun PatientAppointmentsScreen(
     }
 }
 
+/**
+ * Simple composable for book appointment floating action button
+ */
 @Composable
 fun BookButton(modifier: Modifier = Modifier, onClick: () -> Unit){
     CustomFilledButton(

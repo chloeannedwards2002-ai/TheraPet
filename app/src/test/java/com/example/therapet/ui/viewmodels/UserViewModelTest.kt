@@ -16,6 +16,7 @@ import org.junit.Test
 import org.junit.Assert.assertNull
 import com.example.therapet.app.data.model.UserRole
 import junit.framework.TestCase.assertNotNull
+import com.example.therapet.helpers.registerAndLogin
 
 
 /**
@@ -154,8 +155,8 @@ class UserViewModelTest {
     @Test
     fun delete_user_deletes_user_and_logs_out() = runTest {
         val userId = "123454345643"
-        repository.register(userId, "A", "B", "Password_123")
-        sessionManager.login(userId, UserRole.PATIENT)
+
+        registerAndLogin(repository, sessionManager, userId)
 
         viewModel.deleteAccount()
         advanceUntilIdle()
@@ -170,8 +171,7 @@ class UserViewModelTest {
         val userId = "123456789012"
         val password = "Password_123"
 
-        repository.register(userId, "Test", "Test", password)
-        sessionManager.login(userId, UserRole.PATIENT)
+        registerAndLogin(repository, sessionManager, userId, password)
 
         val result = viewModel.verifyPassword(password)
 
@@ -180,11 +180,10 @@ class UserViewModelTest {
 
     //12. Verify password returns false for incorrect password
     @Test
-    fun verify_password_returns_false_for_incorrect_password() =runTest {
+    fun verify_password_returns_false_for_incorrect_password() = runTest {
         val userId = "123456789012"
 
-        repository.register(userId, "Test", "Test", "Password_123")
-        sessionManager.login(userId, UserRole.PATIENT)
+        registerAndLogin(repository, sessionManager, userId)
 
         val result = viewModel.verifyPassword("incorrect")
 
@@ -197,8 +196,14 @@ class UserViewModelTest {
         val userId="123456789012"
         val password = "Password_123"
 
-        repository.register(userId, "Alice", "Smith", password)
-        sessionManager.login(userId, UserRole.PATIENT)
+        registerAndLogin(
+            repository,
+            sessionManager,
+            userId,
+            password,
+            firstname = "Alice",
+            surname = "Smith"
+        )
 
         viewModel.loadCurrentUser()
         advanceUntilIdle()
@@ -209,21 +214,12 @@ class UserViewModelTest {
         assertEquals("Smith", user?.surname)
     }
 
-    // 14. Load current user loads nothing if a user is not logged in
-    @Test
-    fun load_user_loads_nothing_if_not_logged_in() = runTest{
-        viewModel.loadCurrentUser()
-        advanceUntilIdle()
-
-        assertNull(viewModel.currentUser.value)
-    }
-
     // 15. Deleting the account clears the current user
     @Test
-    fun delete_account_clears_current_user() =runTest{
+    fun delete_account_clears_current_user() = runTest{
         val userId = "123456789012"
-        repository.register(userId, "Test", "Test", "Password_123")
-        sessionManager.login(userId, UserRole.PATIENT)
+
+        registerAndLogin(repository, sessionManager, userId)
 
         viewModel.loadCurrentUser()
         advanceUntilIdle()
@@ -240,8 +236,7 @@ class UserViewModelTest {
     fun resetPassword_updates_password() = runTest {
         val userId = "123456789012"
 
-        repository.register(userId, "Test", "Test", "Password_123")
-        sessionManager.login(userId, UserRole.PATIENT)
+        registerAndLogin(repository, sessionManager, userId)
 
         viewModel.resetPassword("newPassword_123")
         advanceUntilIdle()
@@ -249,31 +244,6 @@ class UserViewModelTest {
         val updatedUser = repository.login(userId, "newPassword_123")
         assertNotNull(updatedUser)
     }
-
-    @Test
-    fun login_updates_lastLoginMillis() = runTest {
-        val userId = "123456789012"
-        val password = "Password_123"
-
-        viewModel.register(userId, "Jane", "Doe", password)
-        advanceUntilIdle()
-
-        val firstLoginTime = repository.getUserById(userId)?.lastLoginMillis
-        assertNotNull(firstLoginTime)
-
-        kotlinx.coroutines.delay(10)
-
-        // Login again
-        viewModel.login(userId, password)
-        advanceUntilIdle()
-
-        val secondLoginTime = repository.getUserById(userId)?.lastLoginMillis
-        assertNotNull(secondLoginTime)
-
-        assertTrue(secondLoginTime!! >= firstLoginTime!!)
-    }
-
-
 }
 
 

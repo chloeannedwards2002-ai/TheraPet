@@ -9,11 +9,23 @@ import com.example.therapet.app.data.util.crypto.PasswordHasher
 import com.example.therapet.app.data.util.crypto.PasswordHasher.toHex
 import com.example.therapet.app.data.model.AccountUIModel
 
+/**
+ * Implementation of UserRepositoryContract
+ *
+ * Handles user registration, login, passwor dupdates etc
+ */
+
 class UserRepository(
     private val userDao: UserDao
     ): UserRepositoryContract
 {
-    //Register
+    /**
+     * Registers a new user
+     *
+     * User role is based on the ID length
+     * Generates a salt
+     * Hashes the password
+     */
     override suspend fun register(
         userid: String,
         firstname: String,
@@ -36,7 +48,12 @@ class UserRepository(
         )
     }
 
-    //Login
+    /**
+     * Logs in the user by verifying the password
+     * Updates the last login timestamp
+     *
+     * @return UserEntity if login succeeds, null if creds are invalid
+     */
     override suspend fun login(
         userid: String,
         password: String
@@ -55,17 +72,26 @@ class UserRepository(
         }
     }
 
-    // check user exists
+    /**
+     * Checks if the user with given ID exists
+     */
     override suspend fun userExists(userid: String): Boolean {
         return userDao.userExists(userid)
     }
 
-    //Delete user
+    /**
+     * Deletes a user from the database
+     */
     override suspend fun deleteUser(userid: String) {
         userDao.deleteUserById(userid)
     }
 
-    // determining the users role - invalid user ID is already caught in UI but this is ane xtra defense
+    /**
+     * Determines a user's role based on the ID format
+     *
+     * 12 characters - patients
+     * 16 characters - therapists
+     */
     private fun determineUserRole(userid: String): UserRole {
         return when(userid.length){
             12 -> UserRole.PATIENT
@@ -74,10 +100,18 @@ class UserRepository(
         }
     }
 
+    /**
+     * Retrieves a user by their ID
+     */
     override suspend fun getUserById(userid: String): UserEntity? {
         return userDao.getUserById(userid)
     }
 
+    /**
+     * Updates a user's password
+     *
+     * Generates a new salt and hash before saving
+     */
     override suspend fun updatePassword(userid: String, newPassword: String): Boolean {
         val salt = PasswordHasher.generateSalt()
         val hash = PasswordHasher.hash(newPassword, salt)
@@ -90,16 +124,24 @@ class UserRepository(
         return true
     }
 
+    /**
+     * Retrieves all users with the therapist role
+     */
     override suspend fun getTherapists(): List<UserEntity> {
         return userDao.getUsersByRole(UserRole.THERAPIST)
     }
 
-
+    /**
+     * Retrieves account details formatted for UI, along with user's role
+     */
     override suspend fun getUserAccountById(userid: String): Pair<AccountUIModel, UserRole>? {
         val user = userDao.getUserById(userid) ?: return null
         return user.toAccountUIModel() to user.role
     }
 
+    /**
+     * Updates the last login timestamp for the user
+     */
     override suspend fun updateLastLogin(userid: String) {
         userDao.updateLastLogin(
             userid = userid,

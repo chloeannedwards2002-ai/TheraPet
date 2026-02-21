@@ -62,13 +62,13 @@ class PetViewModelTest {
     //3. Selecting a new colour changes the index
     @Test
     fun selecting_new_colour_changes_index() = runTest {
-            viewModel.selectColour(1)
-            advanceUntilIdle()
+        viewModel.selectColour(1)
+        advanceUntilIdle()
 
-            viewModel.selectColour(3)
-            advanceUntilIdle()
+        viewModel.selectColour(3)
+        advanceUntilIdle()
 
-            assertEquals(3, viewModel.selectedColourIndex.value)
+        assertEquals(3, viewModel.selectedColourIndex.value)
     }
 
 

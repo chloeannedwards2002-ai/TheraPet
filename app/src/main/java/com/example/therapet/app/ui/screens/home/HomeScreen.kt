@@ -50,30 +50,37 @@ import com.example.therapet.app.ui.theme.PetColours
  * Home screen UI
  *
  * Repeated if statements about PATIENT role are no optimal but will work for now
+ *
+ * Displays different content depending on users role
+ * PATIENT: Shows petpenguin with interactive petcarebar
+ * THERAPIST: Shows watchlist of patients
  */
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     role: UserRole,
-    petColourIndex: Int,
+    petColourIndex: Int, // Pet colour index
     modifier: Modifier = Modifier,
-    onLogout: () -> Unit,
-    onSettings: () -> Unit,
-    onNotifs: () -> Unit,
-    onAppts: () -> Unit,
-    onBookAppt: () -> Unit,
-    onProfile: () -> Unit,
-    user: UserEntity?,
-    watchlist: List<AccountUIModel> = emptyList(),
+    onLogout: () -> Unit, // Callback when user logs out
+    onSettings: () -> Unit, // Callback when user navigates to settings
+    onNotifs: () -> Unit, // Callback when user navigates to notifications
+    onAppts: () -> Unit, // Callback when user navigates to appointments
+    onBookAppt: () -> Unit, // Callback when user navigates to book appointments
+    onProfile: () -> Unit, // Callback when user navigates to profile
+    user: UserEntity?, // Optional user for logged-in user
+    watchlist: List<AccountUIModel> = emptyList(), // List of accounts for watchlist
     selectedAccount: AccountUIModel? = null,
-    onAccountRemove: (AccountUIModel) -> Unit = {},
+    onAccountRemove: (AccountUIModel) -> Unit = {}, // Callback when removing a selected account
     onAccountSelected: (AccountUIModel) -> Unit = {}
 ) {
+    /**
+     * Drawer state for nav menu
+     */
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    //Not ideal to ahve state in the screen but easiest way
+    //Not ideal to have state in the screen but easiest way
     var selectedAccount by remember { mutableStateOf<AccountUIModel?>(null) }
 
     HomeNavigationDrawer(
@@ -113,6 +120,9 @@ fun HomeScreen(
                     .padding(innerPadding)
             ) {
 
+                /**
+                 * Patient UI
+                 */
                 if (role == UserRole.PATIENT) {
                     Column(
                         modifier = Modifier.fillMaxSize(),
@@ -131,6 +141,9 @@ fun HomeScreen(
                     }
                 }
 
+                /**
+                 * Therapist UI
+                 */
                 if (role == UserRole.THERAPIST) {
                     Column(
                         modifier = Modifier

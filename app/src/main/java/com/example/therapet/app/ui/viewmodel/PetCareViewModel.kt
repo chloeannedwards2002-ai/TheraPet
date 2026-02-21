@@ -18,7 +18,7 @@ import kotlin.math.min
  * @author: Chloe Edwards
  * @date: 14/02/2026
  *
- * Pet care view model
+ * ViewModel for managing per care mechanics (food sleep water and hibernation)
  */
 
 class PetCareViewModel(
@@ -29,6 +29,10 @@ class PetCareViewModel(
 ) : ViewModel() {
 
     private var persistCounter = 0
+
+    /**
+     * Current pet care levels
+     */
     val food: StateFlow<Float> = repository.foodLevel
         .stateIn(viewModelScope, SharingStarted.Eagerly, 0.5f)
     val water: StateFlow<Float> = repository.waterLevel
@@ -51,6 +55,9 @@ class PetCareViewModel(
        if (startLoop) startDecayLoop()
     }
 
+    /**
+     * Loop continuously decays food water and sleep
+     */
     private fun startDecayLoop() {
         viewModelScope.launch(dispatcher) {
             while (true) {
@@ -60,6 +67,9 @@ class PetCareViewModel(
         }
     }
 
+    /**
+     * Applies decay to pet resources
+     */
     private suspend fun applyDecay() {
         if (!isActive || isHibernating.value) return
 
@@ -77,6 +87,9 @@ class PetCareViewModel(
         }
     }
 
+    /**
+     * Increase food, and water
+     */
     fun increaseFood(amount: Float = 0.1f) {
         val newValue = min(1f, food.value + amount)
         viewModelScope.launch { repository.saveFoodLevel(newValue) }
@@ -87,7 +100,9 @@ class PetCareViewModel(
         viewModelScope.launch { repository.saveWaterLevel(newValue) }
     }
 
-    // Sleeping
+    /**
+     * Increase sleep
+     */
     fun startSleep() {
         if (_isSleeping.value) return
 
@@ -113,8 +128,9 @@ class PetCareViewModel(
         }
     }
 
-    fun setActive(active: Boolean) { isActive = active }
-
+    /**
+     * Start hibernation
+     */
     fun setHibernation(enabled: Boolean) {
         viewModelScope.launch {
             repository.saveHibernationEnabled(enabled)

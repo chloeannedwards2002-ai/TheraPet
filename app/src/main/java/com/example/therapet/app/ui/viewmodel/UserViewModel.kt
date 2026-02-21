@@ -9,10 +9,12 @@ import com.example.therapet.app.data.model.toAccountUIModel
 import com.example.therapet.app.data.repository.contracts.UserRepositoryContract
 import com.example.therapet.app.data.session.SessionManager
 import com.example.therapet.app.data.session.SessionManagerContract
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 /**
  * @author: Chloe Edwards
@@ -30,6 +32,9 @@ class UserViewModel(
     private val sessionManager: SessionManager
 ) : ViewModel() {
 
+    /**
+     * Authentication State
+     */
     private val _loginResult = MutableStateFlow<Boolean?>(null)
     val loginResult: StateFlow<Boolean?> = _loginResult
 
@@ -52,25 +57,35 @@ class UserViewModel(
     private val _selectedUser = MutableStateFlow<Pair<AccountUIModel, UserRole>?>(null)
     val selectedUser: StateFlow<Pair<AccountUIModel, UserRole>?> = _selectedUser
 
-    // Authentication
+    /**
+     * Auth methods
+     */
 
+    /**
+     * Attempts to login user with given credentials
+     */
     fun login(
         userid: String,
         password: String
     ) {
         viewModelScope.launch {
-            val user = repository.login(userid, password)
+            val user = withContext(Dispatchers.IO) {
+                repository.login(userid, password)
+            }
 
             if (user != null) {
-                _loginResult.value = true
                 sessionManager.login(user.userid, user.role)
                 _loggedInRole.value = user.role
+                _loginResult.value = true
             } else {
                 _loginResult.value = false
             }
         }
     }
 
+    /**
+     * Registers a new user and logs them in
+     */
     fun register(
         userid: String,
         firstname: String,
@@ -78,15 +93,23 @@ class UserViewModel(
         password: String
     ) {
         viewModelScope.launch {
-            // Check if user already exists
-            if (repository.userExists(userid)) {
+            val userAlreadyExists = withContext(Dispatchers.IO) {
+                repository.userExists(userid)
+            }
+
+            if (userAlreadyExists) {
                 _registerResult.value = false
                 return@launch
             }
 
-            repository.register(userid, firstname, surname, password)
+            withContext(Dispatchers.Default) {
+                repository.register(userid, firstname, surname, password)
+            }
 
-            val user = repository.login(userid, password)
+            val user = withContext(Dispatchers.IO) {
+                repository.login(userid, password)
+            }
+
             if (user != null) {
                 sessionManager.login(user.userid, user.role)
                 _loggedInRole.value = user.role
@@ -97,7 +120,9 @@ class UserViewModel(
         }
     }
 
-    // Account management
+    /**
+     * Deletes account
+     */
 
     fun deleteAccount() {
         val session = sessionManager.session.value ?: return
@@ -110,54 +135,68 @@ class UserViewModel(
         }
     }
 
+    /**
+     * Logs out current user
+     */
     fun logout() {
         sessionManager.logout()
         _loggedInRole.value = null
     }
 
-    // Clearing UI results
+    /**
+     * Clears UI results
+     */
 
     fun clearLoginResult() {
         _loginResult.value = null
     }
 
+    /**
+     * Clears registration results
+     */
     fun clearRegisterResult() {
         _registerResult.value = null
     }
 
-    // Verifies the user's password
-    fun verifyPassword(input: String): Boolean {
-        val session = sessionManager.session.value ?: return false
-        return runBlocking {
-            repository.login(session.userid, input) != null
-        }
+    /**
+     * Verifies user password
+     */
+    suspend fun verifyPassword(input: String): Boolean = withContext(Dispatchers.IO) {
+        val session = sessionManager.session.value ?: return@withContext false
+        repository.login(session.userid, input) != null
     }
 
-    //Load current users details
+    /**
+     * Loads current users
+     */
     fun loadCurrentUser() {
         val session = sessionManager.session.value ?: return
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _currentUser.value = repository.getUserById(session.userid)
         }
     }
 
-    // Updates password
+    /**
+     * Resets the password
+     */
     fun resetPassword(newPassword: String) {
         val session = sessionManager.session.value ?: return
-
-        viewModelScope.launch {
-            val success = repository.updatePassword(
-                userid = session.userid,
-                newPassword = newPassword
-            )
+        viewModelScope.launch(Dispatchers.IO) {
+            val success = repository.updatePassword(session.userid, newPassword)
             _resetPasswordResult.value = success
         }
     }
 
+    /**
+     * Clears password reset result
+     */
     fun clearResetPasswordResult() {
         _resetPasswordResult.value = null
     }
 
+    /**
+     * Loads therapists
+     */
     fun loadTherapists() {
         viewModelScope.launch {
             _therapists.value =

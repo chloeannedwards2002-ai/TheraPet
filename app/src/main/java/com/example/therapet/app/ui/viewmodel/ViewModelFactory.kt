@@ -26,6 +26,9 @@ import com.example.therapet.app.data.session.SessionManagerContract
 // Nesting ViewModelFactories
 class ViewModelFactory {
 
+    /**
+     * User view model factory
+     */
     class UserViewModelFactory(
         context: Context,
         private val sessionManager: SessionManager
@@ -48,6 +51,9 @@ class ViewModelFactory {
         }
     }
 
+    /**
+     * Pet view model factory
+     */
     class PetViewModelFactory(
         private val context: Context,
         private val userId: String
@@ -64,6 +70,9 @@ class ViewModelFactory {
         }
     }
 
+    /**
+     * Appointment view model factory
+     */
     class AppointmentViewModelFactory(
         private val context: Context,
         private val sessionManager: SessionManagerContract,
@@ -92,6 +101,9 @@ class ViewModelFactory {
         }
     }
 
+    /**
+     * Pet care view model factory
+     */
     class PetCareViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(PetCareViewModel::class.java)) {
@@ -103,6 +115,9 @@ class ViewModelFactory {
         }
     }
 
+    /**
+     * Watchlist view model factory
+     */
     class WatchlistViewModelFactory(
         private val context: Context,
         private val sessionManager: SessionManager

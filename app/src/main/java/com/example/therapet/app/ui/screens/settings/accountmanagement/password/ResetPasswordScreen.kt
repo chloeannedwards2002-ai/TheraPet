@@ -127,6 +127,9 @@ fun ResetPasswordScreen(
     }
 }
 
+/**
+ * Custom composables
+ */
 @Composable
 fun ResetPasswordButton(onClick: () -> Unit){
     CustomFilledButton(
