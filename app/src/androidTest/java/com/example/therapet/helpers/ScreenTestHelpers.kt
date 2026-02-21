@@ -4,10 +4,13 @@ import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import com.example.therapet.app.data.entity.AppointmentEntity
 import com.example.therapet.app.data.entity.UserEntity
+import com.example.therapet.app.data.model.AccountUIModel
 import com.example.therapet.app.data.model.AppointmentType
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.screens.WelcomeScreen
 import com.example.therapet.app.ui.screens.appts.AppointmentsScreen
+import com.example.therapet.app.ui.screens.booking.BookingStep
+import com.example.therapet.app.ui.screens.booking.PatientAppointmentsScreen
 import com.example.therapet.app.ui.screens.home.HomeScreen
 import com.example.therapet.app.ui.screens.login.LoginScreen
 import com.example.therapet.app.ui.screens.pet.CreatePetScreen
@@ -47,6 +50,23 @@ object ScreenTestHelpers {
         password = "Password_123",
         role = UserRole.THERAPIST
     )
+
+    private fun fakeTherapists(): List<AccountUIModel> {
+        return listOf(
+            AccountUIModel(
+                userid = "1234567891234567",
+                fullName = "Bob Bobbington",
+                role = UserRole.THERAPIST,
+                lastLoginMillis = 1_800_000_000_000L
+            ),
+            AccountUIModel(
+                userid = "1231231231231234",
+                fullName = "Jane Doe",
+                role = UserRole.THERAPIST,
+                lastLoginMillis = 1_800_000_000_000L
+            )
+        )
+    }
 
     // For appointments tests
     private fun fakeAppointments(): List<AppointmentEntity> {
@@ -232,23 +252,91 @@ object ScreenTestHelpers {
         }
     }
 
+    /** Launchers for patient appointment screen **/
+
     fun launchPatientAppointmentsScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ) {
         composeRule.setContent {
             TheraPetTheme {
-                AppointmentsScreen(
-                    role = UserRole.PATIENT,
-                    appointments = fakeAppointments(),
+                PatientAppointmentsScreen(
+                    step = BookingStep.PATIENT_APPOINTMENTS,
+                    therapists = emptyList(),
+                    selectedTherapistId = null,
+                    selectedYearMonth = null,
+                    appointments = emptyList(),
+                    patientAppointments = fakeAppointments(),
+                    onTherapistSelected = {},
+                    onMonthSelected = {},
+                    onAppointmentClick = {},
                     onBack = {},
-                    onAddAppointment = { _, _ -> },
-                    onUpdateAppointment = {},
-                    onDeleteAppointment = {},
-                    getPatientName = { "Test Patient" }
+                    onBook = {}
                 )
             }
         }
     }
+
+    fun launchChooseTherapistStep(composeRule: AndroidComposeTestRule<*, ComponentActivity>) {
+        composeRule.setContent {
+            TheraPetTheme {
+                PatientAppointmentsScreen(
+                    step = BookingStep.CHOOSE_THERAPIST,
+                    therapists = fakeTherapists(),
+                    selectedTherapistId = null,
+                    selectedYearMonth = null,
+                    appointments = emptyList(),
+                    patientAppointments = emptyList(),
+                    onTherapistSelected = {},
+                    onMonthSelected = {},
+                    onAppointmentClick = {},
+                    onBack = {},
+                    onBook = {}
+                )
+            }
+        }
+    }
+
+    fun launchBookAppointmentStep(composeRule: AndroidComposeTestRule<*, ComponentActivity>) {
+        composeRule.setContent {
+            TheraPetTheme {
+                PatientAppointmentsScreen(
+                    step = BookingStep.BOOK_APPOINTMENT,
+                    therapists = emptyList(),
+                    selectedTherapistId = "123",
+                    selectedYearMonth = null,
+                    appointments = fakeAppointments(),
+                    patientAppointments = emptyList(),
+                    onTherapistSelected = {},
+                    onMonthSelected = {},
+                    onAppointmentClick = {},
+                    onBack = {},
+                    onBook = {}
+                )
+            }
+        }
+    }
+
+    fun launchBookAppointmentStepEmpty(composeRule: AndroidComposeTestRule<*, ComponentActivity>) {
+        composeRule.setContent {
+            TheraPetTheme {
+                PatientAppointmentsScreen(
+                    step = BookingStep.BOOK_APPOINTMENT,
+                    therapists = emptyList(),
+                    selectedTherapistId = "123",
+                    selectedYearMonth = null,
+                    appointments = emptyList(),
+                    patientAppointments = emptyList(),
+                    onTherapistSelected = {},
+                    onMonthSelected = {},
+                    onAppointmentClick = {},
+                    onBack = {},
+                    onBook = {}
+                )
+            }
+        }
+    }
+
+    /** -- **/
 
     fun launchDeleteAccountConfirmScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>

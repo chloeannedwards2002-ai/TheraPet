@@ -6,6 +6,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.therapet.app.data.util.sounds.SoundManager
 import com.example.therapet.app.ui.theme.TheraPetTheme
 
 /**
@@ -18,7 +19,8 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 @Composable
 fun CustomTextButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     TextButton(
-        onClick = { onClick() }, modifier = modifier) {
+        onClick = { onClick()
+            SoundManager.playSound("click")}, modifier = modifier) {
         Text(text,
             style = MaterialTheme.typography.labelSmall)
     }

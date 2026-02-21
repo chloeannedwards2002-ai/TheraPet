@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.therapet.app.data.util.sounds.SoundManager
 import com.example.therapet.app.ui.theme.TheraPetTheme
 
 /**
@@ -21,7 +22,9 @@ fun CustomOutlinedButton(
     text: String,
     onClick: () -> Unit,
 ) {
-    OutlinedButton(onClick = onClick, modifier = modifier,
+    OutlinedButton(onClick = {
+        onClick()
+        SoundManager.playSound("click")}, modifier = modifier,
     ) {
         Text(
             text,
