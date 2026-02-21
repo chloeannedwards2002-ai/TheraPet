@@ -9,15 +9,30 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 
+/**
+ * Implementation of WatchlistRepositoryContract
+ */
 class WatchlistRepository(
     private val watchlistDao: WatchlistDao,
     private val userDao: UserDao
 ) : WatchlistRepositoryContract {
 
+    /**
+     * Adds a patient to a therapist's watchlist
+     *
+     * @param therapistId The ID of the therapist
+     * @param patientId the ID of the patient to add
+     */
     override suspend fun addPatientToWatchlist(therapistId: String, patientId: String) {
         watchlistDao.addToWatchlist(WatchlistEntity(therapistId, patientId))
     }
 
+    /**
+     * Retrieves the full watchlist for a therapist as a Flow
+     *
+     * @param therapistId the ID of the therapist
+     * @return Flow emitting a list of accountUImodel objects
+     */
     override fun getWatchlistForTherapist(
         therapistId: String
     ): Flow<List<AccountUIModel>> =
@@ -39,6 +54,12 @@ class WatchlistRepository(
                 }
             }
 
+    /**
+     * Removes a patient from a therapist's watchlist
+     *
+     * @param therapistId the ID of the therapist
+     * @param patientId the ID of the patient to remove
+     */
     override suspend fun removePatientFromWatchlist(therapistId: String, patientId: String) {
         watchlistDao.deletePatientFromWatchlist(therapistId, patientId)
     }

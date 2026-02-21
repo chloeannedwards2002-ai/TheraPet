@@ -22,15 +22,21 @@ import com.example.therapet.app.ui.viewmodel.UserViewModel
 
 @Composable
 fun LoginRoute(
-    onLoginSuccess: () -> Unit,
-    onRegisterNav: () -> Unit,
-    onBack: () -> Unit,
-    viewModel: UserViewModel
+    onLoginSuccess: () -> Unit, // Callback invoked when login succeeds
+    onRegisterNav: () -> Unit, // Callback to navigate to reg screen
+    onBack: () -> Unit, // Callback for back navigation
+    viewModel: UserViewModel // UserViewModel instance
 ) {
+    /**
+     * Observe login result from the ViewModel
+     */
     val loginResult by viewModel.loginResult.collectAsState(initial = null)
 
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
+    /**
+     * Pass callbacks to LoginScreen
+     */
     LoginScreen(
         onLogin = { userId, password ->
             errorMessage = null
@@ -41,6 +47,9 @@ fun LoginRoute(
         errorMessage = errorMessage
     )
 
+    /**
+     * React to login result changes
+     */
     LaunchedEffect(loginResult) {
         when (loginResult) {
             true -> {

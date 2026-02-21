@@ -23,19 +23,29 @@ import java.time.YearMonth
  * @date: 08/02/2026
  *
  * Book Appointment route
+ *
+ * Route for patients to book or view appointments with therapists
+ *
+ * Handles selecting a therapist, picking month/year, booking and cancelling appointments in steps
  */
 
 @Composable
 fun PatientAppointmentsRoute(
-    sessionManager: SessionManager,
-    onBack: () -> Unit
+    sessionManager: SessionManager, // Session manager
+    onBack: () -> Unit // Navigates user back
 ) {
     val context = LocalContext.current
 
+    /**
+     * State for selected therapis, year and month
+     */
     var selectedTherapistId by rememberSaveable { mutableStateOf<String?>(null) }
     var selectedYear by rememberSaveable { mutableStateOf<Int?>(null) }
     var selectedMonth by rememberSaveable { mutableStateOf<Int?>(null) }
 
+    /**
+     * Combine year and month into YearMonth
+     */
     val selectedYearMonth =
         if (selectedYear != null && selectedMonth != null) {
             YearMonth.of(selectedYear!!, selectedMonth!!)
@@ -61,17 +71,25 @@ fun PatientAppointmentsRoute(
         )
     )
 
+    /**
+     * Step state for multi-step UI
+     */
     var step by rememberSaveable {
         mutableStateOf(BookingStep.PATIENT_APPOINTMENTS)
     }
 
-
+    /**
+     * Load therapists when this route if displayed
+     */
     LaunchedEffect(Unit) {
         userViewModel.loadTherapists()
     }
 
     val therapists by userViewModel.therapists.collectAsState()
 
+    /**
+     * Appointments for the selected therapist and month/year
+     */
     val appointments by selectedTherapistId?.let { therapistId ->
         appointmentViewModel
             .getAppointmentsForTherapistById(
@@ -85,7 +103,9 @@ fun PatientAppointmentsRoute(
         .getAppointmentsForPatient()
         .collectAsState(initial = emptyList())
 
-
+    /**
+     * Render the main PatientAppointmentsScreen UI
+     */
     PatientAppointmentsScreen(
         step = step,
         therapists = therapists,

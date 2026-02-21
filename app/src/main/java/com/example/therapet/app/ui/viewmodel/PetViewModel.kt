@@ -3,6 +3,7 @@ package com.example.therapet.app.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.therapet.app.data.repository.contracts.PetPreferencesRepositoryContract
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -19,6 +20,9 @@ class PetViewModel(
     private val repository: PetPreferencesRepositoryContract
 ) : ViewModel() {
 
+    /**
+     * Currently selected pet colour idex
+     */
     val selectedColourIndex = repository.petColourIndex
         .stateIn(
             scope = viewModelScope,
@@ -26,8 +30,11 @@ class PetViewModel(
             initialValue = 0
         )
 
+    /**
+     * Updates selected pet colour
+     */
     fun selectColour(index: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.savePetColour(index)
         }
     }

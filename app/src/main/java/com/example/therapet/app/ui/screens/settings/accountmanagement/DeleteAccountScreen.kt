@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.example.therapet.R
 import com.example.therapet.app.ui.components.buttons.general.CustomElevatedButton
 import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextField
+import kotlinx.coroutines.launch
 
 
 /**
@@ -39,11 +41,13 @@ import com.example.therapet.app.ui.components.fields.input.CustomOutlinedTextFie
 fun DeleteAccountScreen(
     onBack: () -> Unit,
     onContinue: () -> Unit,
-    validatePassword: (String) -> Boolean,
+    validatePassword: suspend (String) -> Boolean,
     modifier: Modifier = Modifier
 ) {
     var password by remember { mutableStateOf("") }
     var showError by remember { mutableStateOf(false) }
+
+    val scope = rememberCoroutineScope()
 
     Scaffold { innerPadding ->
 
@@ -94,10 +98,12 @@ fun DeleteAccountScreen(
             Spacer(modifier = Modifier.height(40.dp))
 
             DeleteAccountContinueButton {
-                if (validatePassword(password)) {
-                    onContinue()
-                } else {
-                    showError = true
+                scope.launch {
+                    if (validatePassword(password)) {
+                        onContinue()
+                    } else {
+                        showError = true
+                    }
                 }
             }
         }

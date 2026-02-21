@@ -34,7 +34,9 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 
 object ScreenTestHelpers {
 
-    //fake users for testing
+    /**
+     * Fake users for testing (uses CreateTestUser class)
+     */
     val testPatientUser: UserEntity = createTestUser(
         userid = "123456789123",
         firstname = "Bob",
@@ -51,6 +53,9 @@ object ScreenTestHelpers {
         role = UserRole.THERAPIST
     )
 
+    /**
+     * Creates a list of fake therapists
+     */
     private fun fakeTherapists(): List<AccountUIModel> {
         return listOf(
             AccountUIModel(
@@ -68,7 +73,9 @@ object ScreenTestHelpers {
         )
     }
 
-    // For appointments tests
+    /**
+     * A list of fake appointments for appointment tests
+     */
     private fun fakeAppointments(): List<AppointmentEntity> {
         return listOf(
             AppointmentEntity(
@@ -82,6 +89,9 @@ object ScreenTestHelpers {
         )
     }
 
+    /**
+     * Launching the welcome screen
+     */
     fun launchWelcomeScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -95,6 +105,9 @@ object ScreenTestHelpers {
         }
     }
 
+    /**
+     * Launching the login screen
+     */
     fun launchLoginScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -108,7 +121,9 @@ object ScreenTestHelpers {
         }
     }
 
-    //register screen
+    /**
+     * Launching the registration screen
+     */
     fun launchRegisterScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ) {
@@ -122,7 +137,9 @@ object ScreenTestHelpers {
         }
     }
 
-    //settings screen (patient state)
+    /**
+     * Launching the patient state settings screen
+     */
     fun launchPatientSettingsScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -140,7 +157,9 @@ object ScreenTestHelpers {
         }
     }
 
-    //settings screen (therapist state)
+    /**
+     * Launching the therapist state settings screen
+     */
     fun launchTherapistSettingsScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -158,7 +177,9 @@ object ScreenTestHelpers {
         }
     }
 
-    //create pet screen
+    /**
+     * Launching the create pet screen
+     */
     fun launchCreatePetScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -173,7 +194,9 @@ object ScreenTestHelpers {
         }
     }
 
-    //homescreen
+    /**
+     * Launching the patient state home screen
+     */
     fun launchPatientHomeScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>,
         role: UserRole = UserRole.PATIENT,
@@ -197,6 +220,9 @@ object ScreenTestHelpers {
         }
     }
 
+    /**
+     * Launching the settings screen
+     */
     fun launchPetSettingsScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -211,6 +237,9 @@ object ScreenTestHelpers {
         }
     }
 
+    /**
+     * Launching the therapist state home screen (not used)
+     */
     fun launchTherapistHomeScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>,
         role: UserRole = UserRole.THERAPIST,
@@ -234,6 +263,9 @@ object ScreenTestHelpers {
         }
     }
 
+    /**
+     * Launching the therapist appointment screen
+     */
     fun launchTherapistAppointmentsScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -252,7 +284,9 @@ object ScreenTestHelpers {
         }
     }
 
-    /** Launchers for patient appointment screen **/
+    /**
+     *  Launchers for patient appointment screen
+     **/
 
     fun launchPatientAppointmentsScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
@@ -338,6 +372,9 @@ object ScreenTestHelpers {
 
     /** -- **/
 
+    /**
+     * Launching the delete account confirmation screen
+     */
     fun launchDeleteAccountConfirmScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -351,6 +388,9 @@ object ScreenTestHelpers {
         }
     }
 
+    /**
+     * Launching the delete account screen
+     */
     fun launchDeleteAccountScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -365,6 +405,9 @@ object ScreenTestHelpers {
         }
     }
 
+    /**
+     * Launching the Help/support screen
+     */
     fun launchHelpSupportScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -377,6 +420,9 @@ object ScreenTestHelpers {
         }
     }
 
+    /**
+     * Launching the privacy policy screen
+     */
     fun launchPrivacyPolicyScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -389,6 +435,9 @@ object ScreenTestHelpers {
         }
     }
 
+    /**
+     * Launching the profile screen
+     */
     fun launchProfileScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){
@@ -406,6 +455,9 @@ object ScreenTestHelpers {
         }
     }
 
+    /**
+     * Launching the reset password screen
+     */
     fun launchResetPasswordScreen(
         composeRule: AndroidComposeTestRule<*, ComponentActivity>
     ){

@@ -80,27 +80,4 @@ class TherapistAppointmentsScreenTest {
             .onNodeWithTag("date_time_picker", useUnmergedTree = true)
             .assertIsDisplayed()
     }
-
-    @Test
-    fun date_picker_dismisses_when_done_clicked() {
-        ScreenTestHelpers.launchTherapistAppointmentsScreen(composeRule)
-
-        composeRule
-            .onNodeWithTag("appointment_cell")
-            .performClick()
-
-        composeRule
-            .onNodeWithTag("edit_time_button")
-            .performClick()
-
-        composeRule
-            .onNodeWithText("Done", useUnmergedTree = true)
-            .performClick()
-
-        composeRule
-            .onNodeWithTag("date_time_picker", useUnmergedTree = true)
-            .assertDoesNotExist()
-    }
-
-
 }

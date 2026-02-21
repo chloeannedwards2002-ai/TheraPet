@@ -20,8 +20,9 @@ import org.junit.Test
 
 class PasswordHashingTest{
 
-    //1. Testing matching password and salt generates a matching hash
     /**
+     * 1. Testing matching password and salt generates a matching hash
+     *
      * When logging in, the password is hashed with a salt and compares it to the stored hash,
      *  if hashing doesn't match the user cannot login even with the right password
      */
@@ -36,8 +37,9 @@ class PasswordHashingTest{
         assertArrayEquals(hash1, hash2)
     }
 
-    //2. Testing a matching password but different salt generates a unique hash
     /**
+     * 2. Testing a matching password but different salt generates a unique hash
+     *
      * If two users use the same password, the hashes should be different otherwise hackers can
      * detect duplicate passwords across the accounts
      */
@@ -54,8 +56,9 @@ class PasswordHashingTest{
         assertFalse(hash1.contentEquals(hash2))
     }
 
-    //3. Correct password verification
+
     /**
+     * 3. Correct password verification
      * Confirms hashing, salt and comparison logic
      */
     @Test
@@ -68,8 +71,9 @@ class PasswordHashingTest{
         assertTrue(result)
     }
 
-    //4. Incorrect password verification
+
     /**
+     * 4. Incorrect password verification
      * Incorrect password are rejected
      */
     @Test

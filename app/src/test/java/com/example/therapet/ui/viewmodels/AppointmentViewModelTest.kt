@@ -1,3 +1,6 @@
+package com.example.therapet.ui.viewmodels
+
+import FakeWatchlistRepository
 import com.example.therapet.app.data.model.AppointmentType
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.viewmodel.AppointmentViewModel
@@ -13,6 +16,17 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import com.example.therapet.helpers.createAppointmentViewModel
+import com.example.therapet.helpers.createPatientSession
+
+/**
+ *  * @author: Chloe Edwards
+ *  * @date: 21/02/2026
+ *  *
+ *  * WatchlistRepositoryTest
+ *  *
+ *  * Tests the business logic inside AppointmentViewModel
+ */
 
 class AppointmentViewModelTest {
 
@@ -24,21 +38,34 @@ class AppointmentViewModelTest {
     private lateinit var sessionManager: FakeSessionManager
     private lateinit var watchlistRepository: FakeWatchlistRepository
 
+    // Test IDs
+    private val therapistId = "therapist1"
+    private val patientId = "patient1"
+
     @Before
     fun setup() {
         repository = FakeAppointmentRepository()
+        watchlistRepository = FakeWatchlistRepository()
 
         sessionManager = FakeSessionManager(
-            initialUserId = "1234567890123456",
+            initialUserId = therapistId,
             initialRole = UserRole.THERAPIST
         )
 
-        watchlistRepository = FakeWatchlistRepository()
+        viewModel = createAppointmentViewModel(
+            repository,
+            sessionManager,
+            watchlistRepository
+        )
+    }
 
-        viewModel = AppointmentViewModel(
-            repository = repository,
-            sessionManager = sessionManager,
-            watchlistRepository = watchlistRepository
+    private fun switchToPatient() {
+        sessionManager = createPatientSession(patientId)
+
+        viewModel = createAppointmentViewModel(
+            repository,
+            sessionManager,
+            watchlistRepository
         )
     }
 
@@ -47,11 +74,7 @@ class AppointmentViewModelTest {
     fun creating_appointment_stores_for_therapist() = runTest {
         val dateTime = 1_000_000_000L
 
-        viewModel.addAppointment(
-            dateTime,
-            AppointmentType.SESSION
-        )
-
+        viewModel.addAppointment(dateTime, AppointmentType.SESSION)
         advanceUntilIdle()
 
         val appointments = viewModel
@@ -105,26 +128,14 @@ class AppointmentViewModelTest {
     @Test
     fun patient_booking_sets_to_isBooked_and_patientUserId() = runTest {
         val therapistId = "therapist123"
-        val patientId = "patient999"
-
-        val repository = FakeAppointmentRepository()
-        val sessionManager = FakeSessionManager(
-            initialUserId = patientId,
-            initialRole = UserRole.PATIENT
-        )
-        val watchlistRepository = FakeWatchlistRepository()
-
-        val viewModel = AppointmentViewModel(
-            repository = repository,
-            sessionManager = sessionManager,
-            watchlistRepository = watchlistRepository
-        )
 
         repository.createAppointment(
             therapistUserId = therapistId,
             dateTimeMillis = 1000L,
             appointmentType = AppointmentType.SESSION
         )
+
+        switchToPatient()
 
         val appointment = repository
             .getAppointmentsForTherapist(therapistId)
@@ -147,22 +158,6 @@ class AppointmentViewModelTest {
 
     @Test
     fun getAppointmentsForPatientReturnsAppointments() = runTest {
-        val therapistId = "therapist1"
-        val patientId = "patient123"
-
-        val repository = FakeAppointmentRepository()
-        val sessionManager = FakeSessionManager(
-            initialUserId = patientId,
-            initialRole = UserRole.PATIENT
-        )
-        val watchlistRepository = FakeWatchlistRepository()
-
-        val viewModel = AppointmentViewModel(
-            repository = repository,
-            sessionManager = sessionManager,
-            watchlistRepository = watchlistRepository
-        )
-
         repository.createAppointment(
             therapistUserId = therapistId,
             dateTimeMillis = 123456789L,
@@ -181,79 +176,25 @@ class AppointmentViewModelTest {
             )
         )
 
+        switchToPatient()
+
         val result = viewModel.getAppointmentsForPatient().first()
 
         assertEquals(1, result.size)
         assertEquals(patientId, result.first().patientUserId)
     }
 
-    @Test
-    fun bookAppointmentSetsIsBookedTrueAndPatientId() = runTest {
-        val therapistId = "therapist1"
-        val patientId = "patient123"
-
-        val repository = FakeAppointmentRepository()
-        val sessionManager = FakeSessionManager(
-            initialUserId = patientId,
-            initialRole = UserRole.PATIENT
-        )
-        val watchlistRepository = FakeWatchlistRepository()
-
-        val viewModel = AppointmentViewModel(
-            repository = repository,
-            sessionManager = sessionManager,
-            watchlistRepository = watchlistRepository
-        )
-
-        repository.createAppointment(
-            therapistUserId = therapistId,
-            dateTimeMillis = 123456789L,
-            appointmentType = AppointmentType.FOLLOW_UP
-        )
-
-        val appointment =
-            repository.getAppointmentsForTherapist(therapistId)
-                .first()
-                .first()
-
-        viewModel.bookAppointment(appointment)
-        advanceUntilIdle()
-
-        val updated =
-            repository.getAppointmentsForPatient(patientId).first()
-
-        assertEquals(1, updated.size)
-        assertTrue(updated.first().isBooked)
-        assertEquals(patientId, updated.first().patientUserId)
-    }
-
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun cancelAppointment_setsIsBookedFalse_andClearsPatientId() = runTest {
-        val therapistId = "therapist1"
-        val patientId = "patient123"
-
-        val repository = FakeAppointmentRepository()
-        val sessionManager = FakeSessionManager(
-            initialUserId = patientId,
-            initialRole = UserRole.PATIENT
-        )
-        val watchlistRepository = FakeWatchlistRepository()
-
-        val viewModel = AppointmentViewModel(
-            repository = repository,
-            sessionManager = sessionManager,
-            watchlistRepository = watchlistRepository
-        )
-
-        // Create appointment
         repository.createAppointment(
             therapistUserId = therapistId,
             dateTimeMillis = 1000L,
             appointmentType = AppointmentType.SESSION
         )
 
-        // Book it first
+        switchToPatient()
+
         val appointment = repository
             .getAppointmentsForTherapist(therapistId)
             .first()
@@ -262,7 +203,6 @@ class AppointmentViewModelTest {
         viewModel.bookAppointment(appointment)
         advanceUntilIdle()
 
-        // Now cancel it
         viewModel.cancelAppointment(appointment)
         advanceUntilIdle()
 
@@ -278,27 +218,13 @@ class AppointmentViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun cancelAppointment_removesFromPatientAppointments() = runTest {
-        val therapistId = "therapist1"
-        val patientId = "patient123"
-
-        val repository = FakeAppointmentRepository()
-        val sessionManager = FakeSessionManager(
-            initialUserId = patientId,
-            initialRole = UserRole.PATIENT
-        )
-        val watchlistRepository = FakeWatchlistRepository()
-
-        val viewModel = AppointmentViewModel(
-            repository = repository,
-            sessionManager = sessionManager,
-            watchlistRepository = watchlistRepository
-        )
-
         repository.createAppointment(
             therapistUserId = therapistId,
             dateTimeMillis = 1000L,
             appointmentType = AppointmentType.SESSION
         )
+
+        switchToPatient()
 
         val appointment = repository
             .getAppointmentsForTherapist(therapistId)
@@ -308,18 +234,14 @@ class AppointmentViewModelTest {
         viewModel.bookAppointment(appointment)
         advanceUntilIdle()
 
-        // Confirm it exists for patient
         assertEquals(1, viewModel.getAppointmentsForPatient().first().size)
 
-        // Cancel it
         viewModel.cancelAppointment(appointment)
         advanceUntilIdle()
 
-        val patientAppointments = viewModel.getAppointmentsForPatient().first()
+        val patientAppointments =
+            viewModel.getAppointmentsForPatient().first()
 
         assertTrue(patientAppointments.isEmpty())
     }
-
-
-
 }

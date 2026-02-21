@@ -31,18 +31,20 @@ import com.example.therapet.app.ui.components.fields.appt.EditAppointmentDialog
  * @date: 24/12/2025
  *
  * Appointments screen UI
+ *
+ * UI displaying the therapists POV of appointments and managing the interactions
  */
 
 @Composable
 fun AppointmentsScreen(
-    role: UserRole,
-    appointments: List<AppointmentEntity>,
-    onBack: () -> Unit,
-    onAddAppointment: (Long, AppointmentType) -> Unit,
-    onUpdateAppointment: (AppointmentEntity) -> Unit,
-    onDeleteAppointment: (AppointmentEntity) -> Unit,
+    role: UserRole, // Users role
+    appointments: List<AppointmentEntity>, // Appointments list
+    onBack: () -> Unit, // navigatte back
+    onAddAppointment: (Long, AppointmentType) -> Unit, // Call to add appt
+    onUpdateAppointment: (AppointmentEntity) -> Unit, // Call to update an appt
+    onDeleteAppointment: (AppointmentEntity) -> Unit, // Call to delete an appt
     modifier: Modifier = Modifier,
-    getPatientName: (String?) -> String?,
+    getPatientName: (String?) -> String?, // Retrieving patient name from ID
 ) {
     var showAddAppointmentDialog by remember { mutableStateOf(false) }
     var selectedAppointment by remember { mutableStateOf<AppointmentEntity?>(null) }
@@ -64,6 +66,9 @@ fun AppointmentsScreen(
         }
     ) { innerPadding ->
 
+        /**
+         * List of appointments
+         */
         LazyColumn(
             modifier = modifier
                 .padding(innerPadding)
@@ -80,6 +85,9 @@ fun AppointmentsScreen(
             }
         }
 
+        /**
+         * Add appointment dialog
+         */
         if (showAddAppointmentDialog) {
             AddAppointmentDialog(
                 onDismiss = { showAddAppointmentDialog = false },
@@ -90,6 +98,9 @@ fun AppointmentsScreen(
             )
         }
 
+        /**
+         * Edit appointment dialog when appointment is selected
+         */
         selectedAppointment?.let { appointment ->
             EditAppointmentDialog(
                 role = role,
@@ -117,10 +128,14 @@ fun AppointmentsScreen(
         }
     }
 }
+
+/**
+ * Floating action button for adding a new appointment
+ */
 @Composable
 fun MyBookAppointmentsButton(
-    role: UserRole,
-    onClick: () -> Unit,
+    role: UserRole, //Users role
+    onClick: () -> Unit, // Click callback
     modifier: Modifier = Modifier
 ) {
     CustomOutlinedButton(

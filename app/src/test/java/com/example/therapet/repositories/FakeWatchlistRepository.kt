@@ -5,6 +5,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 
+
+/**
+ * @author: Chloe Edwards
+ * @date: 15/02/2026
+ *
+ * A fake watchlist repository for tests
+ */
 class FakeWatchlistRepository : WatchlistRepositoryContract {
 
     private val watchlistFlow =

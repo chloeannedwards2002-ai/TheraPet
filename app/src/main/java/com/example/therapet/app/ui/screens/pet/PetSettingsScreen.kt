@@ -35,11 +35,14 @@ import com.example.therapet.R
 
 @Composable
 fun PetSettingsScreen(
-    hibernationEnabled: Boolean,
-    onHibernationChanged: (Boolean) -> Unit,
-    onBack: () -> Unit,
+    hibernationEnabled: Boolean, // current state of pet hibernation
+    onHibernationChanged: (Boolean) -> Unit, // Callback when hibernation is toggled
+    onBack: () -> Unit, // Callback when back is pressed
     modifier: Modifier = Modifier
 ){
+    /**
+     * Local state for toggles unrelated to viewmodel
+     */
     var remindersEnabled by remember { mutableStateOf(false) }
     var petSoundsEnabled by remember { mutableStateOf(false) }
 

@@ -42,7 +42,6 @@ import com.example.therapet.app.ui.viewmodel.WatchlistViewModel
 
 @Composable
 fun NavGraph(
-
     navController: NavHostController,
     startDestination: String = Routes.WELCOME
 ){
@@ -57,11 +56,17 @@ fun NavGraph(
         )
     )
 
+    /**
+     * Repo for watchlist operations
+     */
     val watchlistRepository = WatchlistRepository(
         watchlistDao = AppDatabase.getDatabase(LocalContext.current).watchlistDao(),
         userDao = AppDatabase.getDatabase(LocalContext.current).userDao()
     )
 
+    /**
+     * Pet care viewmodel for pet-related data
+     */
     val petCareViewModel: PetCareViewModel = viewModel(
         factory = ViewModelFactory.PetCareViewModelFactory(
             context = context
@@ -70,6 +75,9 @@ fun NavGraph(
 
     val role by userViewModel.loggedInRole.collectAsState(initial = null)
 
+    /**
+     * Nav host defining ALL routes and screens
+     */
     NavHost(
         navController = navController,
         startDestination = startDestination

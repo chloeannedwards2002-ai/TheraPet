@@ -18,10 +18,9 @@ import org.junit.Test
  * @author: Chloe Edwards
  * @date: 08/01/2026
  *
- * User repository tests
- * 1. Registration
- * 2. Logging in with valid details
- * 3. Logging in with invalid details
+ * UserRepositoryTest
+ *
+ * Tests the user repository functionality
  */
 
 class UserRepositoryTest {
@@ -30,7 +29,10 @@ class UserRepositoryTest {
     private lateinit var userDao: UserDao
     private lateinit var repository: UserRepository
 
-    //Setting up the in-memory room database
+    /**
+     * Setting up the in-memory database and repo before each test
+     * This makes sure the tests are isolated
+     */
     @Before
     fun setup(){
         db = Room.inMemoryDatabaseBuilder(
@@ -42,12 +44,18 @@ class UserRepositoryTest {
         repository = UserRepository(userDao)
     }
 
+    /**
+     * Close down the database after each test
+     */
     @After
     fun shutdown(){
         db.close()
     }
 
-    //1. Registration - no invalid test needed because invalid details are caught by the UI and register button is disabled until details ARE valid
+    /**
+     * 1. Registration - no invalid test needed because invalid details are caught by the UI and
+     * register button is disabled until details ARE valid
+     */
     @Test
     fun registering_inserts_user_into_db() = runBlocking {
         repository.register("X328DFSJ108Z", "Bob", "Bobbington", "Password_123")
@@ -56,7 +64,9 @@ class UserRepositoryTest {
         Assert.assertTrue(exists)
     }
 
-    //2. Logging in with valid details
+    /**
+     * //2. Logging in with valid details
+     */
     @Test
     fun login_with_valid_details() = runBlocking {
         repository.register("X328DFSJ108Z", "Bob", "Bobbington", "Password_123")
@@ -64,14 +74,18 @@ class UserRepositoryTest {
         val result = repository.login("X328DFSJ108Z", "Password_123")
     }
 
-    // 3. Logging in with invalid details
+    /**
+     * 3. Logging in with invalid details
+     */
     @Test
     fun login_with_invalid_details() = runBlocking {
         val result = repository.login("83248ndsfnskjjesnf838", "invalid")
         Assert.assertNull(result)
     }
 
-    // 4. 12 character ID makes a patient record
+    /**
+     * 4. 12 character ID makes a patient record
+     */
     @Test
     fun registering_with_12_char_id_creates_patient_record() = runBlocking {
         repository.register("123123123123", "test", "test", "Password_123")
@@ -83,7 +97,9 @@ class UserRepositoryTest {
         assertEquals(UserRole.PATIENT, user?.role)
     }
 
-    //5. Delete use removes the user from the database
+    /**
+     * 5. Delete use removes the user from the database
+     */
     @Test
     fun delete_user_removes_user_from_database() = runBlocking {
         repository.register("123456789012", "test", "test", "Password_123")

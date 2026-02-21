@@ -20,6 +20,13 @@ import com.example.therapet.app.ui.viewmodel.ViewModelFactory
  * @date: 23/01/2026
  *
  * Appointments screen route
+ *
+ * Displays a list of appointments for the therapists and allows them to
+ * add, update and delete appointments
+ *
+ * @param role The role of the logged in user
+ * @param sessionManager The session manager providing the current user session
+ * @param onBack callback invoked when the user navigates to the previous screen
  */
 
 @Composable
@@ -49,6 +56,9 @@ fun AppointmentsRoute(
 
     val patientNames = remember { mutableStateOf<Map<String, String?>>(emptyMap()) }
 
+    /**
+     * Update patientNames map when appointment list changes
+     */
     LaunchedEffect(appointments) {
         val map = mutableMapOf<String, String?>()
         appointments.forEach { appointment ->
@@ -60,6 +70,9 @@ fun AppointmentsRoute(
         patientNames.value = map
     }
 
+    /**
+     * Display the appointment screen UI
+     */
     AppointmentsScreen(
         role = role,
         appointments = appointments,

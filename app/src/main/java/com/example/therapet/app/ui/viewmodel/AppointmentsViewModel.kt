@@ -15,6 +15,10 @@ import kotlinx.coroutines.launch
 import java.time.YearMonth
 import com.example.therapet.app.data.util.toMillisRange
 
+/**
+ * Viewmodel for managing appointments for therapists and patients
+ * Handles creation, booking, updating, deletion and retrieval
+ */
 
 class AppointmentViewModel(
     private val repository: AppointmentRepositoryContract,
@@ -24,7 +28,9 @@ class AppointmentViewModel(
 
     ) : ViewModel() {
 
-    // Used by the therapist to create an appointment
+    /**
+     * Creating a new appointment
+     */
     fun addAppointment(
         dateTimeMillis: Long,
         appointmentType: AppointmentType
@@ -40,7 +46,9 @@ class AppointmentViewModel(
         }
     }
 
-    // Used by the patient to book the appointment (isBooked = true / false)
+    /**
+     * Patient booking an appointment
+     */
     fun bookAppointment(appointment: AppointmentEntity) {
         if (appointment.isBooked) return
 
@@ -64,18 +72,27 @@ class AppointmentViewModel(
         }
     }
 
+    /**
+     * Update appointment details
+     */
     fun updateAppointment(appointment: AppointmentEntity) {
         viewModelScope.launch {
             repository.updateAppointment(appointment)
         }
     }
 
+    /**
+     * Delete appointment
+     */
     fun deleteAppointment(appointment: AppointmentEntity) {
         viewModelScope.launch {
             repository.deleteAppointment(appointment)
         }
     }
 
+    /**
+     * Get al appts for currently logged in therapist
+     */
     fun getAppointmentsForTherapist(): Flow<List<AppointmentEntity>> {
         val therapistId = sessionManager.session.value?.userid
             ?: return flowOf(emptyList())
@@ -83,6 +100,9 @@ class AppointmentViewModel(
         return repository.getAppointmentsForTherapist(therapistId)
     }
 
+    /**
+     * Get appointments for aspecific therapist filtered by year & month
+     */
     fun getAppointmentsForTherapistById(
         therapistId: String,
         yearMonth: YearMonth?
@@ -100,16 +120,25 @@ class AppointmentViewModel(
         }
     }
 
+    /**
+     * Get appointments for currently logged in patient
+     */
     fun getAppointmentsForPatient(): Flow<List<AppointmentEntity>> {
         val patientId = sessionManager.session.value?.userid
             ?: return flowOf(emptyList())
         return repository.getAppointmentsForPatient(patientId)
     }
 
+    /**
+     * Get patients name by ID
+     */
     suspend fun getPatientName(patientUserId: String?): String? {
         return repository.getPatientName(patientUserId)
     }
 
+    /**
+     * Cancelling appointment
+     */
     fun cancelAppointment(appointment: AppointmentEntity) {
         val currentUserId = sessionManager.getUserId()
         val currentRole = sessionManager.getRole()

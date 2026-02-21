@@ -6,12 +6,15 @@ import kotlinx.coroutines.flow.Flow
  * @author: Chloe Edwards
  * @date: 11/01/2026
  *
- * Pet repo contract (abstraction)
+ * Pet pref repo contract (abstraction)
  */
 
 interface PetPreferencesRepositoryContract {
 
     val petColourIndex: Flow<Int>
 
+    /**
+     * Saves the pets colour
+     */
     suspend fun savePetColour(index: Int)
 }

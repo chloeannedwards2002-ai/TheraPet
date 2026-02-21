@@ -42,14 +42,14 @@ val Typography = Typography(
     bodySmall = TextStyle(
         fontFamily = NunitoFamily,
         fontWeight = FontWeight.Light,
-        fontSize = 10.sp,
+        fontSize = 14.sp,
         color = Grey
     ),
 
     bodyMedium = TextStyle(
         fontFamily = NunitoFamily,
         fontWeight = FontWeight.Light,
-        fontSize = 15.sp,
+        fontSize = 18.sp,
         color = Grey
     ) ,
 
