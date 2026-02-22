@@ -72,6 +72,22 @@ fun HomeRoute(
         )
     )
 
+    val petViewModel: PetViewModel = viewModel(
+        factory = ViewModelFactory.PetViewModelFactory(
+            context = LocalContext.current,
+            userId = userId
+        )
+    )
+
+    val petColourIndex by petViewModel.selectedColourIndex.collectAsState()
+
+    /**
+     * Collects the next appointment from view model
+     */
+    val nextAppointment by appointmentViewModel
+        .getNextUpcomingAppointment()
+        .collectAsState(initial = null)
+
     val watchlistFlow: Flow<List<AccountUIModel>> =
         if (role == UserRole.THERAPIST) watchlistRepository.getWatchlistForTherapist(userId)
         else emptyFlow()
@@ -83,6 +99,10 @@ fun HomeRoute(
     var selectedAccount by remember { mutableStateOf<AccountUIModel?>(null) }
 
     val snackbarHostState = remember { androidx.compose.material3.SnackbarHostState() }
+
+    val remindersEnabled by petCareViewModel
+        .remindersEnabled
+        .collectAsState()
 
     /**
      * Removes a patient from the therapist's watchlist and shows snackbar confirming removal
@@ -124,9 +144,6 @@ fun HomeRoute(
         HomeScreen(
             role = role!!,
             user = user,
-            petColourIndex = viewModel<PetViewModel>(
-                factory = ViewModelFactory.PetViewModelFactory(LocalContext.current, userId)
-            ).selectedColourIndex.collectAsState().value,
             modifier = Modifier.padding(innerPadding),
             onLogout = onLogout,
             onSettings = onSettings,
@@ -137,7 +154,13 @@ fun HomeRoute(
             watchlist = watchlist,
             selectedAccount = selectedAccount,
             onAccountRemove = { removePatient(it)},
-            onAccountSelected = { selectedAccount = it }
+            onAccountSelected = { selectedAccount = it },
+            nextAppointment = nextAppointment,
+            remindersEnabled = remindersEnabled,
+            petColourIndex = petColourIndex,
+            onColourSelected = { index ->
+                petViewModel.selectColour(index)
+            }
         )
     }
 }

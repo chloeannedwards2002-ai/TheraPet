@@ -39,7 +39,8 @@ fun SettingsScreen(
     onPetSettings: () -> Unit,
     onPrivacyPolicy: () -> Unit,
     onHelpSupport: () -> Unit,
-    onDeleteAccount: () -> Unit
+    onDeleteAccount: () -> Unit,
+    onPermissions: () -> Unit
 ){
     Scaffold(
 
@@ -75,7 +76,7 @@ fun SettingsScreen(
 
             SecurityButton(onClick = {/* TODO: Navigate to Security settings */})
 
-            PermissionsButton(onClick = {/* TODO: Navigate to Permissions settings */})
+            PermissionsButton(onClick = onPermissions)
 
             PrivacyButton(onClick = onPrivacyPolicy)
 
@@ -225,6 +226,7 @@ fun SettingsPatientPreview() {
             onPrivacyPolicy = {},
             onHelpSupport = {},
             onDeleteAccount = {},
+            onPermissions = {},
             role = UserRole.PATIENT
         )
     }
@@ -240,6 +242,7 @@ fun SettingsTherapistPreview() {
             onPrivacyPolicy = {},
             onHelpSupport = {},
             onDeleteAccount = {},
+            onPermissions = {},
             role = UserRole.THERAPIST
         )
     }

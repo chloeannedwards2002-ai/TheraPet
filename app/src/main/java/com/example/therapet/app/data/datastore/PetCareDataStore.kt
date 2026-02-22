@@ -20,4 +20,6 @@ object PetCareKeys {
     val SLEEP = floatPreferencesKey("sleep_level")
 
     val HIBERNATION = booleanPreferencesKey("hibernation_enabled")
+
+    val REMINDERS = booleanPreferencesKey("reminders_enabled")
 }

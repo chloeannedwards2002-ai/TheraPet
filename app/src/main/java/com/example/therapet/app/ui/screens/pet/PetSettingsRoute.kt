@@ -38,6 +38,8 @@ fun PetSettingsRoute(
      */
     val isHibernating by petCareViewModel.isHibernating.collectAsState()
 
+    val remindersEnabled by petCareViewModel.remindersEnabled.collectAsState()
+
     Scaffold { innerPadding ->
         PetSettingsScreen(
             hibernationEnabled = isHibernating,
@@ -45,7 +47,9 @@ fun PetSettingsRoute(
                 petCareViewModel.setHibernation(enabled)
             },
             onBack = onBack,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            onRemindersChanged = {petCareViewModel.setRemindersEnabled(it)},
+            remindersEnabled = remindersEnabled
         )
     }
 }

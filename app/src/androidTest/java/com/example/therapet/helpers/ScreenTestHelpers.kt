@@ -151,7 +151,9 @@ object ScreenTestHelpers {
                     onPetSettings = {},
                     onPrivacyPolicy = {},
                     onHelpSupport = {},
-                    onDeleteAccount = {}
+                    onDeleteAccount = {},
+
+                    onPermissions = {}
                 )
             }
         }
@@ -171,7 +173,9 @@ object ScreenTestHelpers {
                     onPetSettings = {},
                     onPrivacyPolicy = {},
                     onHelpSupport = {},
-                    onDeleteAccount = {}
+                    onDeleteAccount = {},
+
+                    onPermissions = {}
                 )
             }
         }
@@ -214,7 +218,9 @@ object ScreenTestHelpers {
                     onAppts = {},
                     onBookAppt = {},
                     onProfile = {},
-                    user = user
+                    user = user,
+                    onColourSelected = {},
+                    remindersEnabled = true
                 )
             }
         }
@@ -231,7 +237,9 @@ object ScreenTestHelpers {
                 PetSettingsScreen(
                     hibernationEnabled = false,
                     onHibernationChanged = {},
-                    onBack = {}
+                    onBack = {},
+                    remindersEnabled = true,
+                    onRemindersChanged = {}
                 )
             }
         }
@@ -257,7 +265,9 @@ object ScreenTestHelpers {
                     onAppts = {},
                     onBookAppt = {},
                     onProfile = {},
-                    user = user
+                    user = user,
+                    onColourSelected = {},
+                    remindersEnabled = true
                 )
             }
         }
