@@ -1,3 +1,8 @@
+## TheraPet Notes
+Logins (must be registered first)
+  Therapist: MJW9280LO01IQ9CV
+  Patient: X328HDSJ108Z 
+
 ## TheraPet functional and non-functional requirements:
 
 | Code | Requirement | MoSCoW | F/NF |
