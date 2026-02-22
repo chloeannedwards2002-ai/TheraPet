@@ -136,4 +136,17 @@ class PetCareViewModel(
             repository.saveHibernationEnabled(enabled)
         }
     }
+
+    /**
+     * Toggling reminders
+     */
+    val remindersEnabled: StateFlow<Boolean> =
+        repository.remindersEnabled
+            .stateIn(viewModelScope, SharingStarted.Eagerly, true)
+
+    fun setRemindersEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            repository.saveRemindersEnabled(enabled)
+        }
+    }
 }

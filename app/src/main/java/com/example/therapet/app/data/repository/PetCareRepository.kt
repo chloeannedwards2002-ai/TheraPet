@@ -79,4 +79,17 @@ class PetCareStateRepository private constructor(
             prefs[PetCareKeys.HIBERNATION] = value
         }
     }
+
+    /**
+     * Toggles reminders
+     */
+    override val remindersEnabled = dataStore.data.map { prefs ->
+        prefs[PetCareKeys.REMINDERS] ?: true
+    }
+
+    override suspend fun saveRemindersEnabled(value: Boolean) {
+        dataStore.edit { prefs ->
+            prefs[PetCareKeys.REMINDERS] = value
+        }
+    }
 }

@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import java.time.YearMonth
 import com.example.therapet.app.data.util.toMillisRange
+import kotlinx.coroutines.flow.map
 
 /**
  * Viewmodel for managing appointments for therapists and patients
@@ -156,5 +157,18 @@ class AppointmentViewModel(
         }
     }
 
+    fun getNextUpcomingAppointment(): Flow<AppointmentEntity?> {
+        val patientId = sessionManager.session.value?.userid
+            ?: return flowOf(null)
+
+        val now = System.currentTimeMillis()
+
+        return repository.getAppointmentsForPatient(patientId)
+            .map { appointments ->
+                appointments
+                    .filter { it.isBooked && it.appointmentDateTime > now }
+                    .minByOrNull { it.appointmentDateTime }
+            }
+    }
 
 }

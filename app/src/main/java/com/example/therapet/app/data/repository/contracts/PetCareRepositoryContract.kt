@@ -17,6 +17,8 @@ interface PetCareRepositoryContract {
     val foodLevel: Flow<Float>
     val sleepLevel: Flow<Float>
 
+    val remindersEnabled: Flow<Boolean>
+
     /**
      * Boolean indicating if hibernation mode is enabled
      */
@@ -33,4 +35,10 @@ interface PetCareRepositoryContract {
      * Saves hibernation state
      */
     suspend fun saveHibernationEnabled(value: Boolean)
+
+    /**
+     * Manages reminders from the pet
+     */
+    suspend fun saveRemindersEnabled(value: Boolean)
+
 }

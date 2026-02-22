@@ -23,4 +23,5 @@ object Routes {
     const val HELP_SUPPORT = "help_support_screen"
     const val DELETE_ACCOUNT = "delete_account_screen"
     const val DELETE_ACCOUNT_CONFIRM = "delete_account_confirm_screen"
+    const val PERMISSIONS = "permissions_screen"
 }

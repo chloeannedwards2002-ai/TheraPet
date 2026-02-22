@@ -21,7 +21,7 @@ class PetViewModel(
 ) : ViewModel() {
 
     /**
-     * Currently selected pet colour idex
+     * Currently selected pet colour index
      */
     val selectedColourIndex = repository.petColourIndex
         .stateIn(

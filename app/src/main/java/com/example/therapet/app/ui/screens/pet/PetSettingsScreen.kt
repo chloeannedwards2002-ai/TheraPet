@@ -38,12 +38,13 @@ fun PetSettingsScreen(
     hibernationEnabled: Boolean, // current state of pet hibernation
     onHibernationChanged: (Boolean) -> Unit, // Callback when hibernation is toggled
     onBack: () -> Unit, // Callback when back is pressed
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onRemindersChanged: (Boolean) -> Unit, // Toggling reminders
+    remindersEnabled: Boolean // Is reminder enabled
 ){
     /**
      * Local state for toggles unrelated to viewmodel
      */
-    var remindersEnabled by remember { mutableStateOf(false) }
     var petSoundsEnabled by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -71,7 +72,7 @@ fun PetSettingsScreen(
             ToggleButton(
                 label = stringResource(R.string.appointment_reminders),
                 checked = remindersEnabled,
-                onCheckedChange = { remindersEnabled = it },
+                onCheckedChange = onRemindersChanged,
                 modifier = Modifier.testTag("appointment_reminders_toggle")
             )
 
@@ -130,7 +131,9 @@ fun PetSettingsPreview() {
         PetSettingsScreen(
             hibernationEnabled = false,
             onHibernationChanged = {},
-            onBack = {}
+            onBack = {},
+            onRemindersChanged = {},
+            remindersEnabled = true
         )
     }
 }

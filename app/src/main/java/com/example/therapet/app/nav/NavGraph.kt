@@ -163,6 +163,7 @@ fun NavGraph(
                     onPrivacyPolicy = { navController.navigate(Routes.PRIVACY_POLICY) },
                     onHelpSupport = { navController.navigate(Routes.HELP_SUPPORT) },
                     onDeleteAccount = { navController.navigate(Routes.DELETE_ACCOUNT) },
+                    onPermissions = { navController.navigate(Routes.PERMISSIONS)},
                     role = role!!
                 )
             }
