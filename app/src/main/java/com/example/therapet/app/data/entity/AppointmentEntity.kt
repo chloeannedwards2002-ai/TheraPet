@@ -42,5 +42,12 @@ data class AppointmentEntity(
     val appointmentDateTime: Long,
     val appointmentType: AppointmentType,
     val patientUserId: String? = null,
-    val isBooked: Boolean = false
+    val status: BookingStatus = BookingStatus.AVAILABLE
 )
+
+enum class BookingStatus {
+    AVAILABLE,
+    PENDING,
+    APPROVED,
+    REJECTED
+}

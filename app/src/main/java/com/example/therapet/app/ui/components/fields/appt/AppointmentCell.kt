@@ -22,6 +22,7 @@ import com.example.therapet.app.ui.theme.TheraPetTheme
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import com.example.therapet.app.data.entity.BookingStatus
 
 /**
  * @Author: Chloe Edwards
@@ -40,13 +41,23 @@ fun formatDateTime(millis: Long): String {
 }
 
 @Composable
-fun appointmentCardColours(isBooked: Boolean): CardColors {
-    return if (isBooked) {
-        CardDefaults.cardColors()
-    } else {
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-        )
+fun appointmentCardColours(status: BookingStatus): CardColors {
+    return when (status) {
+        BookingStatus.AVAILABLE ->
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer
+            )
+
+        BookingStatus.PENDING ->
+            CardDefaults.cardColors()
+
+        BookingStatus.APPROVED ->
+            CardDefaults.cardColors()
+
+        BookingStatus.REJECTED ->
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
     }
 }
 
@@ -63,7 +74,7 @@ fun AppointmentCell(
             .clickable { onClick() },
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = appointmentCardColours(appointment.isBooked)
+        colors = appointmentCardColours(appointment.status)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -79,17 +90,30 @@ fun AppointmentCell(
                 style = MaterialTheme.typography.labelMedium
             )
 
-            if (appointment.isBooked) {
-                Text(
-                    text = "Booked",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.error
-                )
-            } else {
-                Text(
+            when (appointment.status) {
+
+                BookingStatus.AVAILABLE -> Text(
                     text = "Available",
                     style = MaterialTheme.typography.labelSmall,
                     color = Color(0xFF2E7D32)
+                )
+
+                BookingStatus.PENDING -> Text(
+                    text = "Awaiting approval",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color(0xFFFFA000)
+                )
+
+                BookingStatus.APPROVED -> Text(
+                    text = "Confirmed",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color(0xFF2E7D32)
+                )
+
+                BookingStatus.REJECTED -> Text(
+                    text = "Rejected",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.error
                 )
             }
         }
@@ -107,7 +131,7 @@ fun AppointmentCellAvailablePreview() {
                 appointmentDateTime = 1_700_000_000_000L,
                 appointmentType = AppointmentType.CONSULTATION,
                 patientUserId = null,
-                isBooked = false
+                status = BookingStatus.AVAILABLE
             ),
             onClick = {}
         )
@@ -126,7 +150,7 @@ fun AppointmentCellBookedPreview() {
                 appointmentDateTime = 1_700_100_000_000L,
                 appointmentType = AppointmentType.SESSION,
                 patientUserId = "123123123123",
-                isBooked = true
+                status = BookingStatus.APPROVED
             ),
             onClick = {}
         )

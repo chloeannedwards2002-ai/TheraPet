@@ -25,6 +25,7 @@ class FakePetCareRepository : PetCareRepositoryContract {
     override val sleepLevel: Flow<Float> = _sleep
     override val hibernationEnabled: Flow<Boolean> = _hibernation
 
+
     override suspend fun saveFoodLevel(value: Float) {
         _food.value = value
     }

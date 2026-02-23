@@ -1,5 +1,7 @@
 package com.example.therapet.app.ui.screens.booking
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,10 +29,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.therapet.app.ui.components.bars.BasicTopBar
 import com.example.therapet.R
 import com.example.therapet.app.data.entity.AppointmentEntity
+import com.example.therapet.app.data.entity.BookingStatus
 import com.example.therapet.app.data.model.AccountUIModel
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.buttons.general.CustomFilledButton
@@ -37,6 +42,7 @@ import com.example.therapet.app.ui.components.fields.account.MinimizedAccountCel
 import com.example.therapet.app.ui.components.fields.appt.AppointmentCell
 import com.example.therapet.app.ui.components.fields.appt.EditAppointmentDialog
 import com.example.therapet.app.ui.components.fields.appt.MonthPicker
+import com.example.therapet.app.ui.theme.TheraPetTheme
 import java.time.YearMonth
 
 /**
@@ -73,6 +79,8 @@ fun PatientAppointmentsScreen(
     var currentStep by remember { mutableStateOf(BookingStep.PATIENT_APPOINTMENTS) }
 
     var selectedAppointment by remember { mutableStateOf<AppointmentEntity?>(null) }
+    
+    var showBookingConfirmation by remember { mutableStateOf(false)}
 
     Scaffold(
         topBar = {
@@ -150,6 +158,8 @@ fun PatientAppointmentsScreen(
                         onUpdateTime = {},
                         onDelete = {},
                         onCancelBooking = { onAppointmentClick(it) },
+                        onApprove = {},
+                        onReject = {},
                         getPatientName = { "" }
                     )
                 }
@@ -224,8 +234,10 @@ fun PatientAppointmentsScreen(
                                 AppointmentCell(
                                     appointment = appointment,
                                     onClick = {
-                                        if (!appointment.isBooked) {
+                                        if (appointment.status == BookingStatus.AVAILABLE) {
                                             onAppointmentClick(appointment)
+
+                                            showBookingConfirmation = true
                                         }
                                     }
                                 )
@@ -234,6 +246,27 @@ fun PatientAppointmentsScreen(
                     }
                 }
             }
+        }
+
+        if (showBookingConfirmation) {
+            AlertDialog(
+                onDismissRequest = { showBookingConfirmation = false },
+                title = {
+                    Text(text = "Booking Confirmed",
+                        style = MaterialTheme.typography.labelMedium)
+
+                },
+                text = {
+                    Text(text = "Your appointment is awaiting approval",
+                        style = MaterialTheme.typography.labelMedium)
+                },
+                confirmButton = {
+                    CustomFilledButton(
+                        onClick = { showBookingConfirmation = false },
+                        text = "OK"
+                    )
+                }
+            )
         }
     }
 }
@@ -252,19 +285,23 @@ fun BookButton(modifier: Modifier = Modifier, onClick: () -> Unit){
     )
 }
 
-/* BROKEN PREVIEWS
 
+/**
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun BookAppointmentChooseTherapistPreview() {
     TheraPetTheme {
-        BookAppointmentScreen(
+        PatientAppointmentsScreen(
             step = BookingStep.CHOOSE_THERAPIST,
             therapists = therapistsForPreview,
             selectedTherapistId = null,
             onTherapistSelected = {},
-            onBack = {}
+            onBack = {},
+            onBook = {},
+            appointments = appointments,
+            onMonthSelected = {},
+
         )
     }
 }
@@ -274,7 +311,7 @@ fun BookAppointmentChooseTherapistPreview() {
 @Composable
 fun BookAppointmentBookingStepPreview() {
     TheraPetTheme {
-        BookAppointmentScreen(
+        PatientAppointmentsScreen(
             step = BookingStep.BOOK_APPOINTMENT,
             therapists = emptyList(),
             selectedTherapistId = "12345678910defgt",
@@ -282,5 +319,4 @@ fun BookAppointmentBookingStepPreview() {
             onBack = {}
         )
     }
-}
-*/
+}**/

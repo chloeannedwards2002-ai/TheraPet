@@ -25,7 +25,7 @@ import net.sqlcipher.database.SupportFactory
         AppointmentEntity::class,
         WatchlistEntity::class
                ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 

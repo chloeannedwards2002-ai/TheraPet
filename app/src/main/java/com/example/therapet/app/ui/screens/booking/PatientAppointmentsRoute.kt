@@ -10,6 +10,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.therapet.app.data.entity.BookingStatus
 import com.example.therapet.app.data.local.AppDatabase
 import com.example.therapet.app.data.repository.WatchlistRepository
 import com.example.therapet.app.data.session.SessionManager
@@ -117,10 +118,17 @@ fun PatientAppointmentsRoute(
             step = BookingStep.BOOK_APPOINTMENT
         },
         onAppointmentClick = { appointment ->
-            if (appointment.isBooked) {
-                appointmentViewModel.cancelAppointment(appointment)
-            } else {
-                appointmentViewModel.bookAppointment(appointment)
+            when (appointment.status) {
+                BookingStatus.AVAILABLE -> {
+                    appointmentViewModel.bookAppointment(appointment)
+                }
+                BookingStatus.PENDING,
+                BookingStatus.APPROVED -> {
+                    appointmentViewModel.cancelAppointment(appointment)
+                }
+                BookingStatus.REJECTED -> {
+                   // do nothing
+                }
             }
         },
         onMonthSelected = { yearMonth ->

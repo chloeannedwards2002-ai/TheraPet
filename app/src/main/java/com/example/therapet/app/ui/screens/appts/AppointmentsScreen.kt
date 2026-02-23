@@ -21,10 +21,13 @@ import com.example.therapet.app.data.entity.AppointmentEntity
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.ui.components.buttons.general.CustomOutlinedButton
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.therapet.app.data.entity.BookingStatus
 import com.example.therapet.app.data.model.AppointmentType
 import com.example.therapet.app.ui.components.fields.appt.AddAppointmentDialog
 import com.example.therapet.app.ui.components.fields.appt.AppointmentCell
 import com.example.therapet.app.ui.components.fields.appt.EditAppointmentDialog
+import com.example.therapet.app.ui.theme.TheraPetTheme
 
 /**
  * @author: Chloe Edwards
@@ -117,7 +120,22 @@ fun AppointmentsScreen(
                 onCancelBooking = {
                     onUpdateAppointment(
                         it.copy(
-                            isBooked = false,
+                            status = BookingStatus.AVAILABLE,
+                            patientUserId = null
+                        )
+                    )
+                    selectedAppointment = null
+                },
+                onApprove = {
+                    onUpdateAppointment(
+                        it.copy(status = BookingStatus.APPROVED)
+                    )
+                    selectedAppointment = null
+                },
+                onReject = {
+                    onUpdateAppointment(
+                        it.copy(
+                            status = BookingStatus.AVAILABLE,
                             patientUserId = null
                         )
                     )
@@ -145,4 +163,45 @@ fun MyBookAppointmentsButton(
             .testTag("book_appointment_button")
             .height(60.dp)
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AppointmentsScreenPreview() {
+
+    val sampleAppointments = listOf(
+        AppointmentEntity(
+            appointmentId = 1,
+            therapistUserId = "therapist_1",
+            appointmentDateTime = System.currentTimeMillis() + 86400000,
+            appointmentType = AppointmentType.FOLLOW_UP,
+            patientUserId = "patient_1",
+            status = BookingStatus.AVAILABLE
+        ),
+        AppointmentEntity(
+            appointmentId = 2,
+            therapistUserId = "therapist_1",
+            appointmentDateTime = System.currentTimeMillis() + 172800000,
+            appointmentType = AppointmentType.FOLLOW_UP,
+            patientUserId = null,
+            status = BookingStatus.AVAILABLE
+        )
+    )
+
+    TheraPetTheme {
+        AppointmentsScreen(
+            role = UserRole.THERAPIST,
+            appointments = sampleAppointments,
+            onBack = {},
+            onAddAppointment = { _, _ -> },
+            onUpdateAppointment = {},
+            onDeleteAppointment = {},
+            getPatientName = { id ->
+                when (id) {
+                    "patient_1" -> "John Smith"
+                    else -> "Unknown"
+                }
+            }
+        )
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.therapet.app.data.repository
 
 import com.example.therapet.app.data.entity.AppointmentEntity
+import com.example.therapet.app.data.entity.BookingStatus
 import com.example.therapet.app.data.local.dao.AppointmentDao
 import com.example.therapet.app.data.local.dao.UserDao
 import com.example.therapet.app.data.model.AppointmentType
@@ -43,7 +44,7 @@ class AppointmentRepository(
             appointmentDateTime = dateTimeMillis,
             appointmentType = appointmentType,
             patientUserId = null,
-            isBooked = false
+            status = BookingStatus.AVAILABLE
         )
 
         appointmentDao.insertAppointment(appointment)

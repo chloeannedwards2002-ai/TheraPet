@@ -3,6 +3,7 @@ package com.example.therapet.app.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.therapet.app.data.entity.AppointmentEntity
+import com.example.therapet.app.data.entity.BookingStatus
 import com.example.therapet.app.data.model.AppointmentType
 import com.example.therapet.app.data.model.UserRole
 import com.example.therapet.app.data.repository.contracts.AppointmentRepositoryContract
@@ -51,7 +52,7 @@ class AppointmentViewModel(
      * Patient booking an appointment
      */
     fun bookAppointment(appointment: AppointmentEntity) {
-        if (appointment.isBooked) return
+        if (appointment.status != BookingStatus.AVAILABLE) return
 
         val currentUserId = sessionManager.getUserId()
         val currentRole = sessionManager.getRole()
@@ -61,7 +62,7 @@ class AppointmentViewModel(
         viewModelScope.launch {
             repository.updateAppointment(
                 appointment.copy(
-                    isBooked = true,
+                    status = BookingStatus.PENDING,
                     patientUserId = currentUserId
                 )
             )
@@ -150,7 +151,7 @@ class AppointmentViewModel(
         viewModelScope.launch {
             repository.updateAppointment(
                 appointment.copy(
-                    isBooked = false,
+                    status = BookingStatus.AVAILABLE,
                     patientUserId = null
                 )
             )
@@ -166,9 +167,37 @@ class AppointmentViewModel(
         return repository.getAppointmentsForPatient(patientId)
             .map { appointments ->
                 appointments
-                    .filter { it.isBooked && it.appointmentDateTime > now }
+                    .filter {
+                        it.status == BookingStatus.APPROVED &&
+                                it.appointmentDateTime > now
+                    }
                     .minByOrNull { it.appointmentDateTime }
             }
+    }
+
+    /**
+     * Therapist can approve or reject the appointment
+     */
+
+    fun approveAppointment(appointment: AppointmentEntity) {
+        viewModelScope.launch {
+            repository.updateAppointment(
+                appointment.copy(
+                    status = BookingStatus.APPROVED
+                )
+            )
+        }
+    }
+
+    fun rejectAppointment(appointment: AppointmentEntity) {
+        viewModelScope.launch {
+            repository.updateAppointment(
+                appointment.copy(
+                    status = BookingStatus.AVAILABLE,
+                    patientUserId = null
+                )
+            )
+        }
     }
 
 }
