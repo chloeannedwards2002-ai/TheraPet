@@ -1,56 +1,60 @@
+## TheraPet Notes
+Logins (must be registered first)
+  Therapist: MJW9280LO01IQ9CV
+  Patient: X328HDSJ108Z 
+
 ## TheraPet functional and non-functional requirements:
 
-| Code   | Requirement                                                                                                                                                                                                                                        | MoSCoW | F/NF |
-|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|------|
-| FM-1   | The TheraPet system must allow users to create a new account using a valid ID and unique password                                                                                                                                                  | Must   | F    |
-| FM-2   | The TheraPet system must allow users to log in and out an active session, with the logging out process taking no more than 3 seconds                                                                                                               | Must   | F    |
-| FM-3   | The TheraPet system must allow users to change, reset and update their password ensuring secure authentication for each process                                                                                                                    | Must   | F    |
-| FM-4   | The TheraPet system must allow users to request deletion of their account, and their user data must be removed within 30 days of the request                                                                                                       | Must   | F    |
-| FM-5   | The TheraPet system must allow users to view and search available therapist appointments with their therapists, with results returned within at least 2 seconds                                                                                    | Must   | F    |
-| FM-6   | The TheraPet system must allow users to book available appointments, and a confirmation notification must be sent within 3 seconds                                                                                                                 | Must   | F    |
-| FM-7   | The TheraPet system must allow users to cancel or reschedule booked appointments at least 24 hours before the booked time                                                                                                                          | Must   | F    |
-| FM-8   | The TheraPet system must send a notification of an appointment update within 5 seconds of the user booking, cancelling or rescheduling an appointment                                                                                              | Must   | F    |
-| FM-9   | The TheraPet system must allow therapists to view patient details such as name, ID and last time logged in                                                                                                                                         | Must   | F    |
-| FM-10  | The TheraPet system must allow therapists to add or remove a patient from their observation list, with changes applies within 3 seconds                                                                                                            | Must   | F    |
-| FM-11  | The TheraPet system must allow therapists to create, delete and mark available appointment slots, with results being visible to patients within 5 seconds                                                                                          | Must   | F    |
-| FM-12  | The TheraPet system must store the time and date of each user login within DataStore, and expose the data to the patient’s therapist dashboard                                                                                                     | Must   | F    |
-| FM-13  | The TheraPet system must allow users to create and name their virtual pet when creating a new account                                                                                                                                              | Must   | F    |
-| FM-14  | The TheraPet system must allow the user to always view their virtual pet on the main screen when returning to it                                                                                                                                   | Must   | F    |
-| FM-15  | The TheraPet system must allow users to interact with their virtual pet by giving them the option to care for 3 needs – feeding, watering and sleeping, with the state changes of the pet being applied immediately and persisting across sessions | Must   | F    |
-| FM-16  | Database operations (Create, Read, Update, delete locally) must complete within 300ms                                                                                                                                                              | Must   | F    |
-| FM-17  | The TheraPet system must allow the user to put their pet in “hibernation” mode by sending them to sleep, which will stop all pet notifications and needs form decreasing                                                                           | Must   | F    |
-| FS-1   | The virtual pet should present visible changes such as sadness or tiredness if any of the 3 needs are neglected for 24 hours or more when the pet is not in hibernation                                                                            | Should | F    |
-| FS-2   | The virtual pet should present a reminder to the user if they haven’t booked a therapy session in 20 days or more                                                                                                                                  | Should | F    |
-| FS-3   | To heed to an offline first approach, the TheraPet system should allow the user to manage their appointments offline, then syncing when connection is restored                                                                                     | Should | F    |
-| FS-4   | Help & support such as FAQ, phone numbers or support emails should be accessible within 3 taps of the main screen                                                                                                                                  | Should | F    |
-| FS-5   | The virtual pet should notify users of their upcoming appointment 2 hours, 1 hours of 30mins before their appointment                                                                                                                              | Should | F    |
-| FC-1   | The virtual pet could notify the user when a previously unavailable appointment becomes available                                                                                                                                                  | Could  | F    |
-| FC-2   | The TheraPet system could allow therapists and patients to block / report each other                                                                                                                                                               | Could  | F    |
-| FW-1   | The TheraPet system won’t allow the users to play interactive minigames with their virtual pet, but it is a possibility in the future                                                                                                              | Would  | F    |
-|        | 
-| NFM-1  | The TheraPet system must comply with GDPR, CCPA and LGPD compliance where applicable                                                                                                                                                               | Must   | NF   |
-| NFM-2  | The TheraPet system must follow privacy-by-design principles                                                                                                                                                                                       | Must   | NF   |
-| NFM-3  | The TheraPet system must follow secure coding practices which includes protection against SQL-injection, and using password hashing                                                                                                                | Must   | NF   |
-| NFM-4  | All user, therapist and appointment data must be stored securely using encryption at rest and in transit (TLS 1.2), and passwords must be hashed using PBKDF2                                                                                      | Must   | NF   |
-| NFM-5  | The UI must meet at least all WGAC 2.1 AA contrast ratios: >= 3:1 for large text and >= 4.5:1 for smaller text                                                                                                                                     | Must   | NF   |
-| NFM-6  | The tap targets on UI buttons must have a minimum spacing of 8dp away from adjacent UI elements                                                                                                                                                    | Must   | NF   |
-| NFM-7  | Navigation through the TheraPet system must be consistent across all screens, and allow users to find core features within 3 taps of opening any page                                                                                              | Must   | NF   |
-| NFM-8  | The TheraPet system must present users with visual feedback (success, failure, error) within 500ms of triggering                                                                                                                                   | Must   | NF   |
-| NFM-9  | The system must present the user with password strength feedback when they are creating a new password or changing their password, making sure that users adhere to password rules such as a number, capital letter, symbol etc                    | Must   | NF   |
-| NFM-10 | The system must respond to touch actions within 100ms                                                                                                                                                                                              | Must   | NFM  |
-| NFM-11 | The virtual pets state (happy, sad, tired, notifications, reminders) must update in real time even when offline and persist across sessions                                                                                                        | Must   | NFM  |
-| NFM-12 | The TheraPet system and database must enforce role-based access, making sure that therapists can only access permitted data for the patients on their observation list                                                                             | Must   | NF   |
-| NFM-13 | The TheraPet system must adhere to data minimisation rules according to GDPR and LDPG law, by only collecting ID, passwords, names and user preferences                                                                                            | Must   | NF   |
-| NFM-14 | The TheraPet UI must respond to changes in screen orientation (portrait, landscape) and adjust accordingly to different screen sizes                                                                                                               | Must   | NF   |
-| NFS-1  | The TheraPet UI should follow Material 3 accessibility guidelines where they are applicable                                                                                                                                                        | Should | NF   |
-| NFS-2  | The appointment booking system should use ISO 8602 format for all dates and times                                                                                                                                                                  | Should | NF   |
-| NFS-3  | FAQ and guidance documentation, privacy policy and terms and conditions should always be accessible offline                                                                                                                                        | Should | NF   |
-| NFS-4  | The TheraPet system should automatically convert time zones for appointments based on the user’s device settings OR the country they choose when signing up (undecided)                                                                            | Should | NF   |
-| NFS-5  | The TheraPet UI should be designed for one handed use                                                                                                                                                                                              | Should | NF   |
-| NFC-1  | The TheraPet UI could enable colour-blind accessible themes (E.G deuteranopia, protanopia) which can be toggled in settings                                                                                                                        | Could  | NF   |
-| NFC-2  | The TheraPet UI could have a “simplified” reduced complexity mode available for users with cognitive accessibility needs                                                                                                                           | Could  | NF   |
-| NFC-3  | The TheraPet system could allow users to remap actions such as swiping in left/right for those with motor disabilities                                                                                                                             | Could  | NF   |
-
+| Code | Requirement | MoSCoW | F/NF |
+|------|-------------|--------|------|
+| FM-1 | <s>The TheraPet system must allow users to create a new account using a valid ID and unique password</s> | Must | F |
+| FM-2 | <s>The TheraPet system must allow users to log in and out an active session, with the logging out process taking no more than 3 seconds</s> | Must | F |
+| FM-3 | <s>The TheraPet system must allow users to change, reset and update their password ensuring secure authentication for each process</s> | Must | F |
+| FM-4 | <s>The TheraPet system must allow users to request deletion of their account, and their user data must be removed within 30 days of the request</s> | Must | F |
+| FM-5 | <s>The TheraPet system must allow users to view and search available therapist appointments with their therapists, with results returned within at least 2 seconds </s> | Must | F |
+| FM-6 | <s>The TheraPet system must allow users to book available appointments,</s> and a confirmation notification must be sent within 3 seconds | Must | F |
+| FM-7 | <s>The TheraPet system must allow users to cancel or reschedule booked appointments at least 24 hours before the booked time</s> | Must | F |
+| FM-8 | The TheraPet system must send a notification of an appointment update within 5 seconds of the user booking, cancelling or rescheduling an appointment | Must | F |
+| FM-9 | <s>The TheraPet system must allow therapists to view patient details such as name, ID </s> and last time logged in | Must | F |
+| FM-10 | <s>The TheraPet system must allow therapists to add or remove a patient from their observation list, with changes applies within 3 seconds</s> | Must | F |
+| FM-11 | <s>The TheraPet system must allow therapists to create, delete and mark available appointment slots, with results being visible to patients within 5 seconds</s> | Must | F |
+| FM-12 | The TheraPet system must store the time and date of each user login within DataStore, and expose the data to the patient’s therapist dashboard</s> | Must | F |
+| FM-13 | <s>The TheraPet system must allow users to create and name their virtual pet when creating a new account</s> | Must | F |
+| FM-14 | <s>The TheraPet system must allow the user to always view their virtual pet on the main screen when returning to it</s> | Must | F |
+| FM-15 | <s>The TheraPet system must allow users to interact with their virtual pet by giving them the option to care for 3 needs – feeding, watering and sleeping, with the state changes of the pet being applied immediately and persisting across sessions</s> | Must | F |
+| FM-16 | <s>Database operations (Create, Read, Update, delete locally) must complete within 300ms</s> *TEST* | Must | F |
+| FM-17 | <s>The TheraPet system must allow the user to put their pet in “hibernation” mode by sending them to sleep,</s> which will stop all pet notifications and<s> needs form decreasing</s> | Must | F |
+| FS-1 | The virtual pet should present visible changes such as sadness or tiredness if any of the 3 needs are neglected for 24 hours or more when the pet is not in hibernation | Should | F |
+| FS-2 | The virtual pet should present a reminder to the user if they haven’t booked a therapy session in 20 days or more | Should | F |
+| FS-3 | To heed to an offline first approach, the TheraPet system should allow the user to manage their appointments offline, then syncing when connection is restored | Should | F |
+| FS-4 | <s>Help & support such as FAQ, phone numbers or support emails should be accessible within 3 taps of the main screen</s> | Should | F |
+| FS-5 | The virtual pet should notify users of their upcoming appointment 2 hours, 1 hours of 30mins before their appointment | Should | F |
+| FC-1 | The virtual pet could notify the user when a previously unavailable appointment becomes available | Could | F |
+| FC-2 | The TheraPet system could allow therapists and patients to block / report each other | Could | F |
+| FW-1 | The TheraPet system won’t allow the users to play interactive minigames with their virtual pet, but it is a possibility in the future | Would | F |
+|      | 
+| NFM-1 | <s>The TheraPet system must comply with GDPR, CCPA and LGPD compliance where applicable</s> | Must | NF |
+| NFM-2 | <s>The TheraPet system must follow privacy-by-design principles</s> | Must | NF |
+| NFM-3 | <s>The TheraPet system must follow secure coding practices which includes protection against SQL-injection, and using password hashing</s> | Must | NF |
+| NFM-4 | USES CIPHER INSTEAD <s> All user, therapist and appointment data must be stored securely using encryption at rest and in transit (TLS 1.2), and passwords must be hashed using PBKDF2 </s> | Must | NF |
+| NFM-5 | <s>The UI must meet at least all WGAC 2.1 AA contrast ratios: >= 3:1 for large text and >= 4.5:1 for smaller text</s> | Must | NF |
+| NFM-6 | <s>The tap targets on UI buttons must have a minimum spacing of 8dp away from adjacent UI elements</s> | Must | NF |
+| NFM-7 | <s>Navigation through the TheraPet system must be consistent across all screens, and allow users to find core features within 3 taps of opening any page</s> | Must | NF |
+| NFM-8 | <s>The TheraPet system must present users with visual feedback (success, failure, error) within 500ms of triggering</s> | Must | NF |
+| NFM-9 | <s>The system must present the user with password strength feedback when they are creating a new password or changing their password, making sure that users adhere to password rules such as a number, capital letter, symbol etc</s> | Must | NF |
+| NFM-10 | *TEST*The system must respond to touch actions within 100ms | Must | NFM |
+| NFM-11 | <s>The virtual pets state (happy, sad, tired, </s> notifications, reminders) must update in real time even when offline and persist across sessions | Must | NFM |
+| NFM-12 | <s>The TheraPet system and database must enforce role-based access, making sure that therapists can only access permitted data for the patients on their observation list</s> | Must | NF |
+| NFM-13 | <s>The TheraPet system must adhere to data minimisation rules according to GDPR and LDPG law, by only collecting ID, passwords, names and user preferences</s> | Must | NF |
+| NFM-14 | The TheraPet UI must respond to changes in screen orientation (portrait, landscape) and adjust accordingly to different screen sizes | Must | NF |
+| NFS-1 | <s>The TheraPet UI should follow Material 3 accessibility guidelines where they are applicable</s> | Should | NF |
+| NFS-2 | The appointment booking system should use ISO 8602 format for all dates and times | Should | NF |
+| NFS-3 | FAQ and guidance documentation, privacy policy and terms and conditions should always be accessible offline | Should | NF |
+| NFS-4 | The TheraPet system should automatically convert time zones for appointments based on the user’s device settings OR the country they choose when signing up (undecided) | Should | NF |
+| NFS-5 | The TheraPet UI should be designed for one handed use | Should | NF |
+| NFC-1 | The TheraPet UI could enable colour-blind accessible themes (E.G deuteranopia, protanopia) which can be toggled in settings | Could | NF |
+| NFC-2 | The TheraPet UI could have a “simplified” reduced complexity mode available for users with cognitive accessibility needs | Could | NF |
+| NFC-3 | The TheraPet system could allow users to remap actions such as swiping in left/right for those with motor disabilities | Could | NF |
 
 ### TheraPet Architecture examples
 HomeScreen -> HomeRoute -> PetCareViewModel -> PetCareRepositoryContract -> PetCareStateRepository -> PetCareDataStore
